@@ -1,0 +1,117 @@
+import axios from 'axios'
+import { useAuthStore } from '../store/authStore'
+
+const api = axios.create({
+  baseURL: '/api',
+  headers: { 'Content-Type': 'application/json' },
+})
+
+api.interceptors.request.use((config) => {
+  const { token, adminToken } = useAuthStore.getState()
+  const t = adminToken || token
+  if (t) config.headers.Authorization = `Bearer ${t}`
+  return config
+})
+
+// --- Types ---
+export interface Category {
+  id: number
+  nameDa: string
+  nameEn: string
+  color: string
+}
+
+export interface LeaderboardEntry {
+  rank: number
+  username: string
+  totalScore: number
+  correctAnswers: number
+  maxStreak: number
+}
+
+export interface SessionResponse {
+  sessionId: number
+  startingTimeLimit: number
+}
+
+export interface NextWordResponse {
+  wordId: number
+  wordText: string
+  categoryIds: number[]
+}
+
+export interface AnswerResponse {
+  correct: boolean
+  pointsEarned: number
+  totalScore: number
+  streak: number
+  nextTimeLimit: number
+  gameOver: boolean
+}
+
+export interface AppUser {
+  id: number
+  username: string
+  createdAt: string
+}
+
+export interface Word {
+  id: number
+  text: string
+  categoryId: number
+}
+
+// --- Auth ---
+export const login = (username: string) =>
+  api.post<{ token: string; userId: number; username: string }>('/auth/login', { username })
+
+export const adminLogin = (username: string, password: string) =>
+  api.post<{ token: string }>('/admin/auth', { username, password })
+
+// --- Game ---
+export const getCategories = () => api.get<Category[]>('/categories')
+
+export const startSession = (categoryIds: number[]) =>
+  api.post<SessionResponse>('/sessions', { categoryIds })
+
+export const getNextWord = (sessionId: number) =>
+  api.get<NextWordResponse>(`/sessions/${sessionId}/next-word`)
+
+export const submitAnswer = (
+  sessionId: number,
+  wordId: number,
+  chosenCategoryId: number,
+  timeRemaining: number
+) =>
+  api.post<AnswerResponse>(`/sessions/${sessionId}/answers`, {
+    wordId,
+    chosenCategoryId,
+    timeRemaining,
+  })
+
+export const completeSession = (sessionId: number) =>
+  api.post(`/sessions/${sessionId}/complete`)
+
+// --- Leaderboard ---
+export const getLeaderboard = (limit = 20) =>
+  api.get<LeaderboardEntry[]>(`/leaderboard?limit=${limit}`)
+
+// --- Admin ---
+export const adminGetCategories = () => api.get<Category[]>('/admin/categories')
+export const adminCreateCategory = (data: { nameDa: string; nameEn: string; color: string }) =>
+  api.post<Category>('/admin/categories', data)
+export const adminUpdateCategory = (id: number, data: { nameDa: string; nameEn: string; color: string }) =>
+  api.put<Category>(`/admin/categories/${id}`, data)
+export const adminDeleteCategory = (id: number) => api.delete(`/admin/categories/${id}`)
+
+export const adminGetWords = (categoryId: number) =>
+  api.get<Word[]>(`/admin/words?categoryId=${categoryId}`)
+export const adminCreateWord = (data: { text: string; categoryId: number }) =>
+  api.post<Word>('/admin/words', data)
+export const adminUpdateWord = (id: number, data: { text: string; categoryId: number }) =>
+  api.put<Word>(`/admin/words/${id}`, data)
+export const adminDeleteWord = (id: number) => api.delete(`/admin/words/${id}`)
+
+export const adminGetUsers = () => api.get<AppUser[]>('/admin/users')
+
+export default api

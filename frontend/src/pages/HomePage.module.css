@@ -1,0 +1,42 @@
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+.titleBlock {
+  text-align: center;
+}
+
+.greeting {
+  font-family: var(--font-mono);
+  color: var(--color-secondary);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  letter-spacing: 0.08em;
+}
+
+.menuGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 340px;
+}
+
+.menuBtn {
+  width: 100%;
+  font-size: 0.75rem !important;
+  padding: 1.25rem !important;
+}
+
+.pixelArt {
+  color: var(--color-text-dim);
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+}

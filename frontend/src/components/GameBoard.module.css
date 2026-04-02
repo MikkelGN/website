@@ -1,0 +1,104 @@
+.board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  padding: 1.5rem;
+  animation: slide-in 0.2s ease;
+}
+
+.hud {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.hudItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.hudLabel {
+  font-family: var(--font-pixel);
+  font-size: 0.45rem;
+  color: var(--color-text-dim);
+}
+
+.hudValue {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  text-shadow: var(--glow-primary);
+}
+
+.hotStreak {
+  color: var(--color-accent) !important;
+  text-shadow: var(--glow-accent) !important;
+  animation: pulse-glow 0.8s infinite;
+}
+
+.wordCard {
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+}
+
+.prompt {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--color-text-dim);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+.word {
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: var(--color-accent);
+  text-shadow: var(--glow-accent);
+  letter-spacing: 0.05em;
+  font-family: var(--font-pixel);
+}
+
+.categoryGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.catBtn {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  padding: 1rem;
+  background: transparent;
+  color: var(--cat-color, var(--color-primary));
+  border: 2px solid var(--cat-color, var(--color-primary));
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 120ms ease;
+  letter-spacing: 0.05em;
+}
+
+.catBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 20%, transparent);
+  box-shadow: 0 0 20px var(--cat-color, var(--color-primary));
+  transform: scale(1.03);
+}
+
+.catBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

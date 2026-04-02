@@ -1,0 +1,35 @@
+api:
+  dashboard: true
+  insecure: true  # Only accessible internally, not exposed publicly
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: ${ACME_EMAIL:-admin@example.com}
+      storage: /acme.json
+      httpChallenge:
+        entryPoint: web
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: wordblitz-net
+  file:
+    directory: /dynamic
+    watch: true
+
+log:
+  level: INFO

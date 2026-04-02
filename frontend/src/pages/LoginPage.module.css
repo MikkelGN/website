@@ -1,0 +1,65 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem;
+  background: radial-gradient(ellipse at center, #1a0030 0%, var(--color-bg) 70%);
+}
+
+.langToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo h1 {
+  font-size: clamp(1.5rem, 6vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  color: var(--color-secondary);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+  border-radius: var(--radius);
+}
+
+.form h2 {
+  text-align: center;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.credits {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  color: var(--color-text-dim);
+  animation: pulse-glow 1.5s infinite;
+  letter-spacing: 0.2em;
+}

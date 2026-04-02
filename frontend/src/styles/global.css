@@ -1,0 +1,242 @@
+/* ===== CSS Custom Properties — Retro Arcade Theme ===== */
+:root {
+  --color-bg: #0a0a0f;
+  --color-bg-card: #0f0f1a;
+  --color-bg-overlay: rgba(10, 10, 15, 0.9);
+
+  --color-primary: #ff00ff;    /* magenta */
+  --color-secondary: #00ffff;  /* cyan */
+  --color-accent: #ffff00;     /* yellow */
+  --color-success: #00ff88;    /* green */
+  --color-danger: #ff2244;     /* red */
+  --color-warning: #ff8800;    /* orange */
+  --color-text: #e0e0ff;
+  --color-text-dim: #6060a0;
+  --color-border: #2a2a4a;
+
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  --glow-primary: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary), 0 0 40px var(--color-primary);
+  --glow-secondary: 0 0 10px var(--color-secondary), 0 0 20px var(--color-secondary);
+  --glow-accent: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+  --glow-success: 0 0 10px var(--color-success), 0 0 20px var(--color-success);
+  --glow-danger: 0 0 10px var(--color-danger), 0 0 20px var(--color-danger);
+
+  --border-neon: 1px solid var(--color-primary);
+  --radius: 4px;
+  --transition: 150ms ease;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Scanline overlay ===== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== Typography ===== */
+h1, h2, h3 {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.05em;
+}
+
+h1 { font-size: clamp(1.2rem, 4vw, 2rem); color: var(--color-primary); text-shadow: var(--glow-primary); }
+h2 { font-size: clamp(0.9rem, 3vw, 1.4rem); color: var(--color-secondary); text-shadow: var(--glow-secondary); }
+h3 { font-size: clamp(0.7rem, 2vw, 1rem); color: var(--color-accent); }
+
+a { color: var(--color-secondary); text-decoration: none; }
+a:hover { text-shadow: var(--glow-secondary); }
+
+/* ===== Buttons ===== */
+.btn {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid currentColor;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-radius: var(--radius);
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: var(--glow-primary);
+}
+
+.btn-secondary {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-secondary);
+  color: var(--color-bg);
+  box-shadow: var(--glow-secondary);
+}
+
+.btn-success {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+.btn-success:hover:not(:disabled) {
+  background: var(--color-success);
+  color: var(--color-bg);
+  box-shadow: var(--glow-success);
+}
+
+.btn-danger {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-danger);
+  color: var(--color-bg);
+  box-shadow: var(--glow-danger);
+}
+
+.btn-lg {
+  font-size: 0.8rem;
+  padding: 1rem 2rem;
+}
+
+/* ===== Inputs ===== */
+.input {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  background: var(--color-bg-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  width: 100%;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary);
+}
+.input::placeholder { color: var(--color-text-dim); }
+
+/* ===== Card ===== */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.card-neon {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+}
+
+/* ===== Layout ===== */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ===== Animations ===== */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: var(--glow-primary); }
+  50% { text-shadow: none; }
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+@keyframes flash-green {
+  0% { background: transparent; }
+  30% { background: rgba(0, 255, 136, 0.15); }
+  100% { background: transparent; }
+}
+
+@keyframes flash-red {
+  0% { background: transparent; }
+  30% { background: rgba(255, 34, 68, 0.2); }
+  100% { background: transparent; }
+}
+
+.animate-flicker { animation: flicker 4s infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s infinite; }
+.animate-slide-in { animation: slide-in 0.3s ease; }
+.animate-shake { animation: shake 0.4s ease; }
+.animate-flash-green { animation: flash-green 0.5s ease; }
+.animate-flash-red { animation: flash-red 0.5s ease; }
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }

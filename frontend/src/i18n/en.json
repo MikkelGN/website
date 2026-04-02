@@ -1,0 +1,88 @@
+{
+  "app": {
+    "title": "WORD BLITZ",
+    "tagline": "Know your word classes!"
+  },
+  "nav": {
+    "play": "PLAY",
+    "leaderboard": "LEADERBOARD",
+    "logout": "LOG OUT"
+  },
+  "login": {
+    "title": "ENTER YOUR NAME",
+    "placeholder": "Your player name",
+    "button": "START",
+    "welcome": "Welcome back",
+    "new": "New player created"
+  },
+  "home": {
+    "greeting": "Hi, {{name}}!",
+    "play": "PLAY NOW",
+    "leaderboard": "LEADERBOARD",
+    "highScore": "Your best score: {{score}}"
+  },
+  "game": {
+    "selectCategories": "SELECT WORD CLASSES",
+    "selectMin": "Select at least 2 word classes",
+    "startGame": "START GAME",
+    "whatIs": "What class is this word?",
+    "timeLeft": "Time: {{time}}s",
+    "score": "Score: {{score}}",
+    "streak": "Streak: {{streak}}",
+    "correct": "CORRECT!",
+    "wrong": "WRONG!",
+    "gameOver": "GAME OVER",
+    "finalScore": "Final score: {{score}}",
+    "correctAnswers": "Correct answers: {{count}}",
+    "maxStreak": "Best streak: {{streak}}",
+    "playAgain": "PLAY AGAIN",
+    "backToMenu": "MENU"
+  },
+  "leaderboard": {
+    "title": "LEADERBOARD",
+    "rank": "#",
+    "player": "PLAYER",
+    "score": "SCORE",
+    "correct": "CORRECT",
+    "streak": "STREAK",
+    "empty": "No scores yet. Be the first!"
+  },
+  "admin": {
+    "title": "ADMIN PANEL",
+    "login": {
+      "title": "ADMIN LOGIN",
+      "username": "Username",
+      "password": "Password",
+      "button": "LOG IN"
+    },
+    "tabs": {
+      "categories": "Categories",
+      "words": "Words",
+      "users": "Players",
+      "sessions": "Sessions"
+    },
+    "actions": {
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "category": {
+      "nameDa": "Danish name",
+      "nameEn": "English name",
+      "color": "Color"
+    },
+    "word": {
+      "text": "Word",
+      "category": "Category"
+    }
+  },
+  "lang": {
+    "toggle": "DA"
+  },
+  "error": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Check your connection."
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "app": {
+    "title": "WORD BLITZ",
+    "tagline": "Kend dine ordklasser!"
+  },
+  "nav": {
+    "play": "SPIL",
+    "leaderboard": "TOPSCORER",
+    "logout": "LOG UD"
+  },
+  "login": {
+    "title": "INDTAST DIT NAVN",
+    "placeholder": "Dit spillernavn",
+    "button": "START",
+    "welcome": "Velkommen tilbage",
+    "new": "Ny spiller oprettet"
+  },
+  "home": {
+    "greeting": "Hej, {{name}}!",
+    "play": "SPIL NU",
+    "leaderboard": "TOPSCORER",
+    "highScore": "Din bedste score: {{score}}"
+  },
+  "game": {
+    "selectCategories": "VÆLG ORDKLASSER",
+    "selectMin": "Vælg mindst 2 ordklasser",
+    "startGame": "START SPIL",
+    "whatIs": "Hvad er dette ord?",
+    "timeLeft": "Tid: {{time}}s",
+    "score": "Score: {{score}}",
+    "streak": "Streak: {{streak}}",
+    "correct": "RIGTIGT!",
+    "wrong": "FORKERT!",
+    "gameOver": "SPIL SLUT",
+    "finalScore": "Endelig score: {{score}}",
+    "correctAnswers": "Rigtige svar: {{count}}",
+    "maxStreak": "Bedste streak: {{streak}}",
+    "playAgain": "SPIL IGEN",
+    "backToMenu": "MENU"
+  },
+  "leaderboard": {
+    "title": "TOPSCORER",
+    "rank": "#",
+    "player": "SPILLER",
+    "score": "SCORE",
+    "correct": "RIGTIGE",
+    "streak": "STREAK",
+    "empty": "Ingen scores endnu. Vær den første!"
+  },
+  "admin": {
+    "title": "ADMIN PANEL",
+    "login": {
+      "title": "ADMIN LOGIN",
+      "username": "Brugernavn",
+      "password": "Adgangskode",
+      "button": "LOG IND"
+    },
+    "tabs": {
+      "categories": "Ordklasser",
+      "words": "Ord",
+      "users": "Spillere",
+      "sessions": "Sessioner"
+    },
+    "actions": {
+      "add": "Tilføj",
+      "edit": "Rediger",
+      "delete": "Slet",
+      "save": "Gem",
+      "cancel": "Annuller"
+    },
+    "category": {
+      "nameDa": "Dansk navn",
+      "nameEn": "Engelsk navn",
+      "color": "Farve"
+    },
+    "word": {
+      "text": "Ord",
+      "category": "Ordklasse"
+    }
+  },
+  "lang": {
+    "toggle": "EN"
+  },
+  "error": {
+    "generic": "Noget gik galt. Prøv igen.",
+    "network": "Netværksfejl. Tjek din forbindelse."
+  }
+}

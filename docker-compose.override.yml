@@ -1,0 +1,49 @@
+version: "3.9"
+
+# Local development overrides - hot reload, exposed ports, local builds
+services:
+  traefik:
+    ports:
+      - "8090:8080"  # Traefik dashboard
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    image: wordblitz-frontend-dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost/api
+    ports:
+      - "5173:5173"
+    labels:
+      - "traefik.enable=false"
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    image: wordblitz-backend-dev
+    volumes:
+      - ./backend:/app
+      - ~/.m2:/root/.m2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/wordblitz
+      SPRING_DATASOURCE_USERNAME: wordblitz
+      SPRING_DATASOURCE_PASSWORD: devpassword
+      JWT_SECRET: dev-secret-key-for-local-use-only-32chars
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admindev
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "8080:8080"
+    labels:
+      - "traefik.enable=false"
+
+  db:
+    environment:
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5432:5432"

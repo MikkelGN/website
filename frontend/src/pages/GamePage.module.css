@@ -1,0 +1,20 @@
+.selectPhase {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.selectPhase h2 {
+  margin-top: 1rem;
+}
+
+.hint {
+  color: var(--color-warning);
+  font-size: 0.7rem;
+  font-family: var(--font-pixel);
+}
