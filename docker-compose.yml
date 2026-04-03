@@ -62,6 +62,19 @@ services:
       timeout: 5s
       retries: 5
 
+  watchtower:
+    image: containrrr/watchtower
+    container_name: wordblitz-watchtower
+    restart: unless-stopped
+    environment:
+      WATCHTOWER_POLL_INTERVAL: 300
+      WATCHTOWER_CLEANUP: "true"
+      REPO_USER: ${WATCHTOWER_USER:-mikkelgn}
+      REPO_PASS: ${WATCHTOWER_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: wordblitz-frontend wordblitz-backend
+
 volumes:
   db-data:
 
