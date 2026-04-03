@@ -3,13 +3,10 @@ services:
     image: traefik:v3.3
     container_name: wordblitz-traefik
     restart: unless-stopped
-    environment:
-      - DOCKER_API_VERSION=1.41
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/traefik.yml:/traefik.yml:ro
       - ./traefik/dynamic:/dynamic:ro
       - ./traefik/acme.json:/acme.json
@@ -24,17 +21,6 @@ services:
     restart: unless-stopped
     networks:
       - wordblitz-net
-    labels:
-      - "traefik.enable=true"
-      # HTTP router — works by IP or any hostname, no SSL required
-      - "traefik.http.routers.frontend-http.rule=PathPrefix(`/`) && !PathPrefix(`/api`)"
-      - "traefik.http.routers.frontend-http.entrypoints=web"
-      - "traefik.http.routers.frontend-http.priority=1"
-      # HTTPS router — domain + Let's Encrypt cert
-      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`) && !PathPrefix(`/api`)"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
   backend:
     build:
@@ -54,17 +40,6 @@ services:
         condition: service_healthy
     networks:
       - wordblitz-net
-    labels:
-      - "traefik.enable=true"
-      # HTTP router — works by IP or any hostname
-      - "traefik.http.routers.backend-http.rule=PathPrefix(`/api`)"
-      - "traefik.http.routers.backend-http.entrypoints=web"
-      - "traefik.http.routers.backend-http.priority=10"
-      # HTTPS router — domain + Let's Encrypt cert
-      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
-      - "traefik.http.services.backend.loadbalancer.server.port=8080"
 
   db:
     image: postgres:16-alpine

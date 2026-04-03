@@ -1,0 +1,40 @@
+http:
+  routers:
+    # HTTP routers — work by IP or any hostname (local access)
+    frontend-http:
+      entryPoints: [web]
+      rule: "PathPrefix(`/`) && !PathPrefix(`/api`)"
+      service: frontend
+      priority: 1
+
+    backend-http:
+      entryPoints: [web]
+      rule: "PathPrefix(`/api`)"
+      service: backend
+      priority: 10
+
+    # HTTPS routers — domain + Let's Encrypt
+    frontend:
+      entryPoints: [websecure]
+      rule: "Host(`${DOMAIN}`) && !PathPrefix(`/api`)"
+      service: frontend
+      tls:
+        certResolver: letsencrypt
+
+    backend:
+      entryPoints: [websecure]
+      rule: "Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      service: backend
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    frontend:
+      loadBalancer:
+        servers:
+          - url: "http://wordblitz-frontend:80"
+
+    backend:
+      loadBalancer:
+        servers:
+          - url: "http://wordblitz-backend:8080"

@@ -17,10 +17,6 @@ certificatesResolvers:
         entryPoint: web
 
 providers:
-  docker:
-    endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: false
-    network: wordblitz-net
   file:
     directory: /dynamic
     watch: true
