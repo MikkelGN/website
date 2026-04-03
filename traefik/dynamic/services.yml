@@ -16,14 +16,14 @@ http:
     # HTTPS routers — domain + Let's Encrypt
     frontend:
       entryPoints: [websecure]
-      rule: "Host(`${DOMAIN}`) && !PathPrefix(`/api`)"
+      rule: "Host(`{{ env \"DOMAIN\" }}`) && !PathPrefix(`/api`)"
       service: frontend
       tls:
         certResolver: letsencrypt
 
     backend:
       entryPoints: [websecure]
-      rule: "Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      rule: "Host(`{{ env \"DOMAIN\" }}`) && PathPrefix(`/api`)"
       service: backend
       tls:
         certResolver: letsencrypt
