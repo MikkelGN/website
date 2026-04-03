@@ -32,9 +32,9 @@
     "correct": "RIGTIGT!",
     "wrong": "FORKERT!",
     "gameOver": "SPIL SLUT",
-    "finalScore": "Endelig score: {{score}}",
-    "correctAnswers": "Rigtige svar: {{count}}",
-    "maxStreak": "Bedste streak: {{streak}}",
+    "finalScore": "Endelig score",
+    "correctAnswers": "Rigtige svar",
+    "maxStreak": "Bedste streak",
     "playAgain": "SPIL IGEN",
     "backToMenu": "MENU"
   },

@@ -32,9 +32,9 @@
     "correct": "CORRECT!",
     "wrong": "WRONG!",
     "gameOver": "GAME OVER",
-    "finalScore": "Final score: {{score}}",
-    "correctAnswers": "Correct answers: {{count}}",
-    "maxStreak": "Best streak: {{streak}}",
+    "finalScore": "Final score",
+    "correctAnswers": "Correct answers",
+    "maxStreak": "Best streak",
     "playAgain": "PLAY AGAIN",
     "backToMenu": "MENU"
   },

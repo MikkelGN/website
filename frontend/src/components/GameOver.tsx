@@ -19,15 +19,15 @@ export default function GameOver({ score, correctAnswers, maxStreak, onPlayAgain
 
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <span className={styles.statLabel}>{t('game.finalScore', { score: '' })}</span>
+            <span className={styles.statLabel}>{t('game.finalScore')}</span>
             <span className={styles.statValue}>{score.toLocaleString()}</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statLabel}>{t('game.correctAnswers', { count: '' })}</span>
+            <span className={styles.statLabel}>{t('game.correctAnswers')}</span>
             <span className={styles.statValue}>{correctAnswers}</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statLabel}>{t('game.maxStreak', { streak: '' })}</span>
+            <span className={styles.statLabel}>{t('game.maxStreak')}</span>
             <span className={styles.statValue}>x{maxStreak}</span>
           </div>
         </div>
