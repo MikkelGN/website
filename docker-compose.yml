@@ -71,6 +71,7 @@ services:
       WATCHTOWER_CLEANUP: "true"
       REPO_USER: ${WATCHTOWER_USER:-mikkelgn}
       REPO_PASS: ${WATCHTOWER_TOKEN}
+      DOCKER_API_VERSION: "1.41"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: wordblitz-frontend wordblitz-backend
