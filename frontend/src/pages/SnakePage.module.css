@@ -1,0 +1,115 @@
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.hud {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+}
+
+.hudItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scoreVal {
+  color: var(--color-accent);
+  text-shadow: var(--glow-accent);
+}
+
+.highVal {
+  color: var(--color-success);
+  text-shadow: var(--glow-success);
+}
+
+.canvasWrapper {
+  position: relative;
+  border: 1px solid var(--color-primary);
+  box-shadow: var(--glow-primary), inset 0 0 30px rgba(255, 0, 255, 0.05);
+  line-height: 0;
+}
+
+.canvas {
+  display: block;
+  max-width: min(400px, 90vw);
+  max-height: min(400px, 60vh);
+  width: 400px;
+  height: 400px;
+  image-rendering: pixelated;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.overlayTitle {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--color-secondary);
+  text-shadow: var(--glow-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.gameoverTitle {
+  color: var(--color-danger);
+  text-shadow: var(--glow-danger);
+}
+
+.overlayHint {
+  font-family: var(--font-mono);
+  color: var(--color-text-dim);
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0;
+}
+
+.finalScore {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.newHigh {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--color-accent);
+  text-shadow: var(--glow-accent);
+  margin: 0;
+  animation: pulse-glow 1s ease-in-out infinite alternate;
+}
+
+.overlayButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.controlsHint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin: 0;
+}

@@ -19,7 +19,22 @@
     "greeting": "Hi, {{name}}!",
     "play": "PLAY NOW",
     "leaderboard": "LEADERBOARD",
-    "highScore": "Your best score: {{score}}"
+    "highScore": "Your best score: {{score}}",
+    "snake": "SNAKE"
+  },
+  "snake": {
+    "title": "SNAKE",
+    "hint": "Eat the pink squares. Don't hit the walls!",
+    "start": "START",
+    "paused": "PAUSED",
+    "resume": "RESUME",
+    "gameover": "GAME OVER",
+    "score": "Score",
+    "best": "Best",
+    "newHigh": "NEW HIGH SCORE",
+    "playAgain": "PLAY AGAIN",
+    "menu": "MENU",
+    "controlsHint": "Arrow keys / WASD to move · Space to pause · Swipe on mobile"
   },
   "game": {
     "selectCategories": "SELECT WORD CLASSES",

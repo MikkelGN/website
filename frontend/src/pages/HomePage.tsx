@@ -31,6 +31,12 @@ export default function HomePage() {
           >
             🏆 {t('home.leaderboard')}
           </button>
+          <button
+            className={`btn btn-lg ${styles.menuBtn} ${styles.snakeBtn}`}
+            onClick={() => navigate('/snake')}
+          >
+            🐍 {t('home.snake')}
+          </button>
         </div>
 
         <div className={styles.pixelArt}>

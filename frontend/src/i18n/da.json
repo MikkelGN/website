@@ -19,7 +19,22 @@
     "greeting": "Hej, {{name}}!",
     "play": "SPIL NU",
     "leaderboard": "TOPSCORER",
-    "highScore": "Din bedste score: {{score}}"
+    "highScore": "Din bedste score: {{score}}",
+    "snake": "SLANGE"
+  },
+  "snake": {
+    "title": "SLANGE",
+    "hint": "Spis de pink firkanter. Rør ikke væggene!",
+    "start": "START",
+    "paused": "PAUSE",
+    "resume": "FORTSÆT",
+    "gameover": "SPIL SLUT",
+    "score": "Score",
+    "best": "Bedst",
+    "newHigh": "NY REKORD",
+    "playAgain": "SPIL IGEN",
+    "menu": "MENU",
+    "controlsHint": "Piletaster / WASD for at bevæge · Mellemrum for pause · Svirp på mobil"
   },
   "game": {
     "selectCategories": "VÆLG ORDKLASSER",
