@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
   padding: 2rem;
 }
 
@@ -20,31 +20,101 @@
   letter-spacing: 0.08em;
 }
 
-.menuGrid {
+.selectLabel {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.gameGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 640px;
+}
+
+@media (max-width: 480px) {
+  .gameGrid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+}
+
+.gameCard {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
-  max-width: 340px;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1.5rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  text-align: center;
+  font-family: inherit;
 }
 
-.menuBtn {
-  width: 100%;
-  font-size: 0.75rem !important;
-  padding: 1.25rem !important;
+.gameCard:hover {
+  transform: translateY(-4px);
 }
 
-.snakeBtn {
+.wordCard {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 16px rgba(255, 0, 255, 0.2);
+}
+
+.wordCard:hover {
+  box-shadow: var(--glow-primary);
+}
+
+.snakeCard {
+  border: 1px solid var(--color-success);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.2);
+}
+
+.snakeCard:hover {
+  box-shadow: var(--glow-success);
+}
+
+.gameIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.gameTitle {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+}
+
+.gameDesc {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  line-height: 1.4;
+}
+
+.playBtn {
+  margin-top: 0.5rem;
+  font-size: 0.6rem !important;
+  pointer-events: none;
+}
+
+.snakePlayBtn {
   background: transparent;
   border: 1px solid var(--color-success);
   color: var(--color-success);
   text-shadow: var(--glow-success);
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
-.snakeBtn:hover {
-  background: rgba(0, 255, 136, 0.1);
-  box-shadow: var(--glow-success);
+.leaderboardBtn {
+  font-size: 0.65rem !important;
+  padding: 0.75rem 2rem !important;
 }
 
 .pixelArt {

@@ -17,10 +17,14 @@
   },
   "home": {
     "greeting": "Hej, {{name}}!",
-    "play": "SPIL NU",
+    "play": "SPIL",
     "leaderboard": "TOPSCORER",
     "highScore": "Din bedste score: {{score}}",
-    "snake": "SLANGE"
+    "selectGame": "Vælg et spil",
+    "wordBlitzTitle": "WORD BLITZ",
+    "wordBlitzDesc": "Sorter ord i kategorier inden tiden løber ud",
+    "snakeTitle": "SLANGE",
+    "snakeDesc": "Spis maden, bliv længere, rør ikke væggene"
   },
   "snake": {
     "title": "SLANGE",

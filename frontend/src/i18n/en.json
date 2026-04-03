@@ -17,10 +17,14 @@
   },
   "home": {
     "greeting": "Hi, {{name}}!",
-    "play": "PLAY NOW",
+    "play": "PLAY",
     "leaderboard": "LEADERBOARD",
     "highScore": "Your best score: {{score}}",
-    "snake": "SNAKE"
+    "selectGame": "Choose a game",
+    "wordBlitzTitle": "WORD BLITZ",
+    "wordBlitzDesc": "Sort words into categories before the timer runs out",
+    "snakeTitle": "SNAKE",
+    "snakeDesc": "Eat the food, grow longer, don't hit the walls"
   },
   "snake": {
     "title": "SNAKE",

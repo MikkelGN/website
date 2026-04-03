@@ -18,26 +18,27 @@ export default function HomePage() {
           <p className={styles.greeting}>{t('home.greeting', { name: username })}</p>
         </div>
 
-        <div className={styles.menuGrid}>
-          <button
-            className={`btn btn-primary btn-lg ${styles.menuBtn}`}
-            onClick={() => navigate('/game')}
-          >
-            🕹 {t('home.play')}
+        <p className={styles.selectLabel}>{t('home.selectGame')}</p>
+
+        <div className={styles.gameGrid}>
+          <button className={`${styles.gameCard} ${styles.wordCard}`} onClick={() => navigate('/game')}>
+            <span className={styles.gameIcon}>🕹</span>
+            <span className={styles.gameTitle}>{t('home.wordBlitzTitle')}</span>
+            <span className={styles.gameDesc}>{t('home.wordBlitzDesc')}</span>
+            <span className={`btn btn-primary ${styles.playBtn}`}>{t('home.play')}</span>
           </button>
-          <button
-            className={`btn btn-secondary btn-lg ${styles.menuBtn}`}
-            onClick={() => navigate('/leaderboard')}
-          >
-            🏆 {t('home.leaderboard')}
-          </button>
-          <button
-            className={`btn btn-lg ${styles.menuBtn} ${styles.snakeBtn}`}
-            onClick={() => navigate('/snake')}
-          >
-            🐍 {t('home.snake')}
+
+          <button className={`${styles.gameCard} ${styles.snakeCard}`} onClick={() => navigate('/snake')}>
+            <span className={styles.gameIcon}>🐍</span>
+            <span className={styles.gameTitle}>{t('home.snakeTitle')}</span>
+            <span className={styles.gameDesc}>{t('home.snakeDesc')}</span>
+            <span className={`btn ${styles.playBtn} ${styles.snakePlayBtn}`}>{t('home.play')}</span>
           </button>
         </div>
+
+        <button className={`btn btn-secondary ${styles.leaderboardBtn}`} onClick={() => navigate('/leaderboard')}>
+          🏆 {t('home.leaderboard')}
+        </button>
 
         <div className={styles.pixelArt}>
           <span>▓░▓░▓░▓░▓░▓░▓░▓░▓░▓</span>
