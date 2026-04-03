@@ -24,6 +24,11 @@ services:
       - wordblitz-net
     labels:
       - "traefik.enable=true"
+      # HTTP router — works by IP or any hostname, no SSL required
+      - "traefik.http.routers.frontend-http.rule=PathPrefix(`/`) && !PathPrefix(`/api`)"
+      - "traefik.http.routers.frontend-http.entrypoints=web"
+      - "traefik.http.routers.frontend-http.priority=1"
+      # HTTPS router — domain + Let's Encrypt cert
       - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`) && !PathPrefix(`/api`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
@@ -49,6 +54,11 @@ services:
       - wordblitz-net
     labels:
       - "traefik.enable=true"
+      # HTTP router — works by IP or any hostname
+      - "traefik.http.routers.backend-http.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.backend-http.entrypoints=web"
+      - "traefik.http.routers.backend-http.priority=10"
+      # HTTPS router — domain + Let's Encrypt cert
       - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=letsencrypt"
