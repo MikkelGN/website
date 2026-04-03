@@ -15,6 +15,8 @@ services:
       - wordblitz-net
 
   frontend:
+    build:
+      context: ./frontend
     image: ghcr.io/${GITHUB_REPOSITORY:-mikkelgn/website}/frontend:${IMAGE_TAG:-latest}
     container_name: wordblitz-frontend
     restart: unless-stopped
@@ -28,6 +30,8 @@ services:
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
   backend:
+    build:
+      context: ./backend
     image: ghcr.io/${GITHUB_REPOSITORY:-mikkelgn/website}/backend:${IMAGE_TAG:-latest}
     container_name: wordblitz-backend
     restart: unless-stopped
