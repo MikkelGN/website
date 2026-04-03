@@ -69,11 +69,10 @@ services:
     environment:
       WATCHTOWER_POLL_INTERVAL: 300
       WATCHTOWER_CLEANUP: "true"
-      REPO_USER: ${WATCHTOWER_USER:-mikkelgn}
-      REPO_PASS: ${WATCHTOWER_TOKEN}
       DOCKER_API_VERSION: "1.41"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /home/migini/.docker/config.json:/config.json:ro
     command: wordblitz-frontend wordblitz-backend
 
 volumes:
