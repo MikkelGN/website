@@ -3,27 +3,27 @@ http:
     # HTTP routers — work by IP or any hostname (local access)
     frontend-http:
       entryPoints: [web]
-      rule: "PathPrefix(`/`) && !PathPrefix(`/api`)"
+      rule: 'PathPrefix(`/`) && !PathPrefix(`/api`)'
       service: frontend
       priority: 1
 
     backend-http:
       entryPoints: [web]
-      rule: "PathPrefix(`/api`)"
+      rule: 'PathPrefix(`/api`)'
       service: backend
       priority: 10
 
     # HTTPS routers — domain + Let's Encrypt
     frontend:
       entryPoints: [websecure]
-      rule: "Host(`{{ env \"DOMAIN\" }}`) && !PathPrefix(`/api`)"
+      rule: 'Host(`{{ env "DOMAIN" }}`) && !PathPrefix(`/api`)'
       service: frontend
       tls:
         certResolver: letsencrypt
 
     backend:
       entryPoints: [websecure]
-      rule: "Host(`{{ env \"DOMAIN\" }}`) && PathPrefix(`/api`)"
+      rule: 'Host(`{{ env "DOMAIN" }}`) && PathPrefix(`/api`)'
       service: backend
       tls:
         certResolver: letsencrypt
