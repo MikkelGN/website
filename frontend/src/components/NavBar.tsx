@@ -15,9 +15,6 @@ export default function NavBar() {
         {t('app.title')}
       </button>
       <div className={styles.links}>
-        <button className="btn btn-primary" onClick={() => navigate('/game')}>
-          {t('nav.play')}
-        </button>
         <button className="btn btn-secondary" onClick={() => navigate('/leaderboard')}>
           {t('nav.leaderboard')}
         </button>

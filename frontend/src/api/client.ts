@@ -96,6 +96,19 @@ export const completeSession = (sessionId: number) =>
 export const getLeaderboard = (limit = 20) =>
   api.get<LeaderboardEntry[]>(`/leaderboard?limit=${limit}`)
 
+// --- Snake ---
+export interface SnakeLeaderboardEntry {
+  rank: number
+  username: string
+  score: number
+}
+
+export const submitSnakeScore = (score: number) =>
+  api.post('/snake/scores', { score })
+
+export const getSnakeLeaderboard = (limit = 20) =>
+  api.get<SnakeLeaderboardEntry[]>(`/snake/leaderboard?limit=${limit}`)
+
 // --- Admin ---
 export const adminGetCategories = () => api.get<Category[]>('/admin/categories')
 export const adminCreateCategory = (data: { nameDa: string; nameEn: string; color: string }) =>

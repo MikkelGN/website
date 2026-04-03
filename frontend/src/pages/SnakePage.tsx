@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import NavBar from '../components/NavBar'
 import styles from './SnakePage.module.css'
+import { submitSnakeScore } from '../api/client'
 
 const COLS = 20
 const ROWS = 20
@@ -86,11 +87,13 @@ export default function SnakePage() {
     if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null }
     stateRef.current = 'gameover'
     setUiState('gameover')
+    const finalScore = scoreRef.current
     setHighScore(prev => {
-      const n = Math.max(prev, scoreRef.current)
+      const n = Math.max(prev, finalScore)
       localStorage.setItem('snakeHighScore', String(n))
       return n
     })
+    if (finalScore > 0) submitSnakeScore(finalScore).catch(() => {})
     draw()
   }, [draw])
 

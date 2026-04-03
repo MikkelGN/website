@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "WORD BLITZ",
-    "tagline": "Know your word classes!"
+    "title": "MIGINI GAMES",
+    "tagline": "Pick a game and play!"
   },
   "nav": {
     "play": "PLAY",
@@ -59,6 +59,8 @@
   },
   "leaderboard": {
     "title": "LEADERBOARD",
+    "tabWordBlitz": "WORD BLITZ",
+    "tabSnake": "SNAKE",
     "rank": "#",
     "player": "PLAYER",
     "score": "SCORE",
