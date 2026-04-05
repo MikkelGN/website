@@ -24,7 +24,27 @@
     "wordBlitzTitle": "WORD BLITZ",
     "wordBlitzDesc": "Sort words into categories before the timer runs out",
     "snakeTitle": "SNAKE",
-    "snakeDesc": "Eat the food, grow longer, don't hit the walls"
+    "snakeDesc": "Eat the food, grow longer, don't hit the walls",
+    "tetrisTitle": "TETRIS",
+    "tetrisDesc": "Stack the blocks, clear lines, don't reach the top"
+  },
+  "tetris": {
+    "title": "TETRIS",
+    "hint": "Stack blocks and clear lines!",
+    "start": "START",
+    "paused": "PAUSED",
+    "resume": "RESUME",
+    "gameover": "GAME OVER",
+    "score": "Score",
+    "level": "Level",
+    "lines": "Lines",
+    "best": "Best",
+    "newHigh": "NEW HIGH SCORE",
+    "playAgain": "PLAY AGAIN",
+    "menu": "MENU",
+    "hold": "HOLD",
+    "next": "NEXT",
+    "controlsHint": "Arrow keys / WASD · Space = drop · C = hold · P = pause · Swipe on mobile"
   },
   "snake": {
     "title": "SNAKE",
@@ -61,11 +81,14 @@
     "title": "LEADERBOARD",
     "tabWordBlitz": "WORD BLITZ",
     "tabSnake": "SNAKE",
+    "tabTetris": "TETRIS",
     "rank": "#",
     "player": "PLAYER",
     "score": "SCORE",
     "correct": "CORRECT",
     "streak": "STREAK",
+    "level": "LEVEL",
+    "lines": "LINES",
     "empty": "No scores yet. Be the first!"
   },
   "admin": {

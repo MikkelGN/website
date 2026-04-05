@@ -109,6 +109,21 @@ export const submitSnakeScore = (score: number) =>
 export const getSnakeLeaderboard = (limit = 20) =>
   api.get<SnakeLeaderboardEntry[]>(`/snake/leaderboard?limit=${limit}`)
 
+// --- Tetris ---
+export interface TetrisLeaderboardEntry {
+  rank: number
+  username: string
+  score: number
+  level: number
+  lines: number
+}
+
+export const submitTetrisScore = (score: number, level: number, lines: number) =>
+  api.post('/tetris/scores', { score, level, lines })
+
+export const getTetrisLeaderboard = (limit = 20) =>
+  api.get<TetrisLeaderboardEntry[]>(`/tetris/leaderboard?limit=${limit}`)
+
 // --- Admin ---
 export const adminGetCategories = () => api.get<Category[]>('/admin/categories')
 export const adminCreateCategory = (data: { nameDa: string; nameEn: string; color: string }) =>

@@ -24,7 +24,27 @@
     "wordBlitzTitle": "WORD BLITZ",
     "wordBlitzDesc": "Sorter ord i kategorier inden tiden løber ud",
     "snakeTitle": "SLANGE",
-    "snakeDesc": "Spis maden, bliv længere, rør ikke væggene"
+    "snakeDesc": "Spis maden, bliv længere, rør ikke væggene",
+    "tetrisTitle": "TETRIS",
+    "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen"
+  },
+  "tetris": {
+    "title": "TETRIS",
+    "hint": "Stabel blokkene og ryd rækker!",
+    "start": "START",
+    "paused": "PAUSE",
+    "resume": "FORTSÆT",
+    "gameover": "SPIL SLUT",
+    "score": "Score",
+    "level": "Level",
+    "lines": "Rækker",
+    "best": "Bedst",
+    "newHigh": "NY REKORD",
+    "playAgain": "SPIL IGEN",
+    "menu": "MENU",
+    "hold": "GEM",
+    "next": "NÆSTE",
+    "controlsHint": "Piletaster / WASD · Mellemrum = drop · C = gem · P = pause · Svirp på mobil"
   },
   "snake": {
     "title": "SLANGE",
@@ -61,11 +81,14 @@
     "title": "TOPSCORER",
     "tabWordBlitz": "WORD BLITZ",
     "tabSnake": "SLANGE",
+    "tabTetris": "TETRIS",
     "rank": "#",
     "player": "SPILLER",
     "score": "SCORE",
     "correct": "RIGTIGE",
     "streak": "STREAK",
+    "level": "LEVEL",
+    "lines": "RÆKKER",
     "empty": "Ingen scores endnu. Vær den første!"
   },
   "admin": {

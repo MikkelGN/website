@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getLeaderboard, getSnakeLeaderboard, LeaderboardEntry, SnakeLeaderboardEntry } from '../api/client'
+import { getLeaderboard, getSnakeLeaderboard, getTetrisLeaderboard, LeaderboardEntry, SnakeLeaderboardEntry, TetrisLeaderboardEntry } from '../api/client'
 import NavBar from '../components/NavBar'
 import styles from './LeaderboardPage.module.css'
 
-type Tab = 'wordblitz' | 'snake'
+type Tab = 'wordblitz' | 'snake' | 'tetris'
 
 export default function LeaderboardPage() {
   const { t } = useTranslation()
   const [tab, setTab] = useState<Tab>('wordblitz')
   const [wbEntries, setWbEntries] = useState<LeaderboardEntry[]>([])
   const [snakeEntries, setSnakeEntries] = useState<SnakeLeaderboardEntry[]>([])
+  const [tetrisEntries, setTetrisEntries] = useState<TetrisLeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,9 +20,13 @@ export default function LeaderboardPage() {
       getLeaderboard(20)
         .then((r) => setWbEntries(r.data))
         .finally(() => setLoading(false))
-    } else {
+    } else if (tab === 'snake') {
       getSnakeLeaderboard(20)
         .then((r) => setSnakeEntries(r.data))
+        .finally(() => setLoading(false))
+    } else {
+      getTetrisLeaderboard(20)
+        .then((r) => setTetrisEntries(r.data))
         .finally(() => setLoading(false))
     }
   }, [tab])
@@ -47,6 +52,12 @@ export default function LeaderboardPage() {
             onClick={() => setTab('snake')}
           >
             🐍 {t('leaderboard.tabSnake')}
+          </button>
+          <button
+            className={`${styles.tab} ${tab === 'tetris' ? styles.tabActiveTetris : ''}`}
+            onClick={() => setTab('tetris')}
+          >
+            🟦 {t('leaderboard.tabTetris')}
           </button>
         </div>
 
@@ -102,6 +113,37 @@ export default function LeaderboardPage() {
                         <td className={styles.rank}>{rankIcon(e.rank)}</td>
                         <td className={styles.username}>{e.username}</td>
                         <td className={styles.scoreSnake}>{e.score.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+        )}
+
+        {!loading && tab === 'tetris' && (
+          tetrisEntries.length === 0
+            ? <p className={styles.empty}>{t('leaderboard.empty')}</p>
+            : (
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>{t('leaderboard.rank')}</th>
+                      <th>{t('leaderboard.player')}</th>
+                      <th>{t('leaderboard.score')}</th>
+                      <th>{t('leaderboard.level')}</th>
+                      <th>{t('leaderboard.lines')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tetrisEntries.map((e) => (
+                      <tr key={e.rank} className={e.rank <= 3 ? styles.topThree : ''}>
+                        <td className={styles.rank}>{rankIcon(e.rank)}</td>
+                        <td className={styles.username}>{e.username}</td>
+                        <td className={styles.scoreTetris}>{e.score.toLocaleString()}</td>
+                        <td>{e.level}</td>
+                        <td>{e.lines}</td>
                       </tr>
                     ))}
                   </tbody>

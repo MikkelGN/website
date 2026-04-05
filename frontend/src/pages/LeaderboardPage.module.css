@@ -42,6 +42,13 @@
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
 }
 
+.tabActiveTetris {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  text-shadow: var(--glow-secondary);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
 .loading, .empty {
   text-align: center;
   color: var(--color-text-dim);
@@ -102,6 +109,12 @@
 
 .scoreSnake {
   color: var(--color-success);
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+}
+
+.scoreTetris {
+  color: var(--color-secondary);
   font-family: var(--font-pixel);
   font-size: 0.75rem;
 }

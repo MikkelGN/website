@@ -31,13 +31,13 @@
 
 .gameGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   width: 100%;
-  max-width: 640px;
+  max-width: 960px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
   .gameGrid {
     grid-template-columns: 1fr;
     max-width: 320px;
@@ -110,6 +110,22 @@
   border: 1px solid var(--color-success);
   color: var(--color-success);
   text-shadow: var(--glow-success);
+}
+
+.tetrisCard {
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.2);
+}
+
+.tetrisCard:hover {
+  box-shadow: var(--glow-secondary);
+}
+
+.tetrisPlayBtn {
+  background: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  text-shadow: var(--glow-secondary);
 }
 
 .leaderboardBtn {
