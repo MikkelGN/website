@@ -190,9 +190,12 @@ export default function SnakePage() {
 
   // Touch/swipe controls
   useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
     let sx = 0, sy = 0
-    const onStart = (e: TouchEvent) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY }
+    const onStart = (e: TouchEvent) => { e.preventDefault(); sx = e.touches[0].clientX; sy = e.touches[0].clientY }
     const onEnd = (e: TouchEvent) => {
+      e.preventDefault()
       const dx = e.changedTouches[0].clientX - sx
       const dy = e.changedTouches[0].clientY - sy
       const d = dirRef.current
@@ -204,11 +207,11 @@ export default function SnakePage() {
         else if (dy < -20 && d !== 'DOWN') nextDirRef.current = 'UP'
       }
     }
-    window.addEventListener('touchstart', onStart, { passive: true })
-    window.addEventListener('touchend', onEnd, { passive: true })
+    canvas.addEventListener('touchstart', onStart, { passive: false })
+    canvas.addEventListener('touchend', onEnd, { passive: false })
     return () => {
-      window.removeEventListener('touchstart', onStart)
-      window.removeEventListener('touchend', onEnd)
+      canvas.removeEventListener('touchstart', onStart)
+      canvas.removeEventListener('touchend', onEnd)
     }
   }, [])
 
