@@ -8,6 +8,7 @@ import AdminLoginPage from './pages/AdminLoginPage'
 import AdminPage from './pages/AdminPage'
 import SnakePage from './pages/SnakePage'
 import TetrisPage from './pages/TetrisPage'
+import WordlePage from './pages/WordlePage'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.token)
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/leaderboard" element={<RequireAuth><LeaderboardPage /></RequireAuth>} />
         <Route path="/snake" element={<RequireAuth><SnakePage /></RequireAuth>} />
         <Route path="/tetris" element={<RequireAuth><TetrisPage /></RequireAuth>} />
+        <Route path="/wordle" element={<RequireAuth><WordlePage /></RequireAuth>} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/*" element={<RequireAdmin><AdminPage /></RequireAdmin>} />
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -109,8 +109,7 @@ export const submitSnakeScore = (score: number) =>
 export const getSnakeLeaderboard = (limit = 20) =>
   api.get<SnakeLeaderboardEntry[]>(`/snake/leaderboard?limit=${limit}`)
 
-// --- Tetris ---
-export interface TetrisLeaderboardEntry {
+// --- Tetris ---export interface TetrisLeaderboardEntry {
   rank: number
   username: string
   score: number
@@ -123,6 +122,15 @@ export const submitTetrisScore = (score: number, level: number, lines: number) =
 
 export const getTetrisLeaderboard = (limit = 20) =>
   api.get<TetrisLeaderboardEntry[]>(`/tetris/leaderboard?limit=${limit}`)
+
+// --- Wordle ---
+export interface WordleGuess {
+  word: string
+  colors: string[]
+}
+
+export const getWordleSuggestions = (guesses: WordleGuess[]) =>
+  api.post<{ words: string[]; count: number }>('/wordle/suggestions', { guesses })
 
 // --- Admin ---
 export const adminGetCategories = () => api.get<Category[]>('/admin/categories')

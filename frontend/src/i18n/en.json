@@ -26,7 +26,29 @@
     "snakeTitle": "SNAKE",
     "snakeDesc": "Eat the food, grow longer, don't hit the walls",
     "tetrisTitle": "TETRIS",
-    "tetrisDesc": "Stack the blocks, clear lines, don't reach the top"
+    "tetrisDesc": "Stack the blocks, clear lines, don't reach the top",
+    "wordleTitle": "WORDLE HELPER",
+    "wordleDesc": "Upload a screenshot or enter guesses to find possible words",
+    "open": "OPEN"
+  },
+  "wordle": {
+    "title": "WORDLE HELPER",
+    "subtitle": "Upload a screenshot — colors are detected automatically. Then type each word you guessed.",
+    "uploadHint": "Upload screenshot (drag & drop or click)",
+    "analyzing": "Analyzing image...",
+    "analyzeFound": "Found {{count}} rows with colors. Now type your guessed words.",
+    "analyzeNoGrid": "Could not detect the Wordle grid. Try setting colors manually.",
+    "analyzeError": "Could not read image.",
+    "guess": "Guess",
+    "clickToCycle": "Click to change color",
+    "green": "Correct position",
+    "yellow": "Wrong position",
+    "gray": "Not in word",
+    "suggestions": "POSSIBLE WORDS",
+    "words": "words",
+    "suggHint": "Fill in at least one complete guess (all 5 letters + colors set) to see suggestions.",
+    "noWords": "No matching words found.",
+    "reset": "Reset"
   },
   "tetris": {
     "title": "TETRIS",

@@ -26,7 +26,29 @@
     "snakeTitle": "SLANGE",
     "snakeDesc": "Spis maden, bliv længere, rør ikke væggene",
     "tetrisTitle": "TETRIS",
-    "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen"
+    "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen",
+    "wordleTitle": "WORDLE HJÆLPER",
+    "wordleDesc": "Upload et screenshot eller indtast gæt for at finde mulige ord",
+    "open": "ÅBEN"
+  },
+  "wordle": {
+    "title": "WORDLE HJÆLPER",
+    "subtitle": "Upload et screenshot — farver opdages automatisk. Skriv derefter hvert ord du gættede.",
+    "uploadHint": "Upload screenshot (træk & slip eller klik)",
+    "analyzing": "Analyserer billede...",
+    "analyzeFound": "Fandt {{count}} rækker med farver. Skriv nu dine gættede ord.",
+    "analyzeNoGrid": "Kunne ikke opdage Wordle-gitteret. Sæt farver manuelt.",
+    "analyzeError": "Kunne ikke læse billedet.",
+    "guess": "Gæt",
+    "clickToCycle": "Klik for at skifte farve",
+    "green": "Rigtig placering",
+    "yellow": "Forkert placering",
+    "gray": "Ikke i ordet",
+    "suggestions": "MULIGE ORD",
+    "words": "ord",
+    "suggHint": "Udfyld mindst ét komplet gæt (alle 5 bogstaver + farver sat) for at se forslag.",
+    "noWords": "Ingen matchende ord fundet.",
+    "reset": "Nulstil"
   },
   "tetris": {
     "title": "TETRIS",

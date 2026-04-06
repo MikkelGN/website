@@ -1,0 +1,244 @@
+.layout {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  align-items: flex-start;
+}
+
+@media (max-width: 700px) {
+  .layout {
+    flex-direction: column;
+    padding: 1rem;
+  }
+}
+
+/* ── Left panel ── */
+.inputPanel {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .inputPanel { flex: 1; width: 100%; }
+}
+
+.title {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  text-shadow: var(--glow-primary);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+/* ── Upload zone ── */
+.dropZone {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dropZone:hover {
+  border-color: var(--color-primary);
+}
+
+.dropHint {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
+.preview {
+  max-width: 100%;
+  max-height: 140px;
+  border-radius: 4px;
+  display: block;
+}
+
+.fileInput {
+  display: none;
+}
+
+.analyzeMsg {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+/* ── Grid ── */
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rowWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.wordInput {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: border-color var(--transition);
+}
+
+.wordInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.tileRow {
+  display: flex;
+  gap: 4px;
+}
+
+.tile {
+  flex: 1;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.1s, filter 0.1s;
+  min-height: 38px;
+}
+
+.tile:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+
+/* ── Legend ── */
+.colorLegend {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  flex-wrap: wrap;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.resetBtn {
+  font-size: 0.55rem !important;
+  align-self: flex-start;
+}
+
+/* ── Right panel: suggestions ── */
+.suggPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.suggHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.suggTitle {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+}
+
+.suggCount {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--color-text-dim);
+}
+
+.suggHint {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  line-height: 1.5;
+}
+
+.loading {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.1em;
+}
+
+.noWords {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-danger);
+}
+
+.wordGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.wordChip {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.6rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  cursor: default;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.wordChip:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
