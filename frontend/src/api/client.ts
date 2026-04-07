@@ -109,7 +109,8 @@ export const submitSnakeScore = (score: number) =>
 export const getSnakeLeaderboard = (limit = 20) =>
   api.get<SnakeLeaderboardEntry[]>(`/snake/leaderboard?limit=${limit}`)
 
-// --- Tetris ---export interface TetrisLeaderboardEntry {
+// --- Tetris ---
+export interface TetrisLeaderboardEntry {
   rank: number
   username: string
   score: number
