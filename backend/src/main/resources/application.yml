@@ -1,6 +1,6 @@
 project:
   version: @project.version@
-  buildTime: @maven.build.timestamp@
+  buildTime: ${project.buildTime:@maven.build.timestamp@}
 
 spring:
   datasource:
