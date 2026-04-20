@@ -116,18 +116,4 @@ public class LinkedInController {
                 LinkedIn post:
                 """.formatted(intensityLevel, hashtagsLine, lengthInstruction, request.text().trim());
     }
-
-        try {
-            String post = chatClient.prompt()
-                    .user(prompt)
-                    .call()
-                    .content();
-            return ResponseEntity.ok(Map.of("post", post));
-        } catch (Exception e) {
-            log.error("Ollama call failed: {}", e.getMessage(), e);
-            return ResponseEntity.status(503).body(
-                Map.of("error", "Ollama not available. Is it running on port 11434?")
-            );
-        }
-    }
 }
