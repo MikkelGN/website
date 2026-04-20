@@ -32,7 +32,7 @@ http:
     frontend:
       loadBalancer:
         servers:
-          - url: "http://wordblitz-frontend:80"
+          - url: "http://wordblitz-frontend:5173"
 
     backend:
       loadBalancer:
