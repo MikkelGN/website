@@ -29,8 +29,8 @@ public class LinkedInController {
 
         String language = request.language() != null ? request.language() : "en";
         String languageInstruction = language.equals("da")
-            ? "Write the entire post in Danish."
-            : "Write the entire post in English.";
+            ? "Skriv opslaget på dansk."
+            : "Write the post in English.";
 
         String lengthInstruction = switch (request.length() != null ? request.length() : "medium") {
             case "short" -> "Write 1-2 short paragraphs";
@@ -51,6 +51,8 @@ public class LinkedInController {
             : "";
 
         String prompt = """
+                %s
+
                 Transform the following ordinary situation into an extremely over-the-top LinkedIn post.
 
                 Requirements:
@@ -59,13 +61,12 @@ public class LinkedInController {
                 %s
                 - Be absurdly inspirational and dramatic about the most mundane things
                 - %s
-                - %s
                 - Output ONLY the LinkedIn post, no introduction or explanation
 
                 Situation: %s
 
                 LinkedIn post:
-                """.formatted(intensityLevel, hashtagsLine, lengthInstruction, languageInstruction, request.text().trim());
+                """.formatted(languageInstruction, intensityLevel, hashtagsLine, lengthInstruction, request.text().trim());
 
         try {
             String post = chatClient.prompt()
