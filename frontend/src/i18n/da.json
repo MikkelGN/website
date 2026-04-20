@@ -29,7 +29,24 @@
     "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen",
     "wordleTitle": "WORDLE HJÆLPER",
     "wordleDesc": "Upload et screenshot eller indtast gæt for at finde mulige ord",
+    "linkedinTitle": "LINKEDIN TALE",
+    "linkedinDesc": "Forvandl alt til corporate buzzword-suppe",
     "open": "ÅBEN"
+  },
+  "linkedin": {
+    "title": "LINKEDIN TALE",
+    "subtitle": "Forvandl en helt almindelig situation til en inspirerende LinkedIn-opslag 🚀",
+    "inputLabel": "HVAD SKETE DER?",
+    "placeholder": "f.eks. Jeg spiste havregrød til morgenmad...",
+    "generate": "LINKEDIN-IFICÉR",
+    "generating": "GENERERER...",
+    "examples": "Eksempler",
+    "emptyState": "Dit mesterværk vises her",
+    "thinking": "AI TÆNKER...",
+    "error": "Kunne ikke forbinde til Ollama. Sørg for at den kører.",
+    "posterMeta": "Growth Hacker • Thought Leader • Visionær",
+    "copy": "Kopiér opslag",
+    "copied": "Kopieret!"
   },
   "wordle": {
     "title": "WORDLE HJÆLPER",

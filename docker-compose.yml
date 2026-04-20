@@ -31,6 +31,8 @@ services:
     image: ghcr.io/${GITHUB_REPOSITORY:-mikkelgn/website}/backend:${IMAGE_TAG:-latest}
     container_name: wordblitz-backend
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/wordblitz
       SPRING_DATASOURCE_USERNAME: wordblitz

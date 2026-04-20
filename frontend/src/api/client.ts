@@ -124,6 +124,10 @@ export const submitTetrisScore = (score: number, level: number, lines: number) =
 export const getTetrisLeaderboard = (limit = 20) =>
   api.get<TetrisLeaderboardEntry[]>(`/tetris/leaderboard?limit=${limit}`)
 
+// --- LinkedIn Speech ---
+export const convertToLinkedIn = (text: string) =>
+  api.post<{ post: string }>('/linkedin/convert', { text })
+
 // --- Wordle ---
 export interface WordleGuess {
   word: string

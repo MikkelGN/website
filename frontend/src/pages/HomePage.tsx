@@ -48,6 +48,13 @@ export default function HomePage() {
             <span className={styles.gameDesc}>{t('home.wordleDesc')}</span>
             <span className={`btn ${styles.playBtn} ${styles.wordlePlayBtn}`}>{t('home.open')}</span>
           </button>
+
+          <button className={`${styles.gameCard} ${styles.linkedinCard}`} onClick={() => navigate('/linkedin')}>
+            <span className={styles.gameIcon}>💼</span>
+            <span className={styles.gameTitle}>{t('home.linkedinTitle')}</span>
+            <span className={styles.gameDesc}>{t('home.linkedinDesc')}</span>
+            <span className={`btn ${styles.playBtn} ${styles.linkedinPlayBtn}`}>{t('home.open')}</span>
+          </button>
         </div>
 
         <button className={`btn btn-secondary ${styles.leaderboardBtn}`} onClick={() => navigate('/leaderboard')}>

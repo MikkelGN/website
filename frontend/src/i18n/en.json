@@ -29,7 +29,24 @@
     "tetrisDesc": "Stack the blocks, clear lines, don't reach the top",
     "wordleTitle": "WORDLE HELPER",
     "wordleDesc": "Upload a screenshot or enter guesses to find possible words",
+    "linkedinTitle": "LINKEDIN SPEECH",
+    "linkedinDesc": "Transform any situation into corporate buzzword soup",
     "open": "OPEN"
+  },
+  "linkedin": {
+    "title": "LINKEDIN SPEECH",
+    "subtitle": "Transform any ordinary situation into an inspirational LinkedIn post 🚀",
+    "inputLabel": "WHAT HAPPENED?",
+    "placeholder": "e.g. I ate cereal for breakfast...",
+    "generate": "LINKEDIN-IFY",
+    "generating": "GENERATING...",
+    "examples": "Examples",
+    "emptyState": "Your masterpiece will appear here",
+    "thinking": "AI IS THINKING...",
+    "error": "Could not connect to Ollama. Make sure it is running.",
+    "posterMeta": "Growth Hacker • Thought Leader • Visionary",
+    "copy": "Copy post",
+    "copied": "Copied!"
   },
   "wordle": {
     "title": "WORDLE HELPER",
