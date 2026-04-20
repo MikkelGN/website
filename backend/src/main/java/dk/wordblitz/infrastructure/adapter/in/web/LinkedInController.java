@@ -1,5 +1,7 @@
 package dk.wordblitz.infrastructure.adapter.in.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import java.util.Map;
 @RequestMapping("/api/linkedin")
 public class LinkedInController {
 
+    private static final Logger log = LoggerFactory.getLogger(LinkedInController.class);
     private final ChatClient chatClient;
 
     public LinkedInController(ChatClient.Builder builder) {
@@ -50,6 +53,7 @@ public class LinkedInController {
                     .content();
             return ResponseEntity.ok(Map.of("post", post));
         } catch (Exception e) {
+            log.error("Ollama call failed: {}", e.getMessage(), e);
             return ResponseEntity.status(503).body(
                 Map.of("error", "Ollama not available. Is it running on port 11434?")
             );
