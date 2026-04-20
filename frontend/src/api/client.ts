@@ -62,7 +62,7 @@ export interface Word {
 }
 
 export interface AppInfo {
-  version: string
+  buildTime: string
   llmModel: string
 }
 

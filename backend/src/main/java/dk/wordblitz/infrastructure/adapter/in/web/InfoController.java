@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/info")
 public class InfoController {
 
-    @Value("${project.version:unknown}")
-    private String projectVersion;
+    @Value("${project.buildTime:unknown}")
+    private String buildTime;
 
     @Value("${spring.ai.ollama.chat.options.model}")
     private String llmModel;
 
-    record InfoResponse(String version, String llmModel) {}
+    record InfoResponse(String buildTime, String llmModel) {}
 
     @GetMapping
     public ResponseEntity<InfoResponse> getInfo() {
-        return ResponseEntity.ok(new InfoResponse(projectVersion, llmModel));
+        return ResponseEntity.ok(new InfoResponse(buildTime, llmModel));
     }
 }
