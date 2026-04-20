@@ -13,6 +13,13 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://host.docker.internal:11434}
+      chat:
+        options:
+          model: qwen2.5-coder:7b
+          temperature: 0.2
 
 server:
   port: 8080
@@ -24,15 +31,6 @@ app:
   admin:
     username: ${ADMIN_USERNAME}
     password: ${ADMIN_PASSWORD}
-
-spring:
-  ai:
-    ollama:
-      base-url: ${OLLAMA_BASE_URL:http://host.docker.internal:11434}
-      chat:
-        options:
-          model: qwen2.5-coder:7b
-          temperature: 0.2
 
 ---
 spring:
