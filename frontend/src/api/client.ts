@@ -61,6 +61,15 @@ export interface Word {
   categoryId: number
 }
 
+export interface AppInfo {
+  version: string
+  llmModel: string
+}
+
+// --- Info ---
+export const getInfo = () =>
+  api.get<AppInfo>('/info')
+
 // --- Auth ---
 export const login = (username: string) =>
   api.post<{ token: string; userId: number; username: string }>('/auth/login', { username })
