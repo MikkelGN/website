@@ -24,7 +24,7 @@ export default function LinkedInPage() {
     setError('')
     setPost('')
     try {
-      const res = await convertToLinkedIn(text.trim())
+      const res = await convertToLinkedIn(text.trim(), i18n.language)
       setPost(res.data.post)
     } catch (e: any) {
       setError(e?.response?.data?.error ?? t('linkedin.error'))

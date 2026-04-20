@@ -19,13 +19,18 @@ public class LinkedInController {
         this.chatClient = builder.build();
     }
 
-    record ConvertRequest(String text) {}
+    record ConvertRequest(String text, String language) {}
 
     @PostMapping("/convert")
     public ResponseEntity<?> convert(@RequestBody ConvertRequest request) {
         if (request.text() == null || request.text().isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Text is required"));
         }
+
+        String language = request.language() != null ? request.language() : "en";
+        String languageInstruction = language.equals("da")
+            ? "Write the entire post in Danish."
+            : "Write the entire post in English.";
 
         String prompt = """
                 Transform the following ordinary situation into an extremely over-the-top LinkedIn post.
@@ -37,14 +42,13 @@ public class LinkedInController {
                 - End with 5-7 hashtags (#Blessed #Growth #Leadership #Innovation #Mindset #Hustle)
                 - Write 3-4 short dramatic paragraphs
                 - Be absurdly inspirational and dramatic about the most mundane things
-                - If the input is in Danish, write the entire post in Danish
-                - If the input is in English, write the entire post in English
+                - %s
                 - Output ONLY the LinkedIn post, no introduction or explanation
 
                 Situation: %s
 
                 LinkedIn post:
-                """.formatted(request.text().trim());
+                """.formatted(languageInstruction, request.text().trim());
 
         try {
             String post = chatClient.prompt()
