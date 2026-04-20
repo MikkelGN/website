@@ -14,9 +14,20 @@ export default function LinkedInPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
+  const [includeHashtags, setIncludeHashtags] = useState(true)
+  const [length, setLength] = useState<'short' | 'medium' | 'long'>('medium')
+  const [intensity, setIntensity] = useState(3)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const examples = i18n.language === 'da' ? EXAMPLES_DA : EXAMPLES_EN
+
+  const intensityLabels = [
+    'Almost Readable',
+    'Mild LinkedIn',
+    'Normal LinkedIn',
+    'Heavy LinkedIn',
+    'Pure LinkedIn'
+  ]
 
   const generate = async (text = input) => {
     if (!text.trim()) return
@@ -24,7 +35,7 @@ export default function LinkedInPage() {
     setError('')
     setPost('')
     try {
-      const res = await convertToLinkedIn(text.trim(), i18n.language)
+      const res = await convertToLinkedIn(text.trim(), i18n.language, includeHashtags, length, intensity)
       setPost(res.data.post)
     } catch (e: any) {
       setError(e?.response?.data?.error ?? t('linkedin.error'))
@@ -68,6 +79,67 @@ export default function LinkedInPage() {
               maxLength={300}
             />
             <div className={styles.charCount}>{input.length}/300</div>
+
+            <div className={styles.controls}>
+              {/* Intensity Slider */}
+              <div className={styles.controlGroup}>
+                <label className={styles.controlLabel}>LinkedIn Intensity</label>
+                <div className={styles.sliderContainer}>
+                  <input
+                    type="range"
+                    min="1"
+                    max="5"
+                    value={intensity}
+                    onChange={e => setIntensity(parseInt(e.target.value))}
+                    className={styles.slider}
+                    disabled={loading}
+                  />
+                  <div className={styles.sliderLabels}>
+                    <span>Almost Readable</span>
+                    <span>{intensityLabels[intensity - 1]}</span>
+                    <span>Pure LinkedIn</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Length Selector */}
+              <div className={styles.controlGroup}>
+                <label className={styles.controlLabel}>Length</label>
+                <div className={styles.chips}>
+                  {(['short', 'medium', 'long'] as const).map(opt => (
+                    <button
+                      key={opt}
+                      className={`${styles.chip} ${length === opt ? styles.active : ''}`}
+                      onClick={() => setLength(opt)}
+                      disabled={loading}
+                    >
+                      {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Hashtags Toggle */}
+              <div className={styles.controlGroup}>
+                <label className={styles.controlLabel}>Ending Hashtags</label>
+                <div className={styles.chips}>
+                  <button
+                    className={`${styles.chip} ${includeHashtags ? styles.active : ''}`}
+                    onClick={() => setIncludeHashtags(true)}
+                    disabled={loading}
+                  >
+                    # On
+                  </button>
+                  <button
+                    className={`${styles.chip} ${!includeHashtags ? styles.active : ''}`}
+                    onClick={() => setIncludeHashtags(false)}
+                    disabled={loading}
+                  >
+                    # Off
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <button
               className={`btn btn-primary ${styles.generateBtn}`}

@@ -134,8 +134,8 @@ export const getTetrisLeaderboard = (limit = 20) =>
   api.get<TetrisLeaderboardEntry[]>(`/tetris/leaderboard?limit=${limit}`)
 
 // --- LinkedIn Speech ---
-export const convertToLinkedIn = (text: string, language?: string) =>
-  api.post<{ post: string }>('/linkedin/convert', { text, language })
+export const convertToLinkedIn = (text: string, language?: string, includeHashtags?: boolean, length?: string, intensity?: number) =>
+  api.post<{ post: string }>('/linkedin/convert', { text, language, includeHashtags, length, intensity })
 
 // --- Wordle ---
 export interface WordleGuess {

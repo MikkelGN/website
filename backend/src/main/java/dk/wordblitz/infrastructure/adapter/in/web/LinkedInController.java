@@ -19,7 +19,7 @@ public class LinkedInController {
         this.chatClient = builder.build();
     }
 
-    record ConvertRequest(String text, String language) {}
+    record ConvertRequest(String text, String language, boolean includeHashtags, String length, int intensity) {}
 
     @PostMapping("/convert")
     public ResponseEntity<?> convert(@RequestBody ConvertRequest request) {
@@ -32,23 +32,40 @@ public class LinkedInController {
             ? "Write the entire post in Danish."
             : "Write the entire post in English.";
 
+        String lengthInstruction = switch (request.length() != null ? request.length() : "medium") {
+            case "short" -> "Write 1-2 short paragraphs";
+            case "long" -> "Write exactly 5 paragraphs";
+            default -> "Write 3-4 paragraphs";
+        };
+
+        String intensityLevel = switch (request.intensity()) {
+            case 1 -> "Write in a mostly normal tone with just a hint of corporate language.";
+            case 2 -> "Use mild corporate buzzwords occasionally.";
+            case 4 -> "Lay on the LinkedIn-speak heavily — every sentence should drip with buzzwords and inspiration.";
+            case 5 -> "Go absolutely maximum LinkedIn: every word must be a buzzword, every sentence a revelation, pure unhinged corporate inspiration.";
+            default -> "Use corporate buzzwords frequently with clear LinkedIn dramatic flair.";
+        };
+
+        String hashtagsLine = request.includeHashtags
+            ? "- End with 5-7 hashtags (#Blessed #Growth #Leadership #Innovation #Mindset #Hustle)"
+            : "";
+
         String prompt = """
                 Transform the following ordinary situation into an extremely over-the-top LinkedIn post.
 
                 Requirements:
-                - Use corporate buzzwords: journey, grateful, humbled, excited to share, game-changer, \
-                synergy, leverage, growth mindset, passion, hustle, pivot, disrupt
+                - %s
                 - Add plenty of emojis (🚀💡🙏✨🎯💪🌟🔥)
-                - End with 5-7 hashtags (#Blessed #Growth #Leadership #Innovation #Mindset #Hustle)
-                - Write 3-4 short dramatic paragraphs
+                %s
                 - Be absurdly inspirational and dramatic about the most mundane things
+                - %s
                 - %s
                 - Output ONLY the LinkedIn post, no introduction or explanation
 
                 Situation: %s
 
                 LinkedIn post:
-                """.formatted(languageInstruction, request.text().trim());
+                """.formatted(intensityLevel, hashtagsLine, lengthInstruction, languageInstruction, request.text().trim());
 
         try {
             String post = chatClient.prompt()
