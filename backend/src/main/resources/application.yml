@@ -18,7 +18,7 @@ spring:
       base-url: ${OLLAMA_BASE_URL:http://host.docker.internal:11434}
       chat:
         options:
-          model: qwen2.5-coder:7b
+          model: qwen2.5:14b-instruct-q4_K_M
           temperature: 0.2
 
 server:
