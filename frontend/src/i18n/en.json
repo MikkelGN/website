@@ -31,7 +31,9 @@
     "wordleDesc": "Upload a screenshot or enter guesses to find possible words",
     "linkedinTitle": "LINKEDIN SPEECH",
     "linkedinDesc": "Transform any situation into corporate buzzword soup",
-    "open": "OPEN"
+    "open": "OPEN",
+    "racingTitle": "RUSSIAN RACING",
+    "racingDesc": "Learn Russian words while racing around the track!"
   },
   "linkedin": {
     "title": "LINKEDIN SPEECH",

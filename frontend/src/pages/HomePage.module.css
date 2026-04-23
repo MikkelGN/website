@@ -166,6 +166,21 @@
   color: #0077b5;
 }
 
+.racingCard {
+  border: 1px solid #E53935;
+  box-shadow: 0 0 16px rgba(229, 57, 53, 0.2);
+}
+
+.racingCard:hover {
+  box-shadow: 0 0 20px rgba(229, 57, 53, 0.55);
+}
+
+.racingPlayBtn {
+  background: transparent;
+  border: 1px solid #E53935;
+  color: #E53935;
+}
+
 .leaderboardBtn {
   font-size: 0.65rem !important;
   padding: 0.75rem 2rem !important;

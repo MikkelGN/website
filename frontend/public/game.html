@@ -100,7 +100,7 @@
 'use strict';
 
 // ─── Config ──────────────────────────────────────────────────────────────────
-const API_BASE          = 'http://localhost:8080';
+const API_BASE          = '';  // relative — works via Vite proxy (dev) and Traefik (prod)
 const NORMAL_SPEED      = 0.004;   // rad/frame at 60 fps → full lap ≈ 26 s
 const BOOST_SPEED       = 0.014;   // rad/frame during boost
 const BOOST_FRAMES      = 80;      // frames the boost lasts (~1.3 s)
