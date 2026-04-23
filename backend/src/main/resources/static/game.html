@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Viktors Russiske Racerløb</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            width: 100%; height: 100%;
+            background: #1e5c0c;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #canvas { display: block; touch-action: none; }
+        #hud {
+            position: fixed; top: 14px; left: 14px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff; padding: 8px 18px;
+            border-radius: 10px; font-size: 1.5rem; font-weight: bold;
+            z-index: 20; user-select: none;
+        }
+        #loading {
+            position: fixed; inset: 0; display: flex;
+            align-items: center; justify-content: center;
+            background: rgba(20, 70, 8, 0.97);
+            color: #fff; font-size: 2.2rem; font-weight: bold;
+            z-index: 100; letter-spacing: 1px;
+        }
+        #question-panel {
+            position: fixed; inset: 0; display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(0, 0, 0, 0.87); z-index: 50;
+            padding: 24px; gap: 14px;
+        }
+        #question-panel.visible { display: flex; }
+        #q-prompt { color: #ddd; font-size: 1.15rem; text-align: center; }
+        #q-word {
+            color: #FFD700;
+            font-size: clamp(2.2rem, 9vw, 4rem);
+            font-weight: bold; letter-spacing: 4px; text-align: center;
+        }
+        #q-speak {
+            background: #1565C0; color: #fff; border: none;
+            border-radius: 12px; padding: 12px 28px; font-size: 1.05rem;
+            cursor: pointer; touch-action: manipulation; min-height: 52px;
+        }
+        #q-speak:active { opacity: 0.8; }
+        #q-buttons {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; width: 100%; max-width: 500px;
+        }
+        .q-btn {
+            background: #0D47A1; color: #fff;
+            border: 3px solid #42A5F5; border-radius: 16px;
+            font-size: clamp(1.2rem, 4vw, 1.65rem); font-weight: bold;
+            min-height: 90px; cursor: pointer; touch-action: manipulation;
+            transition: transform 0.12s; line-height: 1.2; padding: 10px;
+        }
+        .q-btn:active { transform: scale(0.93); }
+        .q-btn.correct { background: #1B5E20; border-color: #66BB6A; }
+        .q-btn.wrong   { background: #B71C1C; border-color: #EF5350; }
+        .shake { animation: shake 0.45s ease-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%  { transform: translateX(-10px); }
+            40%  { transform: translateX(10px); }
+            60%  { transform: translateX(-7px); }
+            80%  { transform: translateX(7px); }
+        }
+        #boost-label {
+            position: fixed; top: 44%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(2rem, 8vw, 3.5rem); font-weight: bold;
+            color: #FFD700; text-shadow: 0 0 28px #FF6F00, 0 0 10px #fff;
+            pointer-events: none; opacity: 0; z-index: 60;
+        }
+        .boost-animate { animation: boost-rise 1.3s ease-out forwards; }
+        @keyframes boost-rise {
+            0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            60%  { opacity: 1; transform: translate(-50%, -85%) scale(1.3); }
+            100% { opacity: 0; transform: translate(-50%, -130%) scale(1.6); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="hud">Point:&nbsp;<span id="score">0</span></div>
+    <div id="loading">Henter ord...</div>
+    <div id="question-panel">
+        <p id="q-prompt">Hvad betyder dette russiske ord?</p>
+        <p id="q-word"></p>
+        <button id="q-speak" onclick="speakCurrent()">🔊 Hør ordet igen</button>
+        <div id="q-buttons"></div>
+    </div>
+    <div id="boost-label">+BOOST</div>
+
+    <script>
+'use strict';
+
+// ─── Config ──────────────────────────────────────────────────────────────────
+const API_BASE          = 'http://localhost:8080';
+const NORMAL_SPEED      = 0.004;   // rad/frame at 60 fps → full lap ≈ 26 s
+const BOOST_SPEED       = 0.014;   // rad/frame during boost
+const BOOST_FRAMES      = 80;      // frames the boost lasts (~1.3 s)
+const QUESTIONS_PER_LAP = 4;
+const TRACK_HALF_W      = 80;      // px — half the asphalt band width
+const TRAIL_LEN         = 14;      // ghost-car frames shown during boost
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let words        = [];
+let score        = 0;
+let gameState    = 'loading';  // loading | racing | question
+let carAngle     = 0;          // angle on ellipse (0 = right, increases clockwise)
+let totalAngle   = 0;          // cumulative angle, never wraps — used for turn detection
+let nextTurnAt   = (2 * Math.PI) / QUESTIONS_PER_LAP;  // first turn after π/2 rad
+let boosting     = false;
+let boostFrames  = 0;
+let trail        = [];         // [{x, y, heading}]
+let currentQ     = null;       // {word, options:[{text, correct}]}
+let answerLocked = false;
+let hadGesture   = false;      // Safari: speech only after a user gesture
+
+// ─── Canvas ──────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, trackRx, trackRy;
+
+function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    trackRx = Math.min(W * 0.38, 340);
+    trackRy = Math.min(H * 0.34, 240);
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ─── Track geometry ───────────────────────────────────────────────────────────
+function ellipsePoint(a) {
+    return { x: W / 2 + trackRx * Math.cos(a), y: H / 2 + trackRy * Math.sin(a) };
+}
+
+// Tangent of clockwise-parametrised ellipse in canvas coords (y-down)
+function ellipseHeading(a) {
+    return Math.atan2(trackRy * Math.cos(a), -trackRx * Math.sin(a));
+}
+
+// ─── Audio ───────────────────────────────────────────────────────────────────
+let ruVoice = null, daVoice = null;
+
+function initSpeech() {
+    if (!window.speechSynthesis) return;
+    function pick() {
+        const vs = speechSynthesis.getVoices();
+        ruVoice = vs.find(v => v.lang.startsWith('ru') && v.localService)
+               || vs.find(v => v.lang.startsWith('ru')) || null;
+        daVoice = vs.find(v => v.lang.startsWith('da') && v.localService)
+               || vs.find(v => v.lang.startsWith('da')) || null;
+    }
+    pick();
+    if ('onvoiceschanged' in speechSynthesis) speechSynthesis.onvoiceschanged = pick;
+}
+
+function speak(text, lang, voice, onEnd) {
+    if (!window.speechSynthesis) { if (onEnd) onEnd(); return; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = 0.88;
+    if (voice) u.voice = voice;
+    if (onEnd) u.onend = onEnd;
+    speechSynthesis.speak(u);
+}
+
+function speakWord(word) {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    speak(word.russian, 'ru-RU', ruVoice, () => {
+        setTimeout(() => speak(word.danish, 'da-DK', daVoice), 400);
+    });
+}
+
+function speakCurrent() {
+    hadGesture = true;
+    if (currentQ) speakWord(currentQ.word);
+}
+
+function playTone(correct) {
+    try {
+        const ac   = new AudioContext();
+        const osc  = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        if (correct) {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, ac.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, ac.currentTime + 0.35);
+            gain.gain.setValueAtTime(0.28, ac.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.55);
+            osc.start(); osc.stop(ac.currentTime + 0.55);
+        } else {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(280, ac.currentTime);
+            gain.gain.setValueAtTime(0.18, ac.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.38);
+            osc.start(); osc.stop(ac.currentTime + 0.38);
+        }
+    } catch (_) {}
+}
+
+// ─── Word loading ─────────────────────────────────────────────────────────────
+const FALLBACK = [
+    { russian: 'красный', danish: 'rød',     category: 'colors'    },
+    { russian: 'синий',   danish: 'blå',     category: 'colors'    },
+    { russian: 'зелёный', danish: 'grøn',    category: 'colors'    },
+    { russian: 'жёлтый',  danish: 'gul',     category: 'colors'    },
+    { russian: 'белый',   danish: 'hvid',    category: 'colors'    },
+    { russian: 'чёрный',  danish: 'sort',    category: 'colors'    },
+    { russian: 'привет',  danish: 'hej',     category: 'greetings' },
+    { russian: 'пока',    danish: 'hej hej', category: 'greetings' },
+    { russian: 'спасибо', danish: 'tak',     category: 'greetings' },
+    { russian: 'машина',  danish: 'bil',     category: 'objects'   },
+    { russian: 'дом',     danish: 'hus',     category: 'objects'   },
+    { russian: 'кот',     danish: 'kat',     category: 'objects'   },
+    { russian: 'собака',  danish: 'hund',    category: 'objects'   },
+    { russian: 'мяч',     danish: 'bold',    category: 'objects'   },
+];
+
+async function loadWords() {
+    try {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 5000);
+        const res  = await fetch(`${API_BASE}/api/words`, { signal: ctrl.signal });
+        clearTimeout(tid);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length >= 4) { words = data; return; }
+    } catch (_) {}
+    words = FALLBACK;
+}
+
+// ─── Question logic ───────────────────────────────────────────────────────────
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function pickDistractors(correctWord, count) {
+    const pool = words.filter(w => w.danish !== correctWord.danish);
+    shuffle(pool);
+    return pool.slice(0, count);
+}
+
+function showQuestion() {
+    const word    = words[Math.floor(Math.random() * words.length)];
+    const options = shuffle([
+        { text: word.danish, correct: true },
+        ...pickDistractors(word, 3).map(d => ({ text: d.danish, correct: false }))
+    ]);
+    currentQ     = { word, options };
+    answerLocked = false;
+
+    document.getElementById('q-word').textContent = word.russian;
+
+    const btnsEl = document.getElementById('q-buttons');
+    btnsEl.innerHTML = '';
+    options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className   = 'q-btn';
+        btn.textContent = opt.text;
+        btn.addEventListener('click', () => handleAnswer(opt.correct, btn, btnsEl));
+        btnsEl.appendChild(btn);
+    });
+
+    document.getElementById('question-panel').classList.add('visible');
+
+    // Auto-speak only after a prior user gesture (required on Safari)
+    if (hadGesture) setTimeout(() => speakWord(word), 300);
+}
+
+function handleAnswer(correct, clickedBtn, btnsEl) {
+    if (answerLocked) return;
+    answerLocked = true;
+    hadGesture   = true;
+    playTone(correct);
+
+    if (correct) {
+        clickedBtn.classList.add('correct');
+        score++;
+        document.getElementById('score').textContent = score;
+        speak(currentQ.word.danish, 'da-DK', daVoice);
+
+        setTimeout(() => {
+            document.getElementById('question-panel').classList.remove('visible');
+            currentQ    = null;
+            nextTurnAt += (2 * Math.PI) / QUESTIONS_PER_LAP;
+            boosting    = true;
+            boostFrames = BOOST_FRAMES;
+            gameState   = 'racing';
+            showBoostLabel();
+        }, 800);
+
+    } else {
+        clickedBtn.classList.add('wrong');
+        Array.from(btnsEl.children).forEach(b => {
+            b.classList.remove('shake');
+            void b.offsetWidth;  // force reflow for animation restart
+            b.classList.add('shake');
+        });
+        setTimeout(() => {
+            clickedBtn.classList.remove('wrong');
+            Array.from(btnsEl.children).forEach(b => b.classList.remove('shake'));
+            answerLocked = false;
+            if (window.speechSynthesis) speechSynthesis.cancel();
+            speak(currentQ.word.russian, 'ru-RU', ruVoice);
+        }, 900);
+    }
+}
+
+function showBoostLabel() {
+    const el = document.getElementById('boost-label');
+    el.classList.remove('boost-animate');
+    void el.offsetWidth;
+    el.classList.add('boost-animate');
+}
+
+// ─── Rendering ────────────────────────────────────────────────────────────────
+function drawKerb(cx, cy, rx, ry) {
+    ctx.save();
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = '#fff';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = '#CC0000';
+    ctx.setLineDash([32, 32]);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+}
+
+function drawTrack() {
+    const cx = W / 2, cy = H / 2;
+    const oRx = trackRx + TRACK_HALF_W, oRy = trackRy + TRACK_HALF_W;
+    const iRx = trackRx - TRACK_HALF_W, iRy = trackRy - TRACK_HALF_W;
+
+    // Grass
+    ctx.fillStyle = '#2d6b1a';
+    ctx.fillRect(0, 0, W, H);
+
+    // Asphalt oval
+    ctx.fillStyle = '#383838';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, oRx, oRy, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Inner grass island
+    ctx.fillStyle = '#2d6b1a';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, iRx, iRy, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Centre dashed line
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.65)';
+    ctx.lineWidth   = 3;
+    ctx.setLineDash([22, 22]);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, trackRx, trackRy, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Kerb barriers
+    drawKerb(cx, cy, oRx + 5, oRy + 5);
+    drawKerb(cx, cy, iRx - 5, iRy - 5);
+}
+
+function drawTurnMarkers() {
+    const pulse = 0.55 + 0.45 * Math.sin(Date.now() / 280);
+    for (let i = 0; i < QUESTIONS_PER_LAP; i++) {
+        const a  = (2 * Math.PI / QUESTIONS_PER_LAP) * i;
+        const pt = ellipsePoint(a);
+        const g  = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 16);
+        g.addColorStop(0,   'rgba(255,215,0,0.95)');
+        g.addColorStop(0.5, 'rgba(255,140,0,0.5)');
+        g.addColorStop(1,   'rgba(255,80,0,0)');
+        ctx.save();
+        ctx.globalAlpha = pulse * 0.9;
+        ctx.fillStyle   = g;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+function drawCar(x, y, heading, scale) {
+    ctx.save();
+    ctx.translate(x, y);
+    // +PI/2 rotates "nose-up" drawing to face the heading direction (canvas y-down)
+    ctx.rotate(heading + Math.PI / 2);
+    ctx.scale(scale, scale);
+
+    const L = 22, BW = 10;  // half-length, body half-width
+
+    // Tyre drop-shadows
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    [[-BW - 4, -L * 0.35], [BW + 4, -L * 0.35],
+     [-BW - 4,  L * 0.38], [BW + 4,  L * 0.38]].forEach(([wx, wy]) => {
+        ctx.beginPath();
+        ctx.ellipse(wx + 2, wy + 2, 4.5, 7.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Main body
+    ctx.fillStyle = '#D32F2F';
+    ctx.beginPath();
+    ctx.moveTo(0, -L);
+    ctx.lineTo( BW * 0.7, -L + 7);
+    ctx.lineTo( BW,       -L * 0.45);
+    ctx.lineTo( BW,        L * 0.55);
+    ctx.lineTo( BW * 0.55, L);
+    ctx.lineTo(-BW * 0.55, L);
+    ctx.lineTo(-BW,        L * 0.55);
+    ctx.lineTo(-BW,       -L * 0.45);
+    ctx.lineTo(-BW * 0.7, -L + 7);
+    ctx.closePath();
+    ctx.fill();
+
+    // White centre stripe
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(-2.5, -L, 5, L * 2);
+
+    // Front wing
+    ctx.fillStyle = '#B71C1C';
+    ctx.fillRect(-BW * 1.6, -L + 1, BW * 3.2, 5);
+
+    // Rear diffuser
+    ctx.fillStyle = '#B71C1C';
+    ctx.fillRect(-BW * 1.4, L - 5, BW * 2.8, 5);
+
+    // Sidepods
+    ctx.fillStyle = '#C62828';
+    [-BW - 2, BW + 2].forEach(sx => {
+        ctx.beginPath();
+        ctx.ellipse(sx, 0, 4, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Cockpit
+    ctx.fillStyle = '#0D1B2A';
+    ctx.beginPath();
+    ctx.ellipse(0, -4, 5, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Tyres (4)
+    ctx.fillStyle = '#1A1A1A';
+    [[-BW - 4, -L * 0.35], [BW + 4, -L * 0.35],
+     [-BW - 4,  L * 0.38], [BW + 4,  L * 0.38]].forEach(([wx, wy]) => {
+        ctx.beginPath();
+        ctx.ellipse(wx, wy, 4.5, 7.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Rim ring
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth   = 1.5;
+        ctx.beginPath();
+        ctx.ellipse(wx, wy, 2.5, 5, 0, 0, Math.PI * 2);
+        ctx.stroke();
+    });
+
+    ctx.restore();
+}
+
+function drawTrail() {
+    trail.forEach((pt, i) => {
+        ctx.globalAlpha = ((trail.length - i) / trail.length) * 0.3;
+        drawCar(pt.x, pt.y, pt.heading, 1.0);
+    });
+    ctx.globalAlpha = 1;
+}
+
+function render() {
+    drawTrack();
+    drawTurnMarkers();
+
+    const pt      = ellipsePoint(carAngle);
+    const heading = ellipseHeading(carAngle);
+
+    if (boosting && trail.length > 0) drawTrail();
+    drawCar(pt.x, pt.y, heading, boosting ? 1.18 : 1.0);
+}
+
+// ─── Game loop ────────────────────────────────────────────────────────────────
+function update() {
+    if (gameState !== 'racing') return;
+
+    const speed = boosting ? BOOST_SPEED : NORMAL_SPEED;
+    carAngle   += speed;
+    totalAngle += speed;
+    if (carAngle >= 2 * Math.PI) carAngle -= 2 * Math.PI;
+
+    // Ghost trail — only while boosting
+    if (boosting) {
+        trail.unshift({ x: ellipsePoint(carAngle).x, y: ellipsePoint(carAngle).y, heading: ellipseHeading(carAngle) });
+        if (trail.length > TRAIL_LEN) trail.pop();
+    } else {
+        trail = [];
+    }
+
+    if (boosting && --boostFrames <= 0) boosting = false;
+
+    // Trigger question at each quarter-lap turn point
+    if (totalAngle >= nextTurnAt) {
+        carAngle  = nextTurnAt % (2 * Math.PI);
+        gameState = 'question';
+        boosting  = false;
+        trail     = [];
+        showQuestion();
+    }
+}
+
+function loop() {
+    update();
+    render();
+    requestAnimationFrame(loop);
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+async function init() {
+    initSpeech();
+    await loadWords();
+    document.getElementById('loading').style.display = 'none';
+    gameState = 'racing';
+    requestAnimationFrame(loop);
+}
+
+init();
+    </script>
+</body>
+</html>

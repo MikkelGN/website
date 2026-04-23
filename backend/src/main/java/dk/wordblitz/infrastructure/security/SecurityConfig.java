@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/admin/auth").permitAll()
                         .requestMatchers("/api/linkedin/**").permitAll()
+                        .requestMatchers("/api/words/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").hasAnyRole("PLAYER", "ADMIN")
                         .anyRequest().permitAll()
