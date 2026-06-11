@@ -1,0 +1,153 @@
+.selectPhase {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.selectPhase h2 {
+  margin-top: 1rem;
+}
+
+.difficultyGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.difficultyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 220px;
+  padding: 2rem 1.5rem;
+  background: var(--color-bg-card);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  font-family: inherit;
+  text-align: center;
+}
+
+.difficultyCard:hover {
+  transform: translateY(-4px);
+}
+
+.easy:hover { box-shadow: var(--glow-success); }
+.medium:hover { box-shadow: var(--glow-primary); }
+.hard:hover { box-shadow: var(--glow-secondary); }
+
+.difficultyIcon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.difficultyName {
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+.difficultyDesc {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+}
+
+.board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 650px;
+  padding: 1.5rem 1rem;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.hudItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hudItem:last-child {
+  text-align: right;
+}
+
+.hudLabel {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+}
+
+.hudValue {
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-primary);
+}
+
+.problemCard {
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+}
+
+.prompt {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.problem {
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  color: var(--color-primary);
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+
+.choiceBtn {
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 1.25rem;
+  background: var(--color-bg-card);
+  color: var(--color-text);
+  border: 2px solid var(--color-success);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.choiceBtn:hover {
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
+  transform: scale(1.03);
+}

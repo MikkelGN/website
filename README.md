@@ -1,6 +1,17 @@
-# Word Blitz
+# Migini Games
 
-A retro arcade-style educational game website for kids learning Danish word categories (nouns, verbs, adjectives, etc.).
+A bilingual (Danish/English) game hub for kids — built for my own children. Minimalistic, rounded design with a fixed five-colour palette. Kids log in by picking their profile and entering a 4-digit PIN.
+
+## Games
+
+| Category | Game | Description |
+|---|---|---|
+| Sprog (Language) | **Word Blitz** | Sort Danish words into word classes before the timer runs out |
+| Matematik & logik (Math & Logic) | **Math Blitz** | Solve arithmetic problems against the clock — three difficulty tiers |
+| Arkade (Arcade) | **Snake** | Classic snake with keyboard + touch controls |
+| Arkade (Arcade) | **Tetris** | Classic tetris with hold/next, ghost piece, touch controls |
+
+All games post scores to a per-game leaderboard (best score per player). A parent admin panel manages player profiles (name, avatar, PIN), word categories/words, and shows per-player progress across all games.
 
 ## Tech Stack
 
@@ -9,138 +20,82 @@ A retro arcade-style educational game website for kids learning Danish word cate
 | Frontend | React 18 + TypeScript + Vite |
 | Backend | Spring Boot 3 + Java 21 |
 | Architecture | Hexagonal (Ports & Adapters) |
-| Database | PostgreSQL 16 |
+| Database | PostgreSQL 16 + Flyway |
+| Auth | JWT (player PIN login via BCrypt + separate admin login) |
 | Reverse Proxy | Traefik v3 + Let's Encrypt |
 | Containerisation | Docker + Docker Compose |
+| E2E Tests | Playwright (chromium + firefox) |
 | CI/CD | GitHub Actions |
 
 ## Project Structure
 
 ```
-wordblitz/
+website/
 ├── backend/                    # Spring Boot (Java 21)
-│   └── src/main/java/dk/wordblitz/
-│       ├── domain/             # Core business logic
-│       │   ├── model/          # Domain records (Category, Word, AppUser…)
-│       │   ├── port/in/        # Use case interfaces
-│       │   ├── port/out/       # Repository interfaces
-│       │   └── service/        # Domain services (ScoreCalculator)
-│       ├── application/        # Use case implementations
-│       │   └── service/
-│       └── infrastructure/     # Spring adapters
-│           ├── security/       # JWT auth filter + config
-│           └── adapter/
-│               ├── in/web/     # REST controllers
-│               └── out/persistence/ # JPA entities + adapters
+│   └── src/main/
+│       ├── java/dk/wordblitz/
+│       │   ├── domain/         # Core business logic
+│       │   │   ├── model/      # Domain records (Player, Category, Word, *Score…)
+│       │   │   ├── port/in/    # Use case interfaces
+│       │   │   ├── port/out/   # Repository interfaces
+│       │   │   ├── exception/  # Domain exceptions (InvalidPin, PinLocked)
+│       │   │   └── service/    # Domain services (ScoreCalculator)
+│       │   ├── application/    # Use case implementations
+│       │   └── infrastructure/ # Spring adapters
+│       │       ├── security/   # JWT auth filter + config
+│       │       └── adapter/
+│       │           ├── in/web/          # REST controllers
+│       │           └── out/persistence/ # JPA entities + adapters
+│       └── resources/db/migration/     # Flyway V1–V9
 ├── frontend/                   # React + Vite
-│   └── src/
-│       ├── api/                # Axios client + types
-│       ├── components/         # Reusable UI components
-│       ├── i18n/               # da.json + en.json translations
-│       ├── pages/              # Route-level pages
-│       ├── store/              # Zustand auth store
-│       └── styles/             # Global CSS (retro arcade theme)
-├── traefik/                    # Traefik config + TLS
-├── .github/workflows/          # CI + Deploy workflows
-├── docker-compose.yml          # Production
-└── docker-compose.override.yml # Local dev
+│   ├── src/
+│   │   ├── api/                # Axios client + types
+│   │   ├── components/         # NavBar, PinPad, ArcadeGameShell, TimerBar…
+│   │   ├── i18n/               # da.json + en.json translations
+│   │   ├── lib/                # avatars, mathProblemGenerator
+│   │   ├── pages/              # Route-level pages
+│   │   └── store/              # Zustand auth store
+│   └── e2e/                    # Playwright suite (pages/, specs/, fixtures/)
+├── docker-compose.yml          # traefik + frontend + backend + db
+└── .github/workflows/          # CI (deploy + e2e tests)
 ```
 
-## Local Development
+## Routes
 
-### Prerequisites
-- Docker + Docker Compose
-- Java 21 (for running backend outside Docker)
-- Node 20 (for running frontend outside Docker)
+- `/login` — profile picker + PIN pad
+- `/` — home hub (Language / Math & Logic / Arcade sections)
+- `/play/word-blitz`, `/play/math-blitz`, `/play/snake`, `/play/tetris`
+- `/leaderboard` — tabbed, one tab per game
+- `/admin` — parent panel (categories, words, players, progress)
 
-### Quick start (Docker)
+## Key API endpoints
+
+- `GET /api/auth/players` + `POST /api/auth/players/{id}/login` — profile picker + PIN login (PIN attempts are throttled)
+- `POST /api/sessions` … — Word Blitz server-driven game sessions
+- `POST /api/{math|snake|tetris}/scores` — client-side games submit final scores
+- `GET /api/leaderboard/{game-type}` — unified leaderboard (backed by the `leaderboard_entries` SQL view)
+- `/api/admin/**` — admin CRUD (categories, words, players) + `GET /api/admin/progress`
+
+## Local development
 
 ```bash
-# Copy and fill in environment variables
-cp .env.example .env
-
-# Start everything
-docker compose up -d
-
-# Frontend: http://localhost:5173
-# Backend:  http://localhost:8080
-# DB:       localhost:5432
+docker compose up          # traefik + frontend (vite dev) + backend (spring-boot:run) + postgres
+# Frontend: http://localhost:5173 — Backend: http://localhost:8080
 ```
 
-### Backend (native)
+Dev admin credentials are set in `docker-compose.override.yml` (`admin` / `admindev`). Two starter profiles are seeded with PIN `1234` (Gæst, Demo) — create real profiles in the admin panel and delete the starters.
+
+Running the backend outside Docker? Point the vite proxy at it: `BACKEND_URL=http://localhost:8080 npm run dev`.
+
+## Tests
 
 ```bash
-cd backend
-export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/wordblitz
-export SPRING_DATASOURCE_USERNAME=wordblitz
-export SPRING_DATASOURCE_PASSWORD=devpassword
-export JWT_SECRET=dev-secret-key-for-local-use-only-32chars
-export ADMIN_USERNAME=admin
-export ADMIN_PASSWORD=admindev
-mvn spring-boot:run
+cd backend && mvn test            # unit tests (scoring, PIN auth + lockout)
+cd frontend && npm run test:e2e   # Playwright suite against the running stack
 ```
 
-### Frontend (native)
+The e2e suite covers login (PIN pad, wrong-PIN errors), hub navigation, all four games (including actually playing Word Blitz and Math Blitz to game over), leaderboards, and the admin panel. See `frontend/E2E_SETUP.md`.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## Deployment
 
-## Production Deployment
-
-### First-time server setup
-
-```bash
-# On your server
-mkdir -p /opt/wordblitz
-cd /opt/wordblitz
-cp .env.example .env   # Fill in all values
-touch traefik/acme.json
-chmod 600 traefik/acme.json
-```
-
-### GitHub Secrets required
-
-| Secret | Description |
-|---|---|
-| `SERVER_HOST` | Your server's static IP |
-| `SERVER_USER` | SSH username |
-| `SERVER_SSH_KEY` | Private SSH key (no passphrase) |
-| `SERVER_PORT` | SSH port (default 22) |
-| `DEPLOY_PATH` | Path on server (default `/opt/wordblitz`) |
-
-### Environment variables (`.env`)
-
-| Variable | Description |
-|---|---|
-| `DOMAIN` | Your domain, e.g. `games.example.com` |
-| `ACME_EMAIL` | Email for Let's Encrypt |
-| `DB_PASSWORD` | Strong random password |
-| `JWT_SECRET` | 32+ char random string (`openssl rand -base64 32`) |
-| `ADMIN_USERNAME` | Admin panel username |
-| `ADMIN_PASSWORD` | Admin panel password |
-| `GITHUB_REPOSITORY` | e.g. `yourusername/wordblitz` |
-| `IMAGE_TAG` | Usually `latest` |
-
-### Deploy
-
-Push to `main` — GitHub Actions will build, push images to GHCR, then SSH into your server and run `docker compose up -d`.
-
-## Game Mechanics
-
-- Player enters a username (no password) — honor-based
-- Select 2+ word categories to train
-- A word appears on screen — click the correct category
-- Timer starts at 10 seconds; each correct answer reduces it by 10% (floor: 2s)
-- Wrong answer or timeout = game over
-- Score = base points × streak multiplier × time bonus
-
-## Admin Panel
-
-Navigate to `/admin` → login with env-configured credentials.
-
-- **Categories**: Add/edit/delete word categories with custom neon colors
-- **Words**: Add/edit/delete words per category
-- **Players**: View all registered players
+Pushing to `main` triggers the deploy workflow; watchtower pulls updated images on the server. `.env` on the server provides `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD` and the Postgres credentials.

@@ -8,12 +8,12 @@
 
 .chip {
   font-family: var(--font-pixel);
-  font-size: 0.55rem;
+  font-size: 0.8rem;
   padding: 0.75rem 1.25rem;
   background: transparent;
-  color: var(--cat-color, var(--color-primary));
+  color: var(--color-text);
   border: 2px solid var(--cat-color, var(--color-primary));
-  border-radius: var(--radius);
+  border-radius: 999px;
   cursor: pointer;
   transition: all 150ms ease;
   display: flex;
@@ -24,15 +24,13 @@
 
 .chip:hover {
   background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 15%, transparent);
-  box-shadow: 0 0 12px var(--cat-color, var(--color-primary));
 }
 
 .active {
-  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 20%, transparent) !important;
-  box-shadow: 0 0 15px var(--cat-color, var(--color-primary)) !important;
+  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 25%, transparent) !important;
 }
 
 .check {
   color: var(--color-success);
-  font-size: 0.7rem;
+  font-size: 1rem;
 }

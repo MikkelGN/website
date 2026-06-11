@@ -1,6 +1,6 @@
 package dk.wordblitz.infrastructure.adapter.in.web;
 
-import dk.wordblitz.domain.model.LeaderboardEntry;
+import dk.wordblitz.domain.model.UnifiedLeaderboardEntry;
 import dk.wordblitz.domain.port.in.LeaderboardUseCase;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +16,9 @@ public class LeaderboardController {
         this.leaderboardUseCase = leaderboardUseCase;
     }
 
-    @GetMapping
-    public List<LeaderboardEntry> getLeaderboard(@RequestParam(defaultValue = "20") int limit) {
-        return leaderboardUseCase.getTopScores(limit);
+    @GetMapping("/{gameType}")
+    public List<UnifiedLeaderboardEntry> getLeaderboard(@PathVariable String gameType,
+                                                        @RequestParam(defaultValue = "20") int limit) {
+        return leaderboardUseCase.getLeaderboard(gameType, limit);
     }
 }

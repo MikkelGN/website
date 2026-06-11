@@ -29,7 +29,7 @@
 
 .hudLabel {
   font-family: var(--font-pixel);
-  font-size: 0.45rem;
+  font-size: 1rem;
   color: var(--color-text-dim);
 }
 
@@ -37,13 +37,10 @@
   font-family: var(--font-pixel);
   font-size: 0.8rem;
   color: var(--color-primary);
-  text-shadow: var(--glow-primary);
 }
 
 .hotStreak {
-  color: var(--color-accent) !important;
-  text-shadow: var(--glow-accent) !important;
-  animation: pulse-glow 0.8s infinite;
+  color: var(--color-primary) !important;
 }
 
 .wordCard {
@@ -53,12 +50,12 @@
   background: var(--color-bg-card);
   border: 2px solid var(--color-primary);
   border-radius: var(--radius);
-  box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+  box-shadow: var(--shadow-card);
 }
 
 .prompt {
   font-family: var(--font-pixel);
-  font-size: 0.55rem;
+  font-size: 0.8rem;
   color: var(--color-text-dim);
   margin-bottom: 1.5rem;
   letter-spacing: 0.1em;
@@ -66,8 +63,7 @@
 
 .word {
   font-size: clamp(2rem, 8vw, 4rem);
-  color: var(--color-accent);
-  text-shadow: var(--glow-accent);
+  color: var(--color-primary);
   letter-spacing: 0.05em;
   font-family: var(--font-pixel);
 }
@@ -81,12 +77,12 @@
 
 .catBtn {
   font-family: var(--font-pixel);
-  font-size: 0.6rem;
+  font-size: 0.9rem;
   padding: 1rem;
   background: transparent;
-  color: var(--cat-color, var(--color-primary));
+  color: var(--color-text);
   border: 2px solid var(--cat-color, var(--color-primary));
-  border-radius: var(--radius);
+  border-radius: 999px;
   cursor: pointer;
   transition: all 120ms ease;
   letter-spacing: 0.05em;
@@ -94,7 +90,6 @@
 
 .catBtn:hover:not(:disabled) {
   background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 20%, transparent);
-  box-shadow: 0 0 20px var(--cat-color, var(--color-primary));
   transform: scale(1.03);
 }
 

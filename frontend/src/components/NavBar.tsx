@@ -10,7 +10,7 @@ export default function NavBar() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { username, logout } = useAuthStore()
-  const [info, setInfo] = useState<{ buildTime: string; llmModel: string } | null>(null)
+  const [info, setInfo] = useState<{ buildTime: string } | null>(null)
 
   useEffect(() => {
     getInfo()
@@ -30,7 +30,7 @@ export default function NavBar() {
       </div>
       <div className={styles.right}>
         {info && (
-          <span className={styles.info} title={`LLM: ${info.llmModel}`}>
+          <span className={styles.info}>
             {info.buildTime}
           </span>
         )}

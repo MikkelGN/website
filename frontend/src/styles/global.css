@@ -1,30 +1,31 @@
-/* ===== CSS Custom Properties — Retro Arcade Theme ===== */
+/* ===== CSS Custom Properties — Friendly Kids Theme ===== */
 :root {
-  --color-bg: #0a0a0f;
-  --color-bg-card: #0f0f1a;
-  --color-bg-overlay: rgba(10, 10, 15, 0.9);
+  --color-bg: #fbf7e2;
+  --color-bg-card: #ffffff;
+  --color-bg-overlay: rgba(251, 247, 226, 0.92);
 
-  --color-primary: #ff00ff;    /* magenta */
-  --color-secondary: #00ffff;  /* cyan */
-  --color-accent: #ffff00;     /* yellow */
-  --color-success: #00ff88;    /* green */
-  --color-danger: #ff2244;     /* red */
-  --color-warning: #ff8800;    /* orange */
-  --color-text: #e0e0ff;
-  --color-text-dim: #6060a0;
-  --color-border: #2a2a4a;
+  --color-primary: #f28123;    /* orange */
+  --color-secondary: #d34e24;  /* burnt red */
+  --color-accent: #f7f052;     /* yellow */
+  --color-success: #38726c;    /* teal */
+  --color-danger: #d34e24;     /* burnt red */
+  --color-warning: #f28123;    /* orange */
+  --color-text: #563f1b;       /* brown */
+  --color-text-dim: #a08b66;
+  --color-border: #eae0c8;
 
-  --font-pixel: 'Press Start 2P', monospace;
-  --font-mono: 'Share Tech Mono', monospace;
+  --font-pixel: 'Baloo 2', sans-serif;
+  --font-mono: 'Nunito', sans-serif;
 
-  --glow-primary: 0 0 8px rgba(255, 0, 255, 0.6);
-  --glow-secondary: 0 0 8px rgba(0, 255, 255, 0.5);
-  --glow-accent: 0 0 8px rgba(255, 255, 0, 0.5);
-  --glow-success: 0 0 8px rgba(0, 255, 136, 0.5);
-  --glow-danger: 0 0 8px rgba(255, 34, 68, 0.5);
+  --glow-primary: 0 4px 14px rgba(242, 129, 35, 0.3);
+  --glow-secondary: 0 4px 14px rgba(211, 78, 36, 0.3);
+  --glow-accent: 0 4px 14px rgba(247, 240, 82, 0.5);
+  --glow-success: 0 4px 14px rgba(56, 114, 108, 0.3);
+  --glow-danger: 0 4px 14px rgba(211, 78, 36, 0.3);
 
   --border-neon: 1px solid var(--color-primary);
-  --radius: 4px;
+  --shadow-card: 0 4px 16px rgba(86, 63, 27, 0.08);
+  --radius: 18px;
   --transition: 150ms ease;
 }
 
@@ -43,51 +44,37 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
-}
-
-/* ===== Scanline overlay ===== */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
 }
 
 /* ===== Typography ===== */
 h1, h2, h3 {
   font-family: var(--font-pixel);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
+  font-weight: 700;
 }
 
-h1 { font-size: clamp(1.2rem, 4vw, 2rem); color: var(--color-primary); }
-h2 { font-size: clamp(0.9rem, 3vw, 1.4rem); color: var(--color-secondary); }
-h3 { font-size: clamp(0.7rem, 2vw, 1rem); color: var(--color-accent); }
+h1 { font-size: clamp(1.6rem, 5vw, 2.6rem); color: var(--color-primary); }
+h2 { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--color-secondary); }
+h3 { font-size: clamp(1rem, 2.5vw, 1.3rem); color: var(--color-success); }
 
 a { color: var(--color-secondary); text-decoration: none; }
-a:hover { text-shadow: var(--glow-secondary); }
+a:hover { text-decoration: underline; }
 
 /* ===== Buttons ===== */
 .btn {
   font-family: var(--font-pixel);
-  font-size: 0.65rem;
-  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   padding: 0.75rem 1.5rem;
   border: 2px solid currentColor;
   background: transparent;
   cursor: pointer;
   transition: all var(--transition);
-  border-radius: var(--radius);
+  border-radius: 999px;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
@@ -104,7 +91,7 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--color-primary);
-  color: var(--color-bg);
+  color: #fff;
   box-shadow: var(--glow-primary);
 }
 
@@ -114,7 +101,7 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 .btn-secondary:hover:not(:disabled) {
   background: var(--color-secondary);
-  color: var(--color-bg);
+  color: #fff;
   box-shadow: var(--glow-secondary);
 }
 
@@ -124,7 +111,7 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 .btn-success:hover:not(:disabled) {
   background: var(--color-success);
-  color: var(--color-bg);
+  color: #fff;
   box-shadow: var(--glow-success);
 }
 
@@ -134,12 +121,12 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 .btn-danger:hover:not(:disabled) {
   background: var(--color-danger);
-  color: var(--color-bg);
+  color: #fff;
   box-shadow: var(--glow-danger);
 }
 
 .btn-lg {
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding: 1rem 2rem;
 }
 
@@ -149,7 +136,7 @@ a:hover { text-shadow: var(--glow-secondary); }
   font-size: 1rem;
   background: var(--color-bg-card);
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
   width: 100%;
@@ -158,21 +145,22 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 .input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 8px var(--color-primary);
+  box-shadow: var(--glow-primary);
 }
 .input::placeholder { color: var(--color-text-dim); }
 
 /* ===== Card ===== */
 .card {
   background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius);
   padding: 1.5rem;
+  box-shadow: var(--shadow-card);
 }
 
 .card-neon {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+  border: none;
+  box-shadow: var(--shadow-card);
 }
 
 /* ===== Layout ===== */
@@ -191,17 +179,9 @@ a:hover { text-shadow: var(--glow-secondary); }
 }
 
 /* ===== Animations ===== */
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 1; }
-  93% { opacity: 0.8; }
-  94% { opacity: 1; }
-  96% { opacity: 0.9; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { text-shadow: var(--glow-primary); }
-  50% { text-shadow: none; }
+@keyframes pop-in {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
 }
 
 @keyframes slide-in {
@@ -219,24 +199,24 @@ a:hover { text-shadow: var(--glow-secondary); }
 
 @keyframes flash-green {
   0% { background: transparent; }
-  30% { background: rgba(0, 255, 136, 0.15); }
+  30% { background: rgba(56, 114, 108, 0.18); }
   100% { background: transparent; }
 }
 
 @keyframes flash-red {
   0% { background: transparent; }
-  30% { background: rgba(255, 34, 68, 0.2); }
+  30% { background: rgba(211, 78, 36, 0.18); }
   100% { background: transparent; }
 }
 
-.animate-flicker { animation: flicker 4s infinite; }
-.animate-pulse-glow { animation: pulse-glow 2s infinite; }
+.animate-flicker { animation: pop-in 0.3s ease; }
+.animate-pulse-glow { animation: pop-in 0.3s ease; }
 .animate-slide-in { animation: slide-in 0.3s ease; }
 .animate-shake { animation: shake 0.4s ease; }
 .animate-flash-green { animation: flash-green 0.5s ease; }
 .animate-flash-red { animation: flash-red 0.5s ease; }
 
 /* ===== Scrollbar ===== */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-text-dim); border-radius: 4px; }

@@ -9,13 +9,13 @@ import {
 } from '../../api/client'
 import styles from './AdminPanel.module.css'
 
-const COLORS = ['#ff00ff', '#00ffff', '#ffff00', '#00ff88', '#ff8800', '#ff0066']
+const COLORS = ['#f7f052', '#f28123', '#d34e24', '#563f1b', '#38726c']
 
 export default function AdminCategories() {
   const { t } = useTranslation()
   const [categories, setCategories] = useState<Category[]>([])
   const [editing, setEditing] = useState<Category | null>(null)
-  const [form, setForm] = useState({ nameDa: '', nameEn: '', color: '#ff00ff' })
+  const [form, setForm] = useState({ nameDa: '', nameEn: '', color: '#f28123' })
 
   useEffect(() => { load() }, [])
 
@@ -30,8 +30,8 @@ export default function AdminCategories() {
   }
 
   function startNew() {
-    setEditing({ id: 0, nameDa: '', nameEn: '', color: '#ff00ff' })
-    setForm({ nameDa: '', nameEn: '', color: '#ff00ff' })
+    setEditing({ id: 0, nameDa: '', nameEn: '', color: '#f28123' })
+    setForm({ nameDa: '', nameEn: '', color: '#f28123' })
   }
 
   async function save() {

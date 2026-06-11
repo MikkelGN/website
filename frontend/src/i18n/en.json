@@ -9,11 +9,12 @@
     "logout": "LOG OUT"
   },
   "login": {
-    "title": "ENTER YOUR NAME",
-    "placeholder": "Your player name",
-    "button": "START",
-    "welcome": "Welcome back",
-    "new": "New player created"
+    "whoIsPlaying": "Who's playing?",
+    "enterPin": "Enter your PIN",
+    "wrongPin": "Wrong PIN – try again!",
+    "locked": "Too many attempts – wait a moment and try again",
+    "noProfiles": "No profiles yet – create them in admin",
+    "back": "Back"
   },
   "home": {
     "greeting": "Hi, {{name}}!",
@@ -27,45 +28,12 @@
     "snakeDesc": "Eat the food, grow longer, don't hit the walls",
     "tetrisTitle": "TETRIS",
     "tetrisDesc": "Stack the blocks, clear lines, don't reach the top",
-    "wordleTitle": "WORDLE HELPER",
-    "wordleDesc": "Upload a screenshot or enter guesses to find possible words",
-    "linkedinTitle": "LINKEDIN SPEECH",
-    "linkedinDesc": "Transform any situation into corporate buzzword soup",
-    "open": "OPEN"
-  },
-  "linkedin": {
-    "title": "LINKEDIN SPEECH",
-    "subtitle": "Transform any ordinary situation into an inspirational LinkedIn post 🚀",
-    "inputLabel": "WHAT HAPPENED?",
-    "placeholder": "e.g. I ate cereal for breakfast...",
-    "generate": "LINKEDIN-IFY",
-    "generating": "GENERATING...",
-    "examples": "Examples",
-    "emptyState": "Your masterpiece will appear here",
-    "thinking": "AI IS THINKING...",
-    "error": "Could not connect to Ollama. Make sure it is running.",
-    "posterMeta": "Growth Hacker • Thought Leader • Visionary",
-    "copy": "Copy post",
-    "copied": "Copied!"
-  },
-  "wordle": {
-    "title": "WORDLE HELPER",
-    "subtitle": "Upload a screenshot — colors are detected automatically. Then type each word you guessed.",
-    "uploadHint": "Upload screenshot (drag & drop or click)",
-    "analyzing": "Analyzing image...",
-    "analyzeFound": "Found {{count}} rows with colors. Now type your guessed words.",
-    "analyzeNoGrid": "Could not detect the Wordle grid. Try setting colors manually.",
-    "analyzeError": "Could not read image.",
-    "guess": "Guess",
-    "clickToCycle": "Click to change color",
-    "green": "Correct position",
-    "yellow": "Wrong position",
-    "gray": "Not in word",
-    "suggestions": "POSSIBLE WORDS",
-    "words": "words",
-    "suggHint": "Fill in at least one complete guess (all 5 letters + colors set) to see suggestions.",
-    "noWords": "No matching words found.",
-    "reset": "Reset"
+    "catLanguage": "Language",
+    "catMath": "Math & Logic",
+    "catArcade": "Arcade",
+    "comingSoon": "Coming soon!",
+    "mathBlitzTitle": "MATH BLITZ",
+    "mathBlitzDesc": "Solve the sums before the timer runs out"
   },
   "tetris": {
     "title": "TETRIS",
@@ -73,7 +41,7 @@
     "start": "START",
     "paused": "PAUSED",
     "resume": "RESUME",
-    "gameover": "GAME OVER",
+    "gameover": "WELL PLAYED!",
     "score": "Score",
     "level": "Level",
     "lines": "Lines",
@@ -87,11 +55,11 @@
   },
   "snake": {
     "title": "SNAKE",
-    "hint": "Eat the pink squares. Don't hit the walls!",
+    "hint": "Eat the orange squares. Don't hit the walls!",
     "start": "START",
     "paused": "PAUSED",
     "resume": "RESUME",
-    "gameover": "GAME OVER",
+    "gameover": "WELL PLAYED!",
     "score": "Score",
     "best": "Best",
     "newHigh": "NEW HIGH SCORE",
@@ -109,7 +77,7 @@
     "streak": "Streak: {{streak}}",
     "correct": "CORRECT!",
     "wrong": "WRONG!",
-    "gameOver": "GAME OVER",
+    "gameOver": "WELL PLAYED!",
     "finalScore": "Final score",
     "correctAnswers": "Correct answers",
     "maxStreak": "Best streak",
@@ -128,7 +96,9 @@
     "streak": "STREAK",
     "level": "LEVEL",
     "lines": "LINES",
-    "empty": "No scores yet. Be the first!"
+    "empty": "No scores yet. Be the first!",
+    "tabMath": "MATH BLITZ",
+    "difficulty": "Difficulty"
   },
   "admin": {
     "title": "ADMIN PANEL",
@@ -141,8 +111,9 @@
     "tabs": {
       "categories": "Categories",
       "words": "Words",
-      "users": "Players",
-      "sessions": "Sessions"
+      "sessions": "Sessions",
+      "players": "Players",
+      "progress": "Progress"
     },
     "actions": {
       "add": "Add",
@@ -159,6 +130,19 @@
     "word": {
       "text": "Word",
       "category": "Category"
+    },
+    "player": {
+      "name": "Name",
+      "pin": "PIN (4 digits)",
+      "newPin": "New PIN (optional)",
+      "created": "Created",
+      "confirmDelete": "Delete this player and all their scores?"
+    },
+    "progress": {
+      "player": "Player",
+      "game": "Game",
+      "plays": "Plays",
+      "best": "Best score"
     }
   },
   "lang": {
@@ -167,5 +151,15 @@
   "error": {
     "generic": "Something went wrong. Please try again.",
     "network": "Network error. Check your connection."
+  },
+  "mathBlitz": {
+    "chooseDifficulty": "CHOOSE DIFFICULTY",
+    "easy": "EASY",
+    "easyDesc": "Plus and minus up to 20",
+    "medium": "MEDIUM",
+    "mediumDesc": "Up to 100 and small times tables",
+    "hard": "HARD",
+    "hardDesc": "Multiplication and division",
+    "prompt": "What's the answer?"
   }
 }

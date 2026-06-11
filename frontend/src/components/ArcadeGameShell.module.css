@@ -1,0 +1,110 @@
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.hud {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-pixel);
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+}
+
+.hudItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scoreVal {
+  color: var(--color-primary);
+}
+
+.highVal {
+  color: var(--color-success);
+}
+
+.canvasWrapper {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  line-height: 0;
+}
+
+.framePrimary {
+  border: 1px solid var(--color-primary);
+}
+
+.frameSecondary {
+  border: 1px solid var(--color-secondary);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-overlay);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.overlayTitle {
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+.gameoverTitle {
+  color: var(--color-primary);
+}
+
+.overlayHint {
+  font-family: var(--font-mono);
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0;
+}
+
+.finalScore {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--color-text);
+  margin: 0;
+  text-align: center;
+}
+
+.newHigh {
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.overlayButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.controlsHint {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin: 0;
+}

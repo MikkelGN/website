@@ -15,7 +15,8 @@ export default defineConfig({
     allowedHosts: ['migini.dk', 'www.migini.dk', 'localhost'],
     proxy: {
       '/api': {
-        target: 'http://backend:8080',
+        // 'backend' resolves inside docker compose; override for bare-metal dev/CI
+        target: process.env.BACKEND_URL || 'http://backend:8080',
         changeOrigin: true,
       },
     },

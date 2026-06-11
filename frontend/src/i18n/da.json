@@ -9,11 +9,12 @@
     "logout": "LOG UD"
   },
   "login": {
-    "title": "INDTAST DIT NAVN",
-    "placeholder": "Dit spillernavn",
-    "button": "START",
-    "welcome": "Velkommen tilbage",
-    "new": "Ny spiller oprettet"
+    "whoIsPlaying": "Hvem spiller?",
+    "enterPin": "Indtast din PIN-kode",
+    "wrongPin": "Forkert PIN – prøv igen!",
+    "locked": "For mange forsøg – vent lidt og prøv igen",
+    "noProfiles": "Ingen profiler endnu – opret dem i admin",
+    "back": "Tilbage"
   },
   "home": {
     "greeting": "Hej, {{name}}!",
@@ -27,45 +28,12 @@
     "snakeDesc": "Spis maden, bliv længere, rør ikke væggene",
     "tetrisTitle": "TETRIS",
     "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen",
-    "wordleTitle": "WORDLE HJÆLPER",
-    "wordleDesc": "Upload et screenshot eller indtast gæt for at finde mulige ord",
-    "linkedinTitle": "LINKEDIN TALE",
-    "linkedinDesc": "Forvandl alt til corporate buzzword-suppe",
-    "open": "ÅBEN"
-  },
-  "linkedin": {
-    "title": "LINKEDIN TALE",
-    "subtitle": "Forvandl en helt almindelig situation til en inspirerende LinkedIn-opslag 🚀",
-    "inputLabel": "HVAD SKETE DER?",
-    "placeholder": "f.eks. Jeg spiste havregrød til morgenmad...",
-    "generate": "LINKEDIN-IFICÉR",
-    "generating": "GENERERER...",
-    "examples": "Eksempler",
-    "emptyState": "Dit mesterværk vises her",
-    "thinking": "AI TÆNKER...",
-    "error": "Kunne ikke forbinde til Ollama. Sørg for at den kører.",
-    "posterMeta": "Growth Hacker • Thought Leader • Visionær",
-    "copy": "Kopiér opslag",
-    "copied": "Kopieret!"
-  },
-  "wordle": {
-    "title": "WORDLE HJÆLPER",
-    "subtitle": "Upload et screenshot — farver opdages automatisk. Skriv derefter hvert ord du gættede.",
-    "uploadHint": "Upload screenshot (træk & slip eller klik)",
-    "analyzing": "Analyserer billede...",
-    "analyzeFound": "Fandt {{count}} rækker med farver. Skriv nu dine gættede ord.",
-    "analyzeNoGrid": "Kunne ikke opdage Wordle-gitteret. Sæt farver manuelt.",
-    "analyzeError": "Kunne ikke læse billedet.",
-    "guess": "Gæt",
-    "clickToCycle": "Klik for at skifte farve",
-    "green": "Rigtig placering",
-    "yellow": "Forkert placering",
-    "gray": "Ikke i ordet",
-    "suggestions": "MULIGE ORD",
-    "words": "ord",
-    "suggHint": "Udfyld mindst ét komplet gæt (alle 5 bogstaver + farver sat) for at se forslag.",
-    "noWords": "Ingen matchende ord fundet.",
-    "reset": "Nulstil"
+    "catLanguage": "Sprog",
+    "catMath": "Matematik & logik",
+    "catArcade": "Arkade",
+    "comingSoon": "Kommer snart!",
+    "mathBlitzTitle": "MATH BLITZ",
+    "mathBlitzDesc": "Regn stykkerne inden tiden løber ud"
   },
   "tetris": {
     "title": "TETRIS",
@@ -73,7 +41,7 @@
     "start": "START",
     "paused": "PAUSE",
     "resume": "FORTSÆT",
-    "gameover": "SPIL SLUT",
+    "gameover": "FLOT KLARET!",
     "score": "Score",
     "level": "Level",
     "lines": "Rækker",
@@ -87,11 +55,11 @@
   },
   "snake": {
     "title": "SLANGE",
-    "hint": "Spis de pink firkanter. Rør ikke væggene!",
+    "hint": "Spis de orange firkanter. Rør ikke væggene!",
     "start": "START",
     "paused": "PAUSE",
     "resume": "FORTSÆT",
-    "gameover": "SPIL SLUT",
+    "gameover": "FLOT KLARET!",
     "score": "Score",
     "best": "Bedst",
     "newHigh": "NY REKORD",
@@ -109,7 +77,7 @@
     "streak": "Streak: {{streak}}",
     "correct": "RIGTIGT!",
     "wrong": "FORKERT!",
-    "gameOver": "SPIL SLUT",
+    "gameOver": "FLOT KLARET!",
     "finalScore": "Endelig score",
     "correctAnswers": "Rigtige svar",
     "maxStreak": "Bedste streak",
@@ -128,7 +96,9 @@
     "streak": "STREAK",
     "level": "LEVEL",
     "lines": "RÆKKER",
-    "empty": "Ingen scores endnu. Vær den første!"
+    "empty": "Ingen scores endnu. Vær den første!",
+    "tabMath": "MATH BLITZ",
+    "difficulty": "Sværhedsgrad"
   },
   "admin": {
     "title": "ADMIN PANEL",
@@ -141,8 +111,9 @@
     "tabs": {
       "categories": "Ordklasser",
       "words": "Ord",
-      "users": "Spillere",
-      "sessions": "Sessioner"
+      "sessions": "Sessioner",
+      "players": "Spillere",
+      "progress": "Fremskridt"
     },
     "actions": {
       "add": "Tilføj",
@@ -159,6 +130,19 @@
     "word": {
       "text": "Ord",
       "category": "Ordklasse"
+    },
+    "player": {
+      "name": "Navn",
+      "pin": "PIN-kode (4 cifre)",
+      "newPin": "Ny PIN-kode (valgfri)",
+      "created": "Oprettet",
+      "confirmDelete": "Slet denne spiller og alle deres scores?"
+    },
+    "progress": {
+      "player": "Spiller",
+      "game": "Spil",
+      "plays": "Antal spil",
+      "best": "Bedste score"
     }
   },
   "lang": {
@@ -167,5 +151,15 @@
   "error": {
     "generic": "Noget gik galt. Prøv igen.",
     "network": "Netværksfejl. Tjek din forbindelse."
+  },
+  "mathBlitz": {
+    "chooseDifficulty": "VÆLG SVÆRHEDSGRAD",
+    "easy": "LET",
+    "easyDesc": "Plus og minus op til 20",
+    "medium": "MELLEM",
+    "mediumDesc": "Op til 100 og de små tabeller",
+    "hard": "SVÆR",
+    "hardDesc": "Gange og division",
+    "prompt": "Hvad er svaret?"
   }
 }

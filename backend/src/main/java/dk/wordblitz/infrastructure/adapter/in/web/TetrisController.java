@@ -1,13 +1,10 @@
 package dk.wordblitz.infrastructure.adapter.in.web;
 
-import dk.wordblitz.domain.model.TetrisLeaderboardEntry;
 import dk.wordblitz.domain.port.in.TetrisUseCase;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/tetris")
@@ -29,8 +26,4 @@ public class TetrisController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/leaderboard")
-    public List<TetrisLeaderboardEntry> getLeaderboard(@RequestParam(defaultValue = "20") int limit) {
-        return tetrisUseCase.getLeaderboard(limit);
-    }
 }

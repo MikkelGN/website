@@ -22,10 +22,10 @@ public class JwtService {
         this.expirationDays = expirationDays;
     }
 
-    public String generatePlayerToken(Long userId, String username) {
+    public String generatePlayerToken(Long playerId, String displayName) {
         return Jwts.builder()
-                .subject(String.valueOf(userId))
-                .claim("username", username)
+                .subject(String.valueOf(playerId))
+                .claim("displayName", displayName)
                 .claim("role", "PLAYER")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationDays * 86_400_000L))

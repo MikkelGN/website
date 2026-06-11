@@ -1,7 +1,6 @@
 package dk.wordblitz.infrastructure.adapter.out.persistence;
 
 import dk.wordblitz.domain.model.GameSession;
-import dk.wordblitz.domain.model.LeaderboardEntry;
 import dk.wordblitz.domain.port.out.GameSessionRepository;
 import dk.wordblitz.infrastructure.adapter.out.persistence.entity.GameSessionEntity;
 import dk.wordblitz.infrastructure.adapter.out.persistence.repository.GameSessionJpaRepository;
@@ -38,18 +37,6 @@ public class GameSessionPersistenceAdapter implements GameSessionRepository {
         return jpa.findById(id).map(this::toDomain);
     }
 
-    @Override
-    public List<LeaderboardEntry> findTopScores(int limit) {
-        List<Object[]> rows = jpa.findTopScoresRaw(PageRequest.of(0, limit));
-        AtomicInteger rank = new AtomicInteger(1);
-        return rows.stream().map(row -> new LeaderboardEntry(
-                rank.getAndIncrement(),
-                (String) row[1],
-                ((Number) row[2]).intValue(),
-                ((Number) row[3]).intValue(),
-                ((Number) row[4]).intValue()
-        )).toList();
-    }
 
     @Override
     public List<GameSession> findAllPaged(int page, int size) {

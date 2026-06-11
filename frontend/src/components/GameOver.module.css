@@ -15,17 +15,15 @@
   max-width: 480px;
   width: 100%;
   background: var(--color-bg-card);
-  border: 2px solid var(--color-danger);
-  box-shadow: 0 0 40px rgba(255, 34, 68, 0.2);
+  border: none;
+  box-shadow: var(--shadow-card);
   border-radius: var(--radius);
   animation: slide-in 0.3s ease;
 }
 
 .title {
-  font-size: clamp(1rem, 5vw, 1.8rem);
-  color: var(--color-danger);
-  text-shadow: var(--glow-danger);
-  animation: pulse-glow 1s infinite;
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  color: var(--color-primary);
 }
 
 .stats {
@@ -46,15 +44,15 @@
 
 .statLabel {
   font-family: var(--font-pixel);
-  font-size: 0.5rem;
+  font-size: 1.05rem;
   color: var(--color-text-dim);
 }
 
 .statValue {
   font-family: var(--font-pixel);
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--color-primary);
-  text-shadow: var(--glow-primary);
 }
 
 .actions {

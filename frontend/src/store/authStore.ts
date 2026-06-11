@@ -5,8 +5,9 @@ interface AuthState {
   token: string | null
   userId: number | null
   username: string | null
+  avatarKey: string | null
   adminToken: string | null
-  setPlayer: (token: string, userId: number, username: string) => void
+  setPlayer: (token: string, userId: number, username: string, avatarKey: string) => void
   setAdminToken: (token: string) => void
   logout: () => void
   logoutAdmin: () => void
@@ -18,10 +19,11 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       userId: null,
       username: null,
+      avatarKey: null,
       adminToken: null,
-      setPlayer: (token, userId, username) => set({ token, userId, username }),
+      setPlayer: (token, userId, username, avatarKey) => set({ token, userId, username, avatarKey }),
       setAdminToken: (adminToken) => set({ adminToken }),
-      logout: () => set({ token: null, userId: null, username: null }),
+      logout: () => set({ token: null, userId: null, username: null, avatarKey: null }),
       logoutAdmin: () => set({ adminToken: null }),
     }),
     {

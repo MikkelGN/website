@@ -1,6 +1,5 @@
 package dk.wordblitz.application.service;
 
-import dk.wordblitz.domain.model.TetrisLeaderboardEntry;
 import dk.wordblitz.domain.model.TetrisScore;
 import dk.wordblitz.domain.port.in.TetrisUseCase;
 import dk.wordblitz.domain.port.out.TetrisScoreRepository;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.List;
 
 @Service
 @Transactional
@@ -28,9 +26,4 @@ public class TetrisService implements TetrisUseCase {
         }
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<TetrisLeaderboardEntry> getLeaderboard(int limit) {
-        return repository.findTopScores(Math.min(limit, 100));
-    }
 }

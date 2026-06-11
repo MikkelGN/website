@@ -13,13 +13,10 @@ public class InfoController {
     @Value("${project.buildTime:Build time unavailable}")
     private String buildTime;
 
-    @Value("${spring.ai.ollama.chat.options.model}")
-    private String llmModel;
-
-    record InfoResponse(String buildTime, String llmModel) {}
+    record InfoResponse(String buildTime) {}
 
     @GetMapping
     public ResponseEntity<InfoResponse> getInfo() {
-        return ResponseEntity.ok(new InfoResponse(buildTime.isEmpty() ? "Build time unavailable" : buildTime, llmModel));
+        return ResponseEntity.ok(new InfoResponse(buildTime.isEmpty() ? "Build time unavailable" : buildTime));
     }
 }

@@ -1,13 +1,10 @@
 package dk.wordblitz.infrastructure.adapter.in.web;
 
-import dk.wordblitz.domain.model.SnakeLeaderboardEntry;
 import dk.wordblitz.domain.port.in.SnakeUseCase;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/snake")
@@ -29,8 +26,4 @@ public class SnakeController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/leaderboard")
-    public List<SnakeLeaderboardEntry> getLeaderboard(@RequestParam(defaultValue = "20") int limit) {
-        return snakeUseCase.getLeaderboard(limit);
-    }
 }

@@ -1,0 +1,112 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--color-bg);
+}
+
+.langToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo h1 {
+  font-size: clamp(1.5rem, 6vw, 3rem);
+}
+
+.pickerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 520px;
+  padding: 2.5rem 2rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.prompt {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.hint {
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+.profileGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 120px;
+  padding: 1.25rem 0.75rem;
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  font-family: inherit;
+}
+
+.profileCard:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-primary);
+}
+
+.avatar {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+.name {
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.selectedProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.backBtn:hover {
+  color: var(--color-text);
+}

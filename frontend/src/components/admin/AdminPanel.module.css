@@ -19,7 +19,7 @@
 }
 
 .filterBtn {
-  font-size: 0.5rem !important;
+  font-size: 1.05rem !important;
   padding: 0.4rem 0.7rem !important;
 }
 
@@ -49,8 +49,19 @@
 }
 
 .colorActive {
-  border-color: white !important;
-  box-shadow: 0 0 8px white;
+  border-color: var(--color-text) !important;
+  box-shadow: var(--shadow-card);
+}
+
+.avatarSwatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--color-bg);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .formActions {
@@ -67,8 +78,8 @@
 
 .table th {
   font-family: var(--font-pixel);
-  font-size: 0.5rem;
-  color: var(--color-accent);
+  font-size: 1.05rem;
+  color: var(--color-primary);
   border-bottom: 1px solid var(--color-primary);
   padding: 0.6rem 0.75rem;
   text-align: left;
@@ -80,7 +91,7 @@
 }
 
 .table tbody tr:hover {
-  background: rgba(255, 0, 255, 0.04);
+  background: rgba(242, 129, 35, 0.07);
 }
 
 .actions {
@@ -89,7 +100,7 @@
 }
 
 .actions .btn {
-  font-size: 0.45rem !important;
+  font-size: 1rem !important;
   padding: 0.35rem 0.6rem !important;
 }
 

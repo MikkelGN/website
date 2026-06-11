@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '../store/authStore'
 import AdminCategories from '../components/admin/AdminCategories'
 import AdminWords from '../components/admin/AdminWords'
-import AdminUsers from '../components/admin/AdminUsers'
+import AdminPlayers from '../components/admin/AdminPlayers'
+import AdminProgress from '../components/admin/AdminProgress'
 import styles from './AdminPage.module.css'
 
-type Tab = 'categories' | 'words' | 'users'
+type Tab = 'categories' | 'words' | 'players' | 'progress'
 
 export default function AdminPage() {
   const { t } = useTranslation()
@@ -23,7 +24,7 @@ export default function AdminPage() {
       </header>
 
       <nav className={styles.tabs}>
-        {(['categories', 'words', 'users'] as Tab[]).map((t_) => (
+        {(['categories', 'words', 'players', 'progress'] as Tab[]).map((t_) => (
           <button
             key={t_}
             className={`btn ${tab === t_ ? 'btn-primary' : 'btn-secondary'} ${styles.tab}`}
@@ -37,7 +38,8 @@ export default function AdminPage() {
       <main className={styles.content}>
         {tab === 'categories' && <AdminCategories />}
         {tab === 'words' && <AdminWords />}
-        {tab === 'users' && <AdminUsers />}
+        {tab === 'players' && <AdminPlayers />}
+        {tab === 'progress' && <AdminProgress />}
       </main>
     </div>
   )

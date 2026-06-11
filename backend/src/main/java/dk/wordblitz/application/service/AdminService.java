@@ -1,17 +1,19 @@
 package dk.wordblitz.application.service;
 
-import dk.wordblitz.domain.model.AppUser;
 import dk.wordblitz.domain.model.Category;
 import dk.wordblitz.domain.model.GameSession;
+import dk.wordblitz.domain.model.Player;
 import dk.wordblitz.domain.model.Word;
 import dk.wordblitz.domain.port.in.AdminUseCase;
 import dk.wordblitz.domain.port.out.CategoryRepository;
 import dk.wordblitz.domain.port.out.GameSessionRepository;
-import dk.wordblitz.domain.port.out.UserRepository;
+import dk.wordblitz.domain.port.out.PlayerRepository;
 import dk.wordblitz.domain.port.out.WordRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,15 +23,18 @@ public class AdminService implements AdminUseCase {
 
     private final CategoryRepository categoryRepository;
     private final WordRepository wordRepository;
-    private final UserRepository userRepository;
+    private final PlayerRepository playerRepository;
     private final GameSessionRepository sessionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AdminService(CategoryRepository categoryRepository, WordRepository wordRepository,
-                        UserRepository userRepository, GameSessionRepository sessionRepository) {
+                        PlayerRepository playerRepository, GameSessionRepository sessionRepository,
+                        PasswordEncoder passwordEncoder) {
         this.categoryRepository = categoryRepository;
         this.wordRepository = wordRepository;
-        this.userRepository = userRepository;
+        this.playerRepository = playerRepository;
         this.sessionRepository = sessionRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -74,8 +79,38 @@ public class AdminService implements AdminUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AppUser> getAllUsers() {
-        return userRepository.findAll();
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
+    }
+
+    @Override
+    public Player createPlayer(CreatePlayerCommand command) {
+        return playerRepository.save(new Player(
+                null, command.displayName(), command.avatarKey(),
+                passwordEncoder.encode(command.pin()), Instant.now()));
+    }
+
+    @Override
+    public Player updatePlayer(UpdatePlayerCommand command) {
+        Player existing = playerRepository.findById(command.id())
+                .orElseThrow(() -> new NoSuchElementException("Player not found: " + command.id()));
+        return playerRepository.save(new Player(
+                existing.id(), command.displayName(), command.avatarKey(),
+                existing.pinHash(), existing.createdAt()));
+    }
+
+    @Override
+    public void resetPin(Long id, String pin) {
+        Player existing = playerRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Player not found: " + id));
+        playerRepository.save(new Player(
+                existing.id(), existing.displayName(), existing.avatarKey(),
+                passwordEncoder.encode(pin), existing.createdAt()));
+    }
+
+    @Override
+    public void deletePlayer(Long id) {
+        playerRepository.deleteById(id);
     }
 
     @Override

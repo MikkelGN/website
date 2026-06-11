@@ -4,6 +4,70 @@ import { useAuthStore } from '../store/authStore'
 import NavBar from '../components/NavBar'
 import styles from './HomePage.module.css'
 
+interface GameTile {
+  icon: string
+  titleKey: string
+  descKey: string
+  route?: string
+  cardClass: string
+  btnClass: string
+}
+
+interface CategorySection {
+  labelKey: string
+  games: GameTile[]
+}
+
+const SECTIONS: CategorySection[] = [
+  {
+    labelKey: 'home.catLanguage',
+    games: [
+      {
+        icon: '🔤',
+        titleKey: 'home.wordBlitzTitle',
+        descKey: 'home.wordBlitzDesc',
+        route: '/play/word-blitz',
+        cardClass: 'wordCard',
+        btnClass: 'btn-primary',
+      },
+    ],
+  },
+  {
+    labelKey: 'home.catMath',
+    games: [
+      {
+        icon: '🔢',
+        titleKey: 'home.mathBlitzTitle',
+        descKey: 'home.mathBlitzDesc',
+        route: '/play/math-blitz',
+        cardClass: 'mathCard',
+        btnClass: 'btn-secondary',
+      },
+    ],
+  },
+  {
+    labelKey: 'home.catArcade',
+    games: [
+      {
+        icon: '🐍',
+        titleKey: 'home.snakeTitle',
+        descKey: 'home.snakeDesc',
+        route: '/play/snake',
+        cardClass: 'snakeCard',
+        btnClass: 'btn-success',
+      },
+      {
+        icon: '🧱',
+        titleKey: 'home.tetrisTitle',
+        descKey: 'home.tetrisDesc',
+        route: '/play/tetris',
+        cardClass: 'tetrisCard',
+        btnClass: 'btn-secondary',
+      },
+    ],
+  },
+]
+
 export default function HomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -18,52 +82,34 @@ export default function HomePage() {
           <p className={styles.greeting}>{t('home.greeting', { name: username })}</p>
         </div>
 
-        <p className={styles.selectLabel}>{t('home.selectGame')}</p>
-
-        <div className={styles.gameGrid}>
-          <button className={`${styles.gameCard} ${styles.wordCard}`} onClick={() => navigate('/game')}>
-            <span className={styles.gameIcon}>🕹</span>
-            <span className={styles.gameTitle}>{t('home.wordBlitzTitle')}</span>
-            <span className={styles.gameDesc}>{t('home.wordBlitzDesc')}</span>
-            <span className={`btn btn-primary ${styles.playBtn}`}>{t('home.play')}</span>
-          </button>
-
-          <button className={`${styles.gameCard} ${styles.snakeCard}`} onClick={() => navigate('/snake')}>
-            <span className={styles.gameIcon}>🐍</span>
-            <span className={styles.gameTitle}>{t('home.snakeTitle')}</span>
-            <span className={styles.gameDesc}>{t('home.snakeDesc')}</span>
-            <span className={`btn ${styles.playBtn} ${styles.snakePlayBtn}`}>{t('home.play')}</span>
-          </button>
-
-          <button className={`${styles.gameCard} ${styles.tetrisCard}`} onClick={() => navigate('/tetris')}>
-            <span className={styles.gameIcon}>🟦</span>
-            <span className={styles.gameTitle}>{t('home.tetrisTitle')}</span>
-            <span className={styles.gameDesc}>{t('home.tetrisDesc')}</span>
-            <span className={`btn ${styles.playBtn} ${styles.tetrisPlayBtn}`}>{t('home.play')}</span>
-          </button>
-
-          <button className={`${styles.gameCard} ${styles.wordleCard}`} onClick={() => navigate('/wordle')}>
-            <span className={styles.gameIcon}>🟩</span>
-            <span className={styles.gameTitle}>{t('home.wordleTitle')}</span>
-            <span className={styles.gameDesc}>{t('home.wordleDesc')}</span>
-            <span className={`btn ${styles.playBtn} ${styles.wordlePlayBtn}`}>{t('home.open')}</span>
-          </button>
-
-          <button className={`${styles.gameCard} ${styles.linkedinCard}`} onClick={() => navigate('/linkedin')}>
-            <span className={styles.gameIcon}>💼</span>
-            <span className={styles.gameTitle}>{t('home.linkedinTitle')}</span>
-            <span className={styles.gameDesc}>{t('home.linkedinDesc')}</span>
-            <span className={`btn ${styles.playBtn} ${styles.linkedinPlayBtn}`}>{t('home.open')}</span>
-          </button>
+        <div className={styles.sections}>
+          {SECTIONS.map((section) => (
+            <section key={section.labelKey} className={styles.categorySection}>
+              <h2 className={styles.categoryTitle}>{t(section.labelKey)}</h2>
+              <div className={styles.gameGrid}>
+                {section.games.map((game) => (
+                  <button
+                    key={game.titleKey}
+                    className={`${styles.gameCard} ${styles[game.cardClass]}`}
+                    onClick={() => game.route && navigate(game.route)}
+                    disabled={!game.route}
+                  >
+                    <span className={styles.gameIcon}>{game.icon}</span>
+                    <span className={styles.gameTitle}>{t(game.titleKey)}</span>
+                    <span className={styles.gameDesc}>{t(game.descKey)}</span>
+                    <span className={`btn ${game.btnClass} ${styles.playBtn}`}>
+                      {game.route ? t('home.play') : t('home.comingSoon')}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
 
         <button className={`btn btn-secondary ${styles.leaderboardBtn}`} onClick={() => navigate('/leaderboard')}>
           🏆 {t('home.leaderboard')}
         </button>
-
-        <div className={styles.pixelArt}>
-          <span>▓░▓░▓░▓░▓░▓░▓░▓░▓░▓</span>
-        </div>
       </div>
     </div>
   )

@@ -23,10 +23,16 @@ export interface Category {
 
 export interface LeaderboardEntry {
   rank: number
-  username: string
-  totalScore: number
-  correctAnswers: number
-  maxStreak: number
+  displayName: string
+  score: number
+  metadata: Record<string, string | number>
+}
+
+export interface PlayerProgress {
+  displayName: string
+  gameType: string
+  plays: number
+  bestScore: number
 }
 
 export interface SessionResponse {
@@ -49,9 +55,16 @@ export interface AnswerResponse {
   gameOver: boolean
 }
 
-export interface AppUser {
+export interface PlayerSummary {
   id: number
-  username: string
+  displayName: string
+  avatarKey: string
+}
+
+export interface AdminPlayer {
+  id: number
+  displayName: string
+  avatarKey: string
   createdAt: string
 }
 
@@ -63,7 +76,6 @@ export interface Word {
 
 export interface AppInfo {
   buildTime: string
-  llmModel: string
 }
 
 // --- Info ---
@@ -71,8 +83,12 @@ export const getInfo = () =>
   api.get<AppInfo>('/info')
 
 // --- Auth ---
-export const login = (username: string) =>
-  api.post<{ token: string; userId: number; username: string }>('/auth/login', { username })
+export const getPlayers = () =>
+  api.get<PlayerSummary[]>('/auth/players')
+
+export const loginPlayer = (playerId: number, pin: string) =>
+  api.post<{ token: string; playerId: number; displayName: string; avatarKey: string }>(
+    `/auth/players/${playerId}/login`, { pin })
 
 export const adminLogin = (username: string, password: string) =>
   api.post<{ token: string }>('/admin/auth', { username, password })
@@ -102,49 +118,20 @@ export const completeSession = (sessionId: number) =>
   api.post(`/sessions/${sessionId}/complete`)
 
 // --- Leaderboard ---
-export const getLeaderboard = (limit = 20) =>
-  api.get<LeaderboardEntry[]>(`/leaderboard?limit=${limit}`)
+export type GameType = 'word-blitz' | 'math-blitz' | 'snake' | 'tetris'
 
-// --- Snake ---
-export interface SnakeLeaderboardEntry {
-  rank: number
-  username: string
-  score: number
-}
+export const getLeaderboard = (gameType: GameType, limit = 20) =>
+  api.get<LeaderboardEntry[]>(`/leaderboard/${gameType}?limit=${limit}`)
 
+// --- Score submission ---
 export const submitSnakeScore = (score: number) =>
   api.post('/snake/scores', { score })
 
-export const getSnakeLeaderboard = (limit = 20) =>
-  api.get<SnakeLeaderboardEntry[]>(`/snake/leaderboard?limit=${limit}`)
-
-// --- Tetris ---
-export interface TetrisLeaderboardEntry {
-  rank: number
-  username: string
-  score: number
-  level: number
-  lines: number
-}
+export const submitMathScore = (score: number, difficulty: string) =>
+  api.post('/math/scores', { score, difficulty })
 
 export const submitTetrisScore = (score: number, level: number, lines: number) =>
   api.post('/tetris/scores', { score, level, lines })
-
-export const getTetrisLeaderboard = (limit = 20) =>
-  api.get<TetrisLeaderboardEntry[]>(`/tetris/leaderboard?limit=${limit}`)
-
-// --- LinkedIn Speech ---
-export const convertToLinkedIn = (text: string, language?: string, includeHashtags?: boolean, length?: string, intensity?: number) =>
-  api.post<{ post: string }>('/linkedin/convert', { text, language, includeHashtags, length, intensity })
-
-// --- Wordle ---
-export interface WordleGuess {
-  word: string
-  colors: string[]
-}
-
-export const getWordleSuggestions = (guesses: WordleGuess[]) =>
-  api.post<{ words: string[]; count: number }>('/wordle/suggestions', { guesses })
 
 // --- Admin ---
 export const adminGetCategories = () => api.get<Category[]>('/admin/categories')
@@ -162,6 +149,15 @@ export const adminUpdateWord = (id: number, data: { text: string; categoryId: nu
   api.put<Word>(`/admin/words/${id}`, data)
 export const adminDeleteWord = (id: number) => api.delete(`/admin/words/${id}`)
 
-export const adminGetUsers = () => api.get<AppUser[]>('/admin/users')
+export const adminGetPlayers = () => api.get<AdminPlayer[]>('/admin/players')
+export const adminCreatePlayer = (data: { displayName: string; avatarKey: string; pin: string }) =>
+  api.post<AdminPlayer>('/admin/players', data)
+export const adminUpdatePlayer = (id: number, data: { displayName: string; avatarKey: string }) =>
+  api.put<AdminPlayer>(`/admin/players/${id}`, { ...data, pin: null })
+export const adminResetPin = (id: number, pin: string) =>
+  api.post(`/admin/players/${id}/pin`, { pin })
+export const adminDeletePlayer = (id: number) => api.delete(`/admin/players/${id}`)
+
+export const adminGetProgress = () => api.get<PlayerProgress[]>('/admin/progress')
 
 export default api

@@ -1,5 +1,7 @@
 package dk.wordblitz.infrastructure.adapter.in.web;
 
+import dk.wordblitz.domain.exception.InvalidPinException;
+import dk.wordblitz.domain.exception.PinLockedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,6 +16,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ProblemDetail handleNotFound(NoSuchElementException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidPinException.class)
+    public ProblemDetail handleInvalidPin(InvalidPinException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    @ExceptionHandler(PinLockedException.class)
+    public ProblemDetail handlePinLocked(PinLockedException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

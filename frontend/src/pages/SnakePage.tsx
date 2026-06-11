@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import NavBar from '../components/NavBar'
+import ArcadeGameShell from '../components/ArcadeGameShell'
 import styles from './SnakePage.module.css'
 import { submitSnakeScore } from '../api/client'
 
@@ -29,8 +27,6 @@ function getSpeed(score: number): number {
 }
 
 export default function SnakePage() {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const stateRef = useRef<GameState>('idle')
@@ -54,33 +50,28 @@ export default function SnakePage() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    ctx.fillStyle = '#0a0a0f'
+    ctx.fillStyle = '#fffdf2'
     ctx.fillRect(0, 0, W, H)
 
     // Grid dots
-    ctx.fillStyle = '#15152a'
+    ctx.fillStyle = '#eae0c8'
     for (let x = 0; x < COLS; x++)
       for (let y = 0; y < ROWS; y++)
         ctx.fillRect(x * CELL + CELL / 2 - 1, y * CELL + CELL / 2 - 1, 2, 2)
 
     // Food
     const f = foodRef.current
-    ctx.shadowBlur = 20
-    ctx.shadowColor = '#ff00ff'
-    ctx.fillStyle = '#ff00ff'
+    ctx.fillStyle = '#f28123'
     ctx.fillRect(f.x * CELL + 3, f.y * CELL + 3, CELL - 6, CELL - 6)
 
     // Snake
     snakeRef.current.forEach((seg, i) => {
       const isHead = i === 0
-      ctx.shadowBlur = isHead ? 25 : 12
-      ctx.shadowColor = isHead ? '#00ffff' : '#00ff88'
       ctx.fillStyle = isHead
-        ? '#00ffff'
-        : `rgba(0,255,136,${Math.max(0.4, 1 - i * 0.025)})`
+        ? '#d34e24'
+        : `rgba(56,114,108,${Math.max(0.4, 1 - i * 0.025)})`
       ctx.fillRect(seg.x * CELL + 1, seg.y * CELL + 1, CELL - 2, CELL - 2)
     })
-    ctx.shadowBlur = 0
   }, [])
 
   const endGame = useCallback(() => {
@@ -223,65 +214,16 @@ export default function SnakePage() {
   }, [gameLoop])
 
   return (
-    <div className="page">
-      <NavBar />
-      <div className={styles.content}>
-        <div className={styles.hud}>
-          <span className={styles.hudItem}>
-            {t('snake.score')}: <strong className={styles.scoreVal}>{score}</strong>
-          </span>
-          <span className={styles.hudItem}>
-            {t('snake.best')}: <strong className={styles.highVal}>{highScore}</strong>
-          </span>
-        </div>
-
-        <div className={styles.canvasWrapper}>
-          <canvas ref={canvasRef} width={W} height={H} className={styles.canvas} />
-
-          {uiState === 'idle' && (
-            <div className={styles.overlay}>
-              <h2 className={styles.overlayTitle}>{t('snake.title')}</h2>
-              <p className={styles.overlayHint}>{t('snake.hint')}</p>
-              <button className="btn btn-primary btn-lg" onClick={startGame}>
-                {t('snake.start')}
-              </button>
-            </div>
-          )}
-
-          {uiState === 'paused' && (
-            <div className={styles.overlay}>
-              <h2 className={styles.overlayTitle}>{t('snake.paused')}</h2>
-              <button className="btn btn-secondary btn-lg" onClick={resumeGame}>
-                {t('snake.resume')}
-              </button>
-            </div>
-          )}
-
-          {uiState === 'gameover' && (
-            <div className={styles.overlay}>
-              <h2 className={`${styles.overlayTitle} ${styles.gameoverTitle}`}>
-                {t('snake.gameover')}
-              </h2>
-              <p className={styles.finalScore}>
-                {t('snake.score')}: <span className={styles.scoreVal}>{score}</span>
-              </p>
-              {score > 0 && score >= highScore && (
-                <p className={styles.newHigh}>★ {t('snake.newHigh')} ★</p>
-              )}
-              <div className={styles.overlayButtons}>
-                <button className="btn btn-primary" onClick={startGame}>
-                  {t('snake.playAgain')}
-                </button>
-                <button className="btn btn-secondary" onClick={() => navigate('/')}>
-                  {t('snake.menu')}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <p className={styles.controlsHint}>{t('snake.controlsHint')}</p>
-      </div>
-    </div>
+    <ArcadeGameShell
+      game="snake"
+      uiState={uiState}
+      score={score}
+      highScore={highScore}
+      frame="primary"
+      onStart={startGame}
+      onResume={resumeGame}
+    >
+      <canvas ref={canvasRef} width={W} height={H} className={styles.canvas} />
+    </ArcadeGameShell>
   )
 }

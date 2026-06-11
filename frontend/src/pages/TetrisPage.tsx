@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import NavBar from '../components/NavBar'
+import ArcadeGameShell from '../components/ArcadeGameShell'
 import styles from './TetrisPage.module.css'
 import { submitTetrisScore } from '../api/client'
 
@@ -53,12 +51,12 @@ const PIECE_KEYS = ['I','O','T','S','Z','J','L'] as const
 type PieceKey = typeof PIECE_KEYS[number]
 
 const COLORS: Record<PieceKey, string> = {
-  I: '#00ffff', O: '#ffff00', T: '#cc00ff',
-  S: '#00ff88', Z: '#ff2244', J: '#4488ff', L: '#ff8800',
+  I: '#38726c', O: '#f7f052', T: '#d34e24',
+  S: '#5fa69e', Z: '#f28123', J: '#563f1b', L: '#f2a65a',
 }
 const GLOWS: Record<PieceKey, string> = {
-  I: 'rgba(0,255,255,0.7)', O: 'rgba(255,255,0,0.7)', T: 'rgba(200,0,255,0.7)',
-  S: 'rgba(0,255,136,0.7)', Z: 'rgba(255,34,68,0.7)', J: 'rgba(68,136,255,0.7)', L: 'rgba(255,136,0,0.7)',
+  I: 'rgba(56,114,108,0.35)', O: 'rgba(247,240,82,0.35)', T: 'rgba(211,78,36,0.35)',
+  S: 'rgba(95,166,158,0.35)', Z: 'rgba(242,129,35,0.35)', J: 'rgba(86,63,27,0.35)', L: 'rgba(242,166,90,0.35)',
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -124,8 +122,6 @@ function speed(level: number) {
 
 // ── Component ──────────────────────────────────────────────────────────────
 export default function TetrisPage() {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const stateRef   = useRef<GameState>('idle')
@@ -182,13 +178,13 @@ export default function TetrisPage() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    ctx.fillStyle = '#0a0a0f'
+    ctx.fillStyle = '#fbf7e2'
     ctx.fillRect(0, 0, CW, BOARD_H)
 
     // Board bg + grid
-    ctx.fillStyle = '#0c0c18'
+    ctx.fillStyle = '#fffdf2'
     ctx.fillRect(PANEL, 0, BOARD_W, BOARD_H)
-    ctx.strokeStyle = 'rgba(255,255,255,0.03)'
+    ctx.strokeStyle = 'rgba(86,63,27,0.06)'
     ctx.lineWidth = 1
     for (let c = 0; c <= COLS; c++) {
       ctx.beginPath(); ctx.moveTo(PANEL + c * CELL, 0); ctx.lineTo(PANEL + c * CELL, BOARD_H); ctx.stroke()
@@ -252,34 +248,34 @@ export default function TetrisPage() {
     }
 
     // Board border
-    ctx.strokeStyle = 'rgba(255,0,255,0.35)'
+    ctx.strokeStyle = 'rgba(242,129,35,0.6)'
     ctx.lineWidth = 1
     ctx.strokeRect(PANEL, 0, BOARD_W, BOARD_H)
 
     // ── Left panel: HOLD ──
-    ctx.font = '7px "Press Start 2P", monospace'
-    ctx.fillStyle = '#5050a0'
+    ctx.font = 'bold 11px "Baloo 2", sans-serif'
+    ctx.fillStyle = '#a08b66'
     ctx.fillText('HOLD', 8, 18)
     if (holdRef.current) drawMini(ctx, holdRef.current, 0, 26, !canHoldRef.current)
 
     // ── Right panel: NEXT + stats ──
     const rx = PANEL + BOARD_W
-    ctx.font = '7px "Press Start 2P", monospace'
-    ctx.fillStyle = '#5050a0'
+    ctx.font = 'bold 11px "Baloo 2", sans-serif'
+    ctx.fillStyle = '#a08b66'
     ctx.fillText('NEXT', rx + 8, 18)
     drawMini(ctx, nextRef.current.key, rx, 26)
 
     const stats: Array<[string, string, string]> = [
-      ['SCORE', String(scoreRef.current), '#ff00ff'],
-      ['LEVEL', String(levelRef.current), '#00ffff'],
-      ['LINES', String(linesRef.current), '#00ff88'],
+      ['SCORE', String(scoreRef.current), '#f28123'],
+      ['LEVEL', String(levelRef.current), '#38726c'],
+      ['LINES', String(linesRef.current), '#d34e24'],
     ]
     let sy = 130
     for (const [label, value, color] of stats) {
-      ctx.font = '6px "Press Start 2P", monospace'
-      ctx.fillStyle = '#5050a0'
+      ctx.font = 'bold 10px "Baloo 2", sans-serif'
+      ctx.fillStyle = '#a08b66'
       ctx.fillText(label, rx + 8, sy)
-      ctx.font = '10px "Press Start 2P", monospace'
+      ctx.font = 'bold 16px "Baloo 2", sans-serif'
       ctx.fillStyle = color
       ctx.fillText(value, rx + 8, sy + 18)
       sy += 52
@@ -466,44 +462,17 @@ export default function TetrisPage() {
   }, [draw, lock, spawn])
 
   return (
-    <div className="page">
-      <NavBar />
-      <div className={styles.content}>
-        <div className={styles.hud}>
-          <span>{t('tetris.best')}: <strong className={styles.highVal}>{highScore.toLocaleString()}</strong></span>
-        </div>
-
-        <div className={styles.canvasWrapper}>
-          <canvas ref={canvasRef} width={CW} height={BOARD_H} className={styles.canvas} />
-
-          {uiState === 'idle' && (
-            <div className={styles.overlay}>
-              <h2 className={styles.overlayTitle}>{t('tetris.title')}</h2>
-              <p className={styles.overlayHint}>{t('tetris.hint')}</p>
-              <button className="btn btn-primary btn-lg" onClick={startGame}>{t('tetris.start')}</button>
-            </div>
-          )}
-          {uiState === 'paused' && (
-            <div className={styles.overlay}>
-              <h2 className={styles.overlayTitle}>{t('tetris.paused')}</h2>
-              <button className="btn btn-secondary btn-lg" onClick={resume}>{t('tetris.resume')}</button>
-            </div>
-          )}
-          {uiState === 'gameover' && (
-            <div className={styles.overlay}>
-              <h2 className={`${styles.overlayTitle} ${styles.gameoverTitle}`}>{t('tetris.gameover')}</h2>
-              <p className={styles.finalScore}>{t('tetris.score')}: <span className={styles.scoreVal}>{score.toLocaleString()}</span></p>
-              {score > 0 && score >= highScore && <p className={styles.newHigh}>★ {t('tetris.newHigh')} ★</p>}
-              <div className={styles.overlayButtons}>
-                <button className="btn btn-primary" onClick={startGame}>{t('tetris.playAgain')}</button>
-                <button className="btn btn-secondary" onClick={() => navigate('/')}>{t('tetris.menu')}</button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <p className={styles.controlsHint}>{t('tetris.controlsHint')}</p>
-      </div>
-    </div>
+    <ArcadeGameShell
+      game="tetris"
+      uiState={uiState}
+      score={score}
+      highScore={highScore}
+      showScoreInHud={false}
+      frame="secondary"
+      onStart={startGame}
+      onResume={resume}
+    >
+      <canvas ref={canvasRef} width={CW} height={BOARD_H} className={styles.canvas} />
+    </ArcadeGameShell>
   )
 }
