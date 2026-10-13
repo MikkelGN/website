@@ -1,8 +1,0 @@
-.canvas {
-  display: block;
-  max-width: min(400px, 90vw);
-  max-height: min(400px, 60vh);
-  width: 400px;
-  height: 400px;
-  image-rendering: pixelated;
-}

@@ -33,3 +33,6 @@ logs/
 
 # Traefik
 traefik/acme.json
+frontend/playwright-report/
+frontend/test-results/
+frontend/dev-dist/

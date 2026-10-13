@@ -1,20 +1,18 @@
 {
-  "name": "wordblitz-frontend",
+  "name": "migini-frontend",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug --headed",
-    "test:e2e:headed": "playwright test --headed"
+    "icons": "node scripts/render-icons.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
-    "axios": "^1.6.7",
+    "@fontsource/baloo-2": "^5.2.0",
     "i18next": "^23.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,12 +21,13 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
-    "@types/node": "^25.9.2",
+    "@playwright/test": "1.56.1",
+    "@types/node": "^22.0.0",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+    "vite-plugin-pwa": "^1.0.0"
   }
 }

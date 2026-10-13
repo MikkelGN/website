@@ -1,165 +1,76 @@
 {
-  "app": {
-    "title": "MIGINI GAMES",
-    "tagline": "Vælg et spil og spil!"
-  },
-  "nav": {
-    "play": "SPIL",
-    "leaderboard": "TOPSCORER",
-    "logout": "LOG UD"
-  },
-  "login": {
-    "whoIsPlaying": "Hvem spiller?",
-    "enterPin": "Indtast din PIN-kode",
-    "wrongPin": "Forkert PIN – prøv igen!",
-    "locked": "For mange forsøg – vent lidt og prøv igen",
-    "noProfiles": "Ingen profiler endnu – opret dem i admin",
-    "back": "Tilbage"
+  "common": {
+    "appName": "Migini",
+    "back": "Tilbage",
+    "soundOn": "Lyd er tændt",
+    "soundOff": "Lyd er slukket",
+    "stars": "{{count}} stjerner",
+    "language": "Sprog"
   },
   "home": {
-    "greeting": "Hej, {{name}}!",
-    "play": "SPIL",
-    "leaderboard": "TOPSCORER",
-    "highScore": "Din bedste score: {{score}}",
-    "selectGame": "Vælg et spil",
-    "wordBlitzTitle": "WORD BLITZ",
-    "wordBlitzDesc": "Sorter ord i kategorier inden tiden løber ud",
-    "snakeTitle": "SLANGE",
-    "snakeDesc": "Spis maden, bliv længere, rør ikke væggene",
-    "tetrisTitle": "TETRIS",
-    "tetrisDesc": "Stabel blokkene, ryd rækker, nå ikke toppen",
-    "catLanguage": "Sprog",
-    "catMath": "Matematik & logik",
-    "catArcade": "Arkade",
-    "comingSoon": "Kommer snart!",
-    "mathBlitzTitle": "MATH BLITZ",
-    "mathBlitzDesc": "Regn stykkerne inden tiden løber ud"
+    "greeting": "Hej! Vi er Kapi og Bao.",
+    "question": "Hvad skal vi lege?",
+    "speak": "Hej! Vi er Kapi og Bao. Hvad skal vi lege?",
+    "cookingTitle": "Køkkenet",
+    "cookingText": "Lav mad til Kapi og Bao",
+    "moreSoon": "Flere spil på vej"
   },
-  "tetris": {
-    "title": "TETRIS",
-    "hint": "Stabel blokkene og ryd rækker!",
-    "start": "START",
-    "paused": "PAUSE",
-    "resume": "FORTSÆT",
-    "gameover": "FLOT KLARET!",
-    "score": "Score",
-    "level": "Level",
-    "lines": "Rækker",
-    "best": "Bedst",
-    "newHigh": "NY REKORD",
-    "playAgain": "SPIL IGEN",
-    "menu": "MENU",
-    "hold": "GEM",
-    "next": "NÆSTE",
-    "controlsHint": "Piletaster / WASD · Mellemrum = drop · C = gem · P = pause · Svirp på mobil"
-  },
-  "snake": {
-    "title": "SLANGE",
-    "hint": "Spis de orange firkanter. Rør ikke væggene!",
-    "start": "START",
-    "paused": "PAUSE",
-    "resume": "FORTSÆT",
-    "gameover": "FLOT KLARET!",
-    "score": "Score",
-    "best": "Bedst",
-    "newHigh": "NY REKORD",
-    "playAgain": "SPIL IGEN",
-    "menu": "MENU",
-    "controlsHint": "Piletaster / WASD for at bevæge · Mellemrum for pause · Svirp på mobil"
-  },
-  "game": {
-    "selectCategories": "VÆLG ORDKLASSER",
-    "selectMin": "Vælg mindst 2 ordklasser",
-    "startGame": "START SPIL",
-    "whatIs": "Hvad er dette ord?",
-    "timeLeft": "Tid: {{time}}s",
-    "score": "Score: {{score}}",
-    "streak": "Streak: {{streak}}",
-    "correct": "RIGTIGT!",
-    "wrong": "FORKERT!",
-    "gameOver": "FLOT KLARET!",
-    "finalScore": "Endelig score",
-    "correctAnswers": "Rigtige svar",
-    "maxStreak": "Bedste streak",
-    "playAgain": "SPIL IGEN",
-    "backToMenu": "MENU"
-  },
-  "leaderboard": {
-    "title": "TOPSCORER",
-    "tabWordBlitz": "WORD BLITZ",
-    "tabSnake": "SLANGE",
-    "tabTetris": "TETRIS",
-    "rank": "#",
-    "player": "SPILLER",
-    "score": "SCORE",
-    "correct": "RIGTIGE",
-    "streak": "STREAK",
-    "level": "LEVEL",
-    "lines": "RÆKKER",
-    "empty": "Ingen scores endnu. Vær den første!",
-    "tabMath": "MATH BLITZ",
-    "difficulty": "Sværhedsgrad"
-  },
-  "admin": {
-    "title": "ADMIN PANEL",
-    "login": {
-      "title": "ADMIN LOGIN",
-      "username": "Brugernavn",
-      "password": "Adgangskode",
-      "button": "LOG IND"
+  "cooking": {
+    "pickTitle": "Hvad skal vi lave?",
+    "pickSpeak": "Hvad skal vi lave i dag?",
+    "order": "{{name}} er sulten! Kan du lave {{dish}}?",
+    "orderButton": "Ja, lad os lave mad!",
+    "gather": "Find det, vi skal bruge til {{dish}}!",
+    "dropHere": "Skålen",
+    "wrong": "Hov, den skal ikke i!",
+    "mixBowl": "Rør rundt i skålen!",
+    "mixBlender": "Tryk på blenderen!",
+    "cookStart": {
+      "pan": "Tryk på panden for at stege!",
+      "oven": "Tryk på ovnen for at bage!",
+      "pot": "Tryk på gryden for at koge!"
     },
-    "tabs": {
-      "categories": "Ordklasser",
-      "words": "Ord",
-      "sessions": "Sessioner",
-      "players": "Spillere",
-      "progress": "Fremskridt"
+    "cooking": "Vent lidt... det dufter godt!",
+    "cookDone": "Ding! Maden er klar!",
+    "takeOut": "Tag maden ud",
+    "serve": "Giv maden til {{name}}!",
+    "thanks": "Mmm! Tak, det smagte dejligt!",
+    "starEarned": "Du fik en stjerne!",
+    "again": "Lav mere mad",
+    "home": "Hjem",
+    "cookedTimes": "Lavet {{count}} gange",
+    "recipe": {
+      "pancakes": "Pandekager",
+      "pizza": "Pizza",
+      "smoothie": "Smoothie",
+      "soup": "Grøntsagssuppe",
+      "cupcakes": "Muffins",
+      "salad": "Salat",
+      "juice": "Juice"
     },
-    "actions": {
-      "add": "Tilføj",
-      "edit": "Rediger",
-      "delete": "Slet",
-      "save": "Gem",
-      "cancel": "Annuller"
-    },
-    "category": {
-      "nameDa": "Dansk navn",
-      "nameEn": "Engelsk navn",
-      "color": "Farve"
-    },
-    "word": {
-      "text": "Ord",
-      "category": "Ordklasse"
-    },
-    "player": {
-      "name": "Navn",
-      "pin": "PIN-kode (4 cifre)",
-      "newPin": "Ny PIN-kode (valgfri)",
-      "created": "Oprettet",
-      "confirmDelete": "Slet denne spiller og alle deres scores?"
-    },
-    "progress": {
-      "player": "Spiller",
-      "game": "Spil",
-      "plays": "Antal spil",
-      "best": "Bedste score"
+    "ingredient": {
+      "egg": "Æg",
+      "milk": "Mælk",
+      "flour": "Mel",
+      "butter": "Smør",
+      "flatbread": "Pizzabund",
+      "tomato": "Tomat",
+      "cheese": "Ost",
+      "mushroom": "Svampe",
+      "banana": "Banan",
+      "strawberry": "Jordbær",
+      "blueberry": "Blåbær",
+      "carrot": "Gulerod",
+      "potato": "Kartoffel",
+      "onion": "Løg",
+      "broccoli": "Broccoli",
+      "chocolate": "Chokolade",
+      "lettuce": "Salathoved",
+      "cucumber": "Agurk",
+      "corn": "Majs",
+      "orange": "Appelsin",
+      "honey": "Honning",
+      "apple": "Æble"
     }
-  },
-  "lang": {
-    "toggle": "EN"
-  },
-  "error": {
-    "generic": "Noget gik galt. Prøv igen.",
-    "network": "Netværksfejl. Tjek din forbindelse."
-  },
-  "mathBlitz": {
-    "chooseDifficulty": "VÆLG SVÆRHEDSGRAD",
-    "easy": "LET",
-    "easyDesc": "Plus og minus op til 20",
-    "medium": "MELLEM",
-    "mediumDesc": "Op til 100 og de små tabeller",
-    "hard": "SVÆR",
-    "hardDesc": "Gange og division",
-    "prompt": "Hvad er svaret?"
   }
 }

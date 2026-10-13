@@ -1,165 +1,76 @@
 {
-  "app": {
-    "title": "MIGINI GAMES",
-    "tagline": "Pick a game and play!"
-  },
-  "nav": {
-    "play": "PLAY",
-    "leaderboard": "LEADERBOARD",
-    "logout": "LOG OUT"
-  },
-  "login": {
-    "whoIsPlaying": "Who's playing?",
-    "enterPin": "Enter your PIN",
-    "wrongPin": "Wrong PIN – try again!",
-    "locked": "Too many attempts – wait a moment and try again",
-    "noProfiles": "No profiles yet – create them in admin",
-    "back": "Back"
+  "common": {
+    "appName": "Migini",
+    "back": "Back",
+    "soundOn": "Sound is on",
+    "soundOff": "Sound is off",
+    "stars": "{{count}} stars",
+    "language": "Language"
   },
   "home": {
-    "greeting": "Hi, {{name}}!",
-    "play": "PLAY",
-    "leaderboard": "LEADERBOARD",
-    "highScore": "Your best score: {{score}}",
-    "selectGame": "Choose a game",
-    "wordBlitzTitle": "WORD BLITZ",
-    "wordBlitzDesc": "Sort words into categories before the timer runs out",
-    "snakeTitle": "SNAKE",
-    "snakeDesc": "Eat the food, grow longer, don't hit the walls",
-    "tetrisTitle": "TETRIS",
-    "tetrisDesc": "Stack the blocks, clear lines, don't reach the top",
-    "catLanguage": "Language",
-    "catMath": "Math & Logic",
-    "catArcade": "Arcade",
-    "comingSoon": "Coming soon!",
-    "mathBlitzTitle": "MATH BLITZ",
-    "mathBlitzDesc": "Solve the sums before the timer runs out"
+    "greeting": "Hi! We are Kapi and Bao.",
+    "question": "What shall we play?",
+    "speak": "Hi! We are Kapi and Bao. What shall we play?",
+    "cookingTitle": "The Kitchen",
+    "cookingText": "Cook for Kapi and Bao",
+    "moreSoon": "More games coming"
   },
-  "tetris": {
-    "title": "TETRIS",
-    "hint": "Stack blocks and clear lines!",
-    "start": "START",
-    "paused": "PAUSED",
-    "resume": "RESUME",
-    "gameover": "WELL PLAYED!",
-    "score": "Score",
-    "level": "Level",
-    "lines": "Lines",
-    "best": "Best",
-    "newHigh": "NEW HIGH SCORE",
-    "playAgain": "PLAY AGAIN",
-    "menu": "MENU",
-    "hold": "HOLD",
-    "next": "NEXT",
-    "controlsHint": "Arrow keys / WASD · Space = drop · C = hold · P = pause · Swipe on mobile"
-  },
-  "snake": {
-    "title": "SNAKE",
-    "hint": "Eat the orange squares. Don't hit the walls!",
-    "start": "START",
-    "paused": "PAUSED",
-    "resume": "RESUME",
-    "gameover": "WELL PLAYED!",
-    "score": "Score",
-    "best": "Best",
-    "newHigh": "NEW HIGH SCORE",
-    "playAgain": "PLAY AGAIN",
-    "menu": "MENU",
-    "controlsHint": "Arrow keys / WASD to move · Space to pause · Swipe on mobile"
-  },
-  "game": {
-    "selectCategories": "SELECT WORD CLASSES",
-    "selectMin": "Select at least 2 word classes",
-    "startGame": "START GAME",
-    "whatIs": "What class is this word?",
-    "timeLeft": "Time: {{time}}s",
-    "score": "Score: {{score}}",
-    "streak": "Streak: {{streak}}",
-    "correct": "CORRECT!",
-    "wrong": "WRONG!",
-    "gameOver": "WELL PLAYED!",
-    "finalScore": "Final score",
-    "correctAnswers": "Correct answers",
-    "maxStreak": "Best streak",
-    "playAgain": "PLAY AGAIN",
-    "backToMenu": "MENU"
-  },
-  "leaderboard": {
-    "title": "LEADERBOARD",
-    "tabWordBlitz": "WORD BLITZ",
-    "tabSnake": "SNAKE",
-    "tabTetris": "TETRIS",
-    "rank": "#",
-    "player": "PLAYER",
-    "score": "SCORE",
-    "correct": "CORRECT",
-    "streak": "STREAK",
-    "level": "LEVEL",
-    "lines": "LINES",
-    "empty": "No scores yet. Be the first!",
-    "tabMath": "MATH BLITZ",
-    "difficulty": "Difficulty"
-  },
-  "admin": {
-    "title": "ADMIN PANEL",
-    "login": {
-      "title": "ADMIN LOGIN",
-      "username": "Username",
-      "password": "Password",
-      "button": "LOG IN"
+  "cooking": {
+    "pickTitle": "What shall we make?",
+    "pickSpeak": "What shall we make today?",
+    "order": "{{name}} is hungry! Can you make {{dish}}?",
+    "orderButton": "Yes, let's cook!",
+    "gather": "Find what we need for {{dish}}!",
+    "dropHere": "The bowl",
+    "wrong": "Oops, that doesn't go in!",
+    "mixBowl": "Stir the bowl!",
+    "mixBlender": "Tap the blender!",
+    "cookStart": {
+      "pan": "Tap the pan to fry!",
+      "oven": "Tap the oven to bake!",
+      "pot": "Tap the pot to boil!"
     },
-    "tabs": {
-      "categories": "Categories",
-      "words": "Words",
-      "sessions": "Sessions",
-      "players": "Players",
-      "progress": "Progress"
+    "cooking": "Wait a moment... it smells good!",
+    "cookDone": "Ding! The food is ready!",
+    "takeOut": "Take the food out",
+    "serve": "Give the food to {{name}}!",
+    "thanks": "Yum! Thank you, that was delicious!",
+    "starEarned": "You got a star!",
+    "again": "Cook more food",
+    "home": "Home",
+    "cookedTimes": "Made {{count}} times",
+    "recipe": {
+      "pancakes": "Pancakes",
+      "pizza": "Pizza",
+      "smoothie": "Smoothie",
+      "soup": "Vegetable soup",
+      "cupcakes": "Cupcakes",
+      "salad": "Salad",
+      "juice": "Juice"
     },
-    "actions": {
-      "add": "Add",
-      "edit": "Edit",
-      "delete": "Delete",
-      "save": "Save",
-      "cancel": "Cancel"
-    },
-    "category": {
-      "nameDa": "Danish name",
-      "nameEn": "English name",
-      "color": "Color"
-    },
-    "word": {
-      "text": "Word",
-      "category": "Category"
-    },
-    "player": {
-      "name": "Name",
-      "pin": "PIN (4 digits)",
-      "newPin": "New PIN (optional)",
-      "created": "Created",
-      "confirmDelete": "Delete this player and all their scores?"
-    },
-    "progress": {
-      "player": "Player",
-      "game": "Game",
-      "plays": "Plays",
-      "best": "Best score"
+    "ingredient": {
+      "egg": "Egg",
+      "milk": "Milk",
+      "flour": "Flour",
+      "butter": "Butter",
+      "flatbread": "Pizza base",
+      "tomato": "Tomato",
+      "cheese": "Cheese",
+      "mushroom": "Mushrooms",
+      "banana": "Banana",
+      "strawberry": "Strawberry",
+      "blueberry": "Blueberries",
+      "carrot": "Carrot",
+      "potato": "Potato",
+      "onion": "Onion",
+      "broccoli": "Broccoli",
+      "chocolate": "Chocolate",
+      "lettuce": "Lettuce",
+      "cucumber": "Cucumber",
+      "corn": "Corn",
+      "orange": "Orange",
+      "honey": "Honey",
+      "apple": "Apple"
     }
-  },
-  "lang": {
-    "toggle": "DA"
-  },
-  "error": {
-    "generic": "Something went wrong. Please try again.",
-    "network": "Network error. Check your connection."
-  },
-  "mathBlitz": {
-    "chooseDifficulty": "CHOOSE DIFFICULTY",
-    "easy": "EASY",
-    "easyDesc": "Plus and minus up to 20",
-    "medium": "MEDIUM",
-    "mediumDesc": "Up to 100 and small times tables",
-    "hard": "HARD",
-    "hardDesc": "Multiplication and division",
-    "prompt": "What's the answer?"
   }
 }

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#ff8a3d"/>
+  <circle cx="256" cy="560" r="300" fill="#ffb26b"/>
+  <!-- Kapi -->
+  <g transform="translate(-20 150) scale(1.7)">
+    <circle cx="56" cy="52" r="13" fill="#94643e"/><circle cx="56" cy="52" r="6" fill="#6f4628"/>
+    <circle cx="144" cy="52" r="13" fill="#94643e"/><circle cx="144" cy="52" r="6" fill="#6f4628"/>
+    <rect x="44" y="40" width="112" height="100" rx="46" fill="#b98457"/>
+    <rect x="58" y="88" width="84" height="52" rx="26" fill="#94643e"/>
+    <ellipse cx="88" cy="102" rx="5" ry="4" fill="#6f4628"/><ellipse cx="112" cy="102" rx="5" ry="4" fill="#6f4628"/>
+    <g fill="none" stroke="#2b1d14" stroke-width="4" stroke-linecap="round"><path d="M68 75 q8 -10 16 0"/><path d="M116 75 q8 -10 16 0"/></g>
+    <path d="M86 118 q14 14 28 0" fill="none" stroke="#6f4628" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="100" cy="34" r="14" fill="#f7a23b"/><path d="M100 20 q8 -8 14 -2 q-8 4 -14 2z" fill="#5bb55b"/>
+  </g>
+  <!-- Bao -->
+  <g transform="translate(186 128) scale(1.7)">
+    <circle cx="52" cy="44" r="19" fill="#2a2a2e"/><circle cx="148" cy="44" r="19" fill="#2a2a2e"/>
+    <circle cx="100" cy="88" r="58" fill="#fffdf7"/>
+    <ellipse cx="76" cy="86" rx="16" ry="21" fill="#2a2a2e" transform="rotate(30 76 86)"/>
+    <ellipse cx="124" cy="86" rx="16" ry="21" fill="#2a2a2e" transform="rotate(-30 124 86)"/>
+    <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M70 87 q8 -10 16 0"/><path d="M114 87 q8 -10 16 0"/></g>
+    <ellipse cx="100" cy="108" rx="9" ry="6" fill="#2a2a2e"/>
+    <path d="M86 120 q14 14 28 0" fill="none" stroke="#2a2a2e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

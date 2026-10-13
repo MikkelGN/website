@@ -1,0 +1,22 @@
+.burst {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.piece {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  font-size: clamp(1.6rem, 6vmin, 2.8rem);
+  opacity: 0;
+  animation: fly 1.4s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes fly {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(40deg); opacity: 0; }
+}

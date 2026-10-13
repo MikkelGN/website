@@ -1,101 +1,53 @@
-# Migini Games
+# Migini
 
-A bilingual (Danish/English) game hub for kids — built for my own children. Minimalistic, rounded design with a fixed five-colour palette. Kids log in by picking their profile and entering a 4-digit PIN.
+Spil for børn uden reklamer, uden login og uden sporing. Universet har to faste figurer, der går igen i alle spil:
 
-## Games
+- **Kapi**: en capybara med en appelsin på hovedet
+- **Bao**: en panda med et bambusblad bag øret
 
-| Category | Game | Description |
-|---|---|---|
-| Sprog (Language) | **Word Blitz** | Sort Danish words into word classes before the timer runs out |
-| Matematik & logik (Math & Logic) | **Math Blitz** | Solve arithmetic problems against the clock — three difficulty tiers |
-| Arkade (Arcade) | **Snake** | Classic snake with keyboard + touch controls |
-| Arkade (Arcade) | **Tetris** | Classic tetris with hold/next, ghost piece, touch controls |
+## Spil
 
-All games post scores to a per-game leaderboard (best score per player). A parent admin panel manages player profiles (name, avatar, PIN), word categories/words, and shows per-player progress across all games.
-
-## Tech Stack
-
-| Layer | Technology |
+| Spil | Beskrivelse |
 |---|---|
-| Frontend | React 18 + TypeScript + Vite |
-| Backend | Spring Boot 3 + Java 21 |
-| Architecture | Hexagonal (Ports & Adapters) |
-| Database | PostgreSQL 16 + Flyway |
-| Auth | JWT (player PIN login via BCrypt + separate admin login) |
-| Reverse Proxy | Traefik v3 + Let's Encrypt |
-| Containerisation | Docker + Docker Compose |
-| E2E Tests | Playwright (chromium + firefox) |
-| CI/CD | GitHub Actions |
+| **Køkkenet** | Vælg en ret, find ingredienserne på hylden (tryk eller træk), rør rundt, steg/bag/kog og server for Kapi eller Bao. Hver ret giver en stjerne. |
 
-## Project Structure
+## Platforme
 
-```
-website/
-├── backend/                    # Spring Boot (Java 21)
-│   └── src/main/
-│       ├── java/dk/wordblitz/
-│       │   ├── domain/         # Core business logic
-│       │   │   ├── model/      # Domain records (Player, Category, Word, *Score…)
-│       │   │   ├── port/in/    # Use case interfaces
-│       │   │   ├── port/out/   # Repository interfaces
-│       │   │   ├── exception/  # Domain exceptions (InvalidPin, PinLocked)
-│       │   │   └── service/    # Domain services (ScoreCalculator)
-│       │   ├── application/    # Use case implementations
-│       │   └── infrastructure/ # Spring adapters
-│       │       ├── security/   # JWT auth filter + config
-│       │       └── adapter/
-│       │           ├── in/web/          # REST controllers
-│       │           └── out/persistence/ # JPA entities + adapters
-│       └── resources/db/migration/     # Flyway V1–V9
-├── frontend/                   # React + Vite
-│   ├── src/
-│   │   ├── api/                # Axios client + types
-│   │   ├── components/         # NavBar, PinPad, ArcadeGameShell, TimerBar…
-│   │   ├── i18n/               # da.json + en.json translations
-│   │   ├── lib/                # avatars, mathProblemGenerator
-│   │   ├── pages/              # Route-level pages
-│   │   └── store/              # Zustand auth store
-│   └── e2e/                    # Playwright suite (pages/, specs/, fixtures/)
-├── docker-compose.yml          # traefik + frontend + backend + db
-└── .github/workflows/          # CI (deploy + e2e tests)
-```
+Appen er en **Progressive Web App (PWA)**: én kodebase, der kører i browseren og kan installeres som app.
 
-## Routes
+- **Web**: åbn siden.
+- **Android**: Chrome → menu → *Installer app* / *Føj til startskærm*.
+- **iOS/iPadOS**: Safari → Del → *Føj til hjemmeskærm*.
 
-- `/login` — profile picker + PIN pad
-- `/` — home hub (Language / Math & Logic / Arcade sections)
-- `/play/word-blitz`, `/play/math-blitz`, `/play/snake`, `/play/tetris`
-- `/leaderboard` — tabbed, one tab per game
-- `/admin` — parent panel (categories, words, players, progress)
+Installeret kører den i fuld skærm og virker offline. Al tekst læses op med enhedens indbyggede stemme (Web Speech API), så børn, der ikke kan læse endnu, kan spille. Fremskridt (stjerner) gemmes kun lokalt på enheden.
 
-## Key API endpoints
+Hvis appen senere skal i App Store / Google Play, kan den samme build pakkes med [Capacitor](https://capacitorjs.com/) (`npx cap add android`/`ios`). Det kræver udviklerkonti hos Apple og Google og en Mac til iOS-builds.
 
-- `GET /api/auth/players` + `POST /api/auth/players/{id}/login` — profile picker + PIN login (PIN attempts are throttled)
-- `POST /api/sessions` … — Word Blitz server-driven game sessions
-- `POST /api/{math|snake|tetris}/scores` — client-side games submit final scores
-- `GET /api/leaderboard/{game-type}` — unified leaderboard (backed by the `leaderboard_entries` SQL view)
-- `/api/admin/**` — admin CRUD (categories, words, players) + `GET /api/admin/progress`
+## Teknik
 
-## Local development
+| Lag | Teknologi |
+|---|---|
+| Frontend | React 18 + TypeScript + Vite + CSS Modules |
+| App | vite-plugin-pwa (manifest + service worker, offline) |
+| State | Zustand med `persist` (localStorage) |
+| i18n | react-i18next, dansk og engelsk |
+| Lyd | Web Audio (syntetiseret, ingen lydfiler) + Web Speech API |
+| Tests | Playwright (telefon, tablet i landscape, desktop) |
+| Drift | nginx-container bag Traefik, GitHub Actions → GHCR → Watchtower |
+
+Der er ingen backend. Alt kører i browseren.
+
+## Udvikling
 
 ```bash
-docker compose up          # traefik + frontend (vite dev) + backend (spring-boot:run) + postgres
-# Frontend: http://localhost:5173 — Backend: http://localhost:8080
+cd frontend
+npm install
+npm run dev          # http://localhost:5173
+npm run type-check
+npm run test:e2e     # bygger, starter preview og kører Playwright
+npm run icons        # genererer PNG-ikoner fra public/favicon.svg
 ```
-
-Dev admin credentials are set in `docker-compose.override.yml` (`admin` / `admindev`). Two starter profiles are seeded with PIN `1234` (Gæst, Demo) — create real profiles in the admin panel and delete the starters.
-
-Running the backend outside Docker? Point the vite proxy at it: `BACKEND_URL=http://localhost:8080 npm run dev`.
-
-## Tests
-
-```bash
-cd backend && mvn test            # unit tests (scoring, PIN auth + lockout)
-cd frontend && npm run test:e2e   # Playwright suite against the running stack
-```
-
-The e2e suite covers login (PIN pad, wrong-PIN errors), hub navigation, all four games (including actually playing Word Blitz and Math Blitz to game over), leaderboards, and the admin panel. See `frontend/E2E_SETUP.md`.
 
 ## Deployment
 
-Pushing to `main` triggers the deploy workflow; watchtower pulls updated images on the server. `.env` on the server provides `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD` and the Postgres credentials.
+Push til `main` → CI bygger frontend-imaget → GHCR → Watchtower på serveren henter det inden for 5 minutter.

@@ -1,120 +1,138 @@
-.content {
+.page {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  padding: 2rem;
-  width: 100%;
+  min-height: 0;
 }
 
-.titleBlock {
-  text-align: center;
-}
-
-.greeting {
-  font-family: var(--font-mono);
-  color: var(--color-secondary);
-  font-size: 1.1rem;
-  margin-top: 0.5rem;
-  letter-spacing: 0.04em;
-}
-
-.sections {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  width: 100%;
-  max-width: 960px;
-}
-
-.categorySection {
+.main {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  justify-content: space-evenly;
+  gap: 12px;
+  padding: 0 16px 16px;
+  overflow-y: auto;
 }
 
-.categoryTitle {
-  font-size: 1.15rem;
-  color: var(--color-text);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.logo {
+  font-size: clamp(2.4rem, 10vw, 4rem);
+  line-height: 1;
+  color: var(--color-primary);
+  text-shadow: 0 4px 0 var(--color-primary-dark);
+  letter-spacing: 0.02em;
 }
 
-.gameGrid {
+.friends {
+  display: flex;
+  align-items: flex-end;
+  gap: 4vw;
+}
+
+.langs {
+  display: flex;
+  gap: 8px;
+}
+
+.lang {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  display: grid;
+  place-items: center;
+  opacity: 0.45;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.langActive {
+  opacity: 1;
+  background: var(--color-card);
+  box-shadow: var(--shadow);
+}
+
+.games {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 16px;
   width: 100%;
 }
 
-.gameCard {
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: min(100%, 320px);
+  padding: 14px 24px 14px 16px;
+  border-radius: var(--radius);
+  text-align: left;
+  color: #fff;
+  transition: transform 80ms ease, box-shadow 80ms ease;
+}
+
+.cardIcon {
+  font-size: 3.4rem;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+}
+
+.cardText {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 2rem 1.5rem;
-  width: 280px;
-  background: var(--color-bg-card);
-  border: none;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
-  cursor: pointer;
-  transition: transform var(--transition), box-shadow var(--transition);
-  text-align: center;
-  font-family: inherit;
 }
 
-.gameCard:hover:not(:disabled) {
-  transform: translateY(-4px);
+.cardText strong {
+  font-size: 1.8rem;
+  line-height: 1.1;
 }
 
-.wordCard:hover:not(:disabled) {
-  box-shadow: var(--glow-primary);
+.cardText small {
+  font-size: 1.05rem;
+  opacity: 0.95;
 }
 
-.snakeCard:hover:not(:disabled) {
-  box-shadow: var(--glow-success);
+.kitchen {
+  background: var(--color-primary);
+  box-shadow: 0 8px 0 var(--color-primary-dark);
+  animation: wiggle 3s ease-in-out infinite;
 }
 
-.tetrisCard:hover:not(:disabled) {
-  box-shadow: var(--glow-secondary);
+.kitchen:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--color-primary-dark);
 }
 
-.mathCard:hover:not(:disabled) {
-  box-shadow: var(--glow-secondary);
-}
-
-.gameIcon {
-  font-size: 2.5rem;
-  line-height: 1;
-}
-
-.gameTitle {
-  font-family: var(--font-pixel);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: 0.04em;
-}
-
-.gameDesc {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+.soon {
+  background: #e8d6bd;
   color: var(--color-text-dim);
-  line-height: 1.4;
+  box-shadow: 0 8px 0 #d6c0a2;
+  min-width: min(100%, 240px);
 }
 
-.playBtn {
-  margin-top: 0.5rem;
-  font-size: 0.8rem !important;
-  pointer-events: none;
+@keyframes wiggle {
+  0%, 85%, 100% { transform: rotate(0); }
+  90% { transform: rotate(-2deg); }
+  95% { transform: rotate(2deg); }
 }
 
-.leaderboardBtn {
-  font-size: 0.95rem !important;
-  padding: 0.75rem 2rem !important;
+/* landscape phones: greeting on the left, games on the right, nothing below the fold */
+@media (orientation: landscape) and (max-height: 560px) {
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'logo games' 'bubble games' 'friends games';
+    align-items: center;
+    justify-items: center;
+  }
+  .logo { grid-area: logo; }
+  .main > button[data-testid='speech'] { grid-area: bubble; }
+  .friends { grid-area: friends; }
+  .games { grid-area: games; flex-direction: column; align-items: center; }
 }

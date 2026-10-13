@@ -1,0 +1,42 @@
+.bubble {
+  position: relative;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 12px 22px;
+  font-size: clamp(1.15rem, 4.2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: min(92vw, 560px);
+  animation: pop-in 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: var(--color-card);
+  transform: rotate(45deg);
+}
+
+.down::after {
+  bottom: -10px;
+  left: calc(50% - 11px);
+}
+
+.left::after {
+  left: -10px;
+  top: calc(50% - 11px);
+}
+
+.right::after {
+  right: -10px;
+  top: calc(50% - 11px);
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

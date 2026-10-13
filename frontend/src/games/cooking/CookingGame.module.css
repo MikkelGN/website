@@ -1,0 +1,592 @@
+/* ===== Frame ===== */
+.game {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 16px;
+  overflow-x: hidden;
+  animation: slide-in 0.3s ease-out;
+}
+
+.center {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 12px;
+}
+
+.workbench {
+  max-width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(8px, 4vw, 32px);
+}
+
+.bubbleDish {
+  display: block;
+  font-size: clamp(3rem, 12vmin, 5rem);
+  margin-bottom: 4px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* ===== Recipe picker ===== */
+.pick {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pickHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pickHeader > button {
+  align-self: center;
+}
+
+.recipeGrid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  padding: 6px 4px 12px;
+  align-content: start;
+}
+
+.recipeCard {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 0 var(--color-line);
+  padding: 12px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: transform 80ms ease;
+}
+
+.recipeCard:active {
+  transform: translateY(4px) scale(0.98);
+}
+
+.recipeDish {
+  font-size: clamp(3rem, 14vw, 4.2rem);
+}
+
+.recipeName {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.recipeMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--color-text-dim);
+  min-height: 34px;
+}
+
+/* ===== Gather ===== */
+.gather {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 'top' 'bench' 'shelf';
+  gap: 10px;
+  justify-items: center;
+}
+
+.gatherTop {
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gather .workbench {
+  grid-area: bench;
+  align-self: center;
+}
+
+.recipeSlots {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 10px);
+  background: var(--color-card);
+  border-radius: 999px;
+  padding: 6px 16px;
+  box-shadow: var(--shadow);
+}
+
+.slotDish {
+  font-size: clamp(2rem, 8vmin, 2.8rem);
+}
+
+.slotEquals {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-dim);
+}
+
+.slot {
+  font-size: clamp(1.6rem, 6.5vmin, 2.4rem);
+  width: 1.5em;
+  height: 1.5em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 3px dashed var(--color-line);
+  filter: grayscale(1);
+  opacity: 0.4;
+  transition: all 200ms ease;
+}
+
+.slotFilled {
+  filter: none;
+  opacity: 1;
+  border: 3px solid var(--color-green);
+  background: #eaf7e6;
+  animation: pop 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.bowl {
+  position: relative;
+  width: min(46vw, 30vh, 260px);
+  aspect-ratio: 2 / 1.2;
+  background: linear-gradient(#9fd3f2, #4aa8e0);
+  border-radius: 12px 12px 50% 50% / 12px 12px 90% 90%;
+  box-shadow: inset 0 14px 0 rgba(255, 255, 255, 0.35), 0 8px 0 var(--color-blue-dark);
+  transition: transform 150ms ease;
+}
+
+.bowlTarget {
+  transform: scale(1.08);
+  box-shadow: inset 0 14px 0 rgba(255, 255, 255, 0.35), 0 8px 0 var(--color-blue-dark), 0 0 0 6px var(--color-yellow);
+}
+
+.bowlContents {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: -18%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.inBowl {
+  font-size: clamp(1.8rem, 7vmin, 2.8rem);
+  animation: drop-in 0.4s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.shelf {
+  grid-area: shelf;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 14px);
+  padding: 14px 10px 18px;
+  background: var(--color-wood);
+  border-radius: var(--radius);
+  box-shadow: inset 0 -10px 0 var(--color-wood-dark), var(--shadow);
+}
+
+.ingredient {
+  width: clamp(64px, 18vw, 92px);
+  aspect-ratio: 1;
+  border-radius: 22px;
+  background: var(--color-card);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+  font-size: clamp(2.2rem, 10vw, 3.4rem);
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  transition: transform 80ms ease, opacity 200ms ease;
+}
+
+.ingredient:active {
+  transform: scale(0.92);
+}
+
+.used {
+  opacity: 0.25;
+  filter: grayscale(1);
+  cursor: default;
+}
+
+.dragging {
+  opacity: 0.3;
+}
+
+.shake {
+  animation: shake 0.45s ease-in-out 2;
+  background: #ffe1e1;
+}
+
+.ghost {
+  position: fixed;
+  z-index: 30;
+  font-size: clamp(3rem, 14vw, 4.4rem);
+  transform: translate(-50%, -60%) scale(1.15);
+  pointer-events: none;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* ===== Mix ===== */
+.mixBowl,
+.blender {
+  position: relative;
+  touch-action: none;
+  display: grid;
+  place-items: center;
+}
+
+.mixBowl {
+  width: min(50vw, 36vh, 320px);
+  aspect-ratio: 2 / 1.25;
+  background: linear-gradient(#9fd3f2, #4aa8e0);
+  border-radius: 14px 14px 50% 50% / 14px 14px 90% 90%;
+  box-shadow: inset 0 16px 0 rgba(255, 255, 255, 0.35), 0 10px 0 var(--color-blue-dark);
+}
+
+.blender {
+  width: min(36vw, 30vh, 200px);
+  aspect-ratio: 1 / 1.5;
+  background: linear-gradient(90deg, rgba(220, 240, 255, 0.9), rgba(255, 255, 255, 0.7));
+  border: 6px solid #cfe4f2;
+  border-radius: 20px 20px 34px 34px;
+  box-shadow: 0 26px 0 -6px #6f7c8a, 0 10px 18px rgba(0, 0, 0, 0.12);
+}
+
+.mixContents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  font-size: clamp(2rem, 8vmin, 3rem);
+  transform: rotate(var(--turn, 0deg));
+  transition: transform 250ms ease;
+  max-width: 80%;
+}
+
+.mixResult {
+  font-size: clamp(3.4rem, 14vmin, 5rem);
+}
+
+.spoon {
+  position: absolute;
+  right: 6%;
+  top: -30%;
+  font-size: clamp(3rem, 12vmin, 4.4rem);
+  transform-origin: 50% 90%;
+  transform: rotate(calc(var(--turn, 0deg) / 3 - 20deg));
+  transition: transform 250ms ease;
+  pointer-events: none;
+}
+
+.mixed {
+  animation: pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.batter {
+  display: block;
+  width: min(30vw, 18vh, 140px);
+  aspect-ratio: 2 / 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff3cf, #f2cf86 70%);
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.06);
+}
+
+.progress {
+  width: min(80vw, 420px);
+  height: 26px;
+  background: var(--color-card);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 4px;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-green);
+  transition: width 200ms ease;
+}
+
+/* ===== Cook ===== */
+.appliance {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.applianceInner {
+  display: grid;
+  place-items: center;
+}
+
+.cookedDish {
+  font-size: clamp(3.4rem, 14vmin, 5rem);
+  animation: pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.ready {
+  animation: nudge 1.6s ease-in-out infinite;
+}
+
+.done {
+  animation: pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+/* oven: a box with a glass window */
+.oven {
+  width: min(48vw, 34vh, 280px);
+  aspect-ratio: 1 / 0.9;
+  background: #e9eef2;
+  border-radius: 22px;
+  box-shadow: 0 10px 0 #b9c3cc;
+  padding: 16% 12% 12%;
+}
+
+.oven::before {
+  /* knobs */
+  content: '';
+  position: absolute;
+  top: 5%;
+  left: 15%;
+  right: 15%;
+  height: 8%;
+  background: radial-gradient(circle, #6f7c8a 40%, transparent 42%) 0 50% / 25% 100% repeat-x;
+}
+
+.oven .applianceInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  background: #3b3f46;
+  border: 6px solid #6f7c8a;
+}
+
+.oven.cooking .applianceInner {
+  background: radial-gradient(circle, #ffb347, #e05a1b);
+  animation: glow 0.8s ease-in-out infinite alternate;
+}
+
+.oven.done .applianceInner {
+  background: radial-gradient(circle, #ffd28a, #f08a3a);
+}
+
+/* pan and pot sit on a burner */
+.pan,
+.pot {
+  width: min(48vw, 34vh, 280px);
+  aspect-ratio: 1 / 0.75;
+  padding-bottom: 14%;
+}
+
+.pan::after,
+.pot::after {
+  /* the stove top under the pan */
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+  height: 14%;
+  border-radius: 10px;
+  background: #e9eef2;
+  box-shadow: 0 6px 0 #b9c3cc;
+}
+
+.pan .applianceInner {
+  width: 70%;
+  margin-right: 18%;
+  aspect-ratio: 2 / 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #555b63 55%, #2f3338 60%);
+  position: relative;
+}
+
+.pan .applianceInner::before {
+  /* handle */
+  content: '';
+  position: absolute;
+  right: -34%;
+  top: 42%;
+  width: 40%;
+  height: 16%;
+  border-radius: 8px;
+  background: #2f3338;
+}
+
+.pot .applianceInner {
+  width: 74%;
+  aspect-ratio: 1.3 / 1;
+  border-radius: 10px 10px 30px 30px;
+  background: linear-gradient(#ff7a6b, #e0503f);
+  box-shadow: inset 0 10px 0 rgba(255, 255, 255, 0.25);
+}
+
+.pan.cooking::after,
+.pot.cooking::after {
+  background: linear-gradient(#ffb347, #e9eef2 70%);
+}
+
+.cooking .batter {
+  animation: sizzle 0.3s ease-in-out infinite alternate;
+}
+
+.steam {
+  position: absolute;
+  top: -12%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 18%;
+  pointer-events: none;
+}
+
+.steam span {
+  width: 18px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  animation: steam 1.2s ease-out infinite;
+}
+
+.steam span:nth-child(2) { animation-delay: 0.4s; }
+.steam span:nth-child(3) { animation-delay: 0.8s; }
+
+/* ===== Serve ===== */
+.table {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 24px);
+}
+
+.plate {
+  align-self: flex-end;
+  width: clamp(96px, 26vw, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 58%, #f0e6d6 60%, #ffffff 72%);
+  box-shadow: 0 6px 0 var(--color-line);
+  font-size: clamp(3rem, 13vw, 4.6rem);
+  display: grid;
+  place-items: center;
+  animation: nudge 1.6s ease-in-out infinite;
+}
+
+.eaten span {
+  animation: eat 1.8s steps(3) forwards;
+}
+
+/* ===== Landscape phones: put things side by side ===== */
+@media (orientation: landscape) and (max-height: 560px) {
+  .gather {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'top shelf' 'bench shelf';
+    align-items: center;
+  }
+
+  .shelf {
+    align-self: center;
+  }
+
+  .ingredient {
+    width: clamp(56px, 10vw, 80px);
+    font-size: clamp(2rem, 6vw, 2.8rem);
+  }
+
+  .center {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===== Animations ===== */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); }
+  100% { transform: scale(1); }
+}
+
+@keyframes drop-in {
+  from { transform: translateY(-60px) scale(0.6); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px) rotate(-6deg); }
+  75% { transform: translateX(8px) rotate(6deg); }
+}
+
+@keyframes nudge {
+  0%, 70%, 100% { transform: scale(1); }
+  80% { transform: scale(1.06); }
+  90% { transform: scale(0.98); }
+}
+
+@keyframes glow {
+  from { filter: brightness(0.9); }
+  to { filter: brightness(1.15); }
+}
+
+@keyframes sizzle {
+  from { transform: scale(1); }
+  to { transform: scale(1.04, 0.96); }
+}
+
+@keyframes steam {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  30% { opacity: 0.9; }
+  100% { transform: translateY(-60px) scale(1.3); opacity: 0; }
+}
+
+@keyframes eat {
+  0% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); transform: scale(0.8); }
+}

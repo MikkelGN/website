@@ -1,0 +1,51 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  flex-shrink: 0;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 64px;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.middle {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.round {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-card);
+  box-shadow: var(--shadow);
+  font-size: 1.6rem;
+  display: grid;
+  place-items: center;
+  transition: transform 80ms ease;
+}
+
+.round:active {
+  transform: scale(0.92);
+}
+
+.stars {
+  background: var(--color-card);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
