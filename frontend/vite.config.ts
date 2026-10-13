@@ -3,9 +3,13 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
-export default defineConfig({
+// `--mode artifact` builds a copy that runs inside a claude.ai Artifact page:
+// relative asset paths, in-memory routing and no service worker (the frame forbids them).
+export default defineConfig(({ mode }) => ({
+  base: mode === 'artifact' ? './' : '/',
   plugins: [
     react(),
+    mode !== 'artifact' &&
     // Installable app on Android and iOS ("Add to Home Screen") that works offline
     VitePWA({
       registerType: 'autoUpdate',
@@ -43,4 +47,4 @@ export default defineConfig({
     port: 5173,
     allowedHosts: ['migini.dk', 'www.migini.dk', 'localhost'],
   },
-})
+}))
